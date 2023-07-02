@@ -1,6 +1,6 @@
 <template>
   <LayoutHeader v-if="isLoggedIn" id="header" />
-  <RouterView id="slot" />
+  <RouterView />
   <LayoutFooter v-if="isLoggedIn" id="footer" />
 </template>
 
@@ -28,9 +28,6 @@ body {
   background-color: #f0f0f0;
 }
 #app {
-  height: 100%;
-}
-#slot {
   height: 100%;
 }
 </style>

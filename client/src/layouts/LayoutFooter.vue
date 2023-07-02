@@ -1,7 +1,7 @@
 <template>
   <div class="footer-container">
-    <RouterLink to="/">Main(친구목록)</RouterLink>
-    <RouterLink to="/rooms">채팅방목록</RouterLink>
+    <RouterLink to="/">벗 목록</RouterLink>
+    <RouterLink to="/rooms">채팅방 목록</RouterLink>
     <RouterLink to="/setting">설정</RouterLink>
   </div>
 </template>

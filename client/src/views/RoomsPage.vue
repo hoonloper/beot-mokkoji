@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 const DEFAULT_IMAGE = '../assets/logo.png';
-const rooms = Array.from({ length: 10 }, (_, i) => ({
+const rooms = Array.from({ length: 15 }, (_, i) => ({
   key: i + 1,
   image: DEFAULT_IMAGE,
   name: '아무개' + (i + 1),
