@@ -1,5 +1,6 @@
 package com.example.server.application.controllers;
 
+import com.example.server.domains.member.dto.MemberDto;
 import com.example.server.domains.member.services.MemberReadService;
 import com.example.server.domains.member.services.MemberWriteService;
 import org.springframework.beans.factory.annotation.Autowired;

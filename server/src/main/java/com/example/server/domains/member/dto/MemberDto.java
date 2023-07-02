@@ -1,4 +1,4 @@
-package com.example.server.application.controllers;
+package com.example.server.domains.member.dto;
 
 import java.time.LocalDate;
 import java.util.UUID;

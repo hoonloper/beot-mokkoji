@@ -1,6 +1,6 @@
 package com.example.server.domains.member.services;
 
-import com.example.server.application.controllers.MemberDto;
+import com.example.server.domains.member.dto.MemberDto;
 import com.example.server.domains.member.entity.Member;
 import com.example.server.domains.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
