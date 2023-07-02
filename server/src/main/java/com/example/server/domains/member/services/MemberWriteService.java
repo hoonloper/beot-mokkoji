@@ -12,8 +12,9 @@ import java.util.UUID;
 @Service
 public class MemberWriteService {
     private final MemberRepository memberRepository;
-    public void signUp(MemberDto member) {
+    public UUID signUp(MemberDto member) {
         UUID memberUUID = member.id() == null ? UUID.randomUUID() : member.id();
         memberRepository.save(new Member(memberUUID, member.name(), member.nickname(), member.birthday()));
+        return memberUUID;
     }
 }

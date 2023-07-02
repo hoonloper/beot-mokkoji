@@ -7,11 +7,17 @@
     <button @click="connect">연결하기</button>
     <button @click="disconnect">연결끊기</button>
     <button @click="sendMessage">메시지 보내기</button>
+    <button @click="logout">로그아웃</button>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { useStore } from 'vuex';
+const store = useStore();
+const logout = () => {
+  store.commit('clear');
+};
 
 const status = ref('status');
 const message = ref('message');

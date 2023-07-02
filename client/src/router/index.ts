@@ -1,35 +1,41 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import Main from '../views/main.vue';
-import About from '../views/about.vue';
-import Rooms from '../views/rooms.vue';
-import Room from '../views/rooms/index.vue';
-import NotFound from '../views/NotFound.vue';
+import MainPage from '../views/MainPage.vue';
+import SignUpPage from '../views/SignUpPage.vue';
+import SettingPage from '../views/SettingPage.vue';
+import RoomsPage from '../views/RoomsPage.vue';
+import RoomPage from '../views/rooms/RoomPage.vue';
+import NotFoundPage from '../views/NotFoundPage.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'Main',
-    component: Main,
+    name: 'MainPage',
+    component: MainPage,
   },
   {
-    path: '/about',
-    name: 'About',
-    component: About,
+    path: '/sign-up',
+    name: 'SignUpPage',
+    component: SignUpPage,
+  },
+  {
+    path: '/setting',
+    name: 'SettingPage',
+    component: SettingPage,
   },
   {
     path: '/rooms',
-    name: 'Rooms',
-    component: Rooms,
+    name: 'RoomsPage',
+    component: RoomsPage,
   },
   {
     path: '/rooms/:roomId',
-    name: 'Room',
+    name: 'RoomPage',
     props: true,
-    component: Room,
+    component: RoomPage,
   },
   // {
   //   path: '/:*',
-  //   component: NotFound,
+  //   component: NotFoundPage,
   // },
 ];
 
