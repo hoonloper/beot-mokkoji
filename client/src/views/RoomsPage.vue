@@ -31,7 +31,6 @@ const rooms = Array.from({ length: 10 }, (_, i) => ({
   align-items: center;
   gap: 8px;
   padding: 8px;
-  background-color: azure;
   .room-info {
     display: flex;
     flex-direction: column;
@@ -47,10 +46,10 @@ const rooms = Array.from({ length: 10 }, (_, i) => ({
   }
 }
 .room-cantainer:hover {
-  background-color: antiquewhite;
+  background-color: #e0e0e0;
   cursor: pointer;
 }
 .room-cantainer:active {
-  background-color: bisque;
+  background-color: #d0d0d0;
 }
 </style>

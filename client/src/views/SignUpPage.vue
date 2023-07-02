@@ -30,7 +30,10 @@
       />
       <div id="error">{{ birthdayMessage }}</div>
     </div>
-    <button type="button" @click="signUp">가입하기</button>
+    <div>
+      <button @click="signUp()">가입하기</button>
+      <button @click="handleSignIn()">로그인 하기</button>
+    </div>
     <div id="error" v-if="errorMessage">{{ errorMessage }}</div>
   </div>
 </template>
@@ -57,6 +60,9 @@ const isValidatedName = computed(
 const isValidatedNickname = computed(
   () => nickname.value.length >= 3 && nickname.value.length <= 15
 );
+const handleSignIn = () => {
+  router.push('sign-in');
+};
 const onChangeName = (event) => {
   name.value = event.target.value;
   if (!isValidatedName.value) {

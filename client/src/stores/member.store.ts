@@ -35,7 +35,7 @@ export default createStore({
       state.nickname = value;
     },
     setIsLoggedIn(state, value) {
-      state.isLoggedIn = false;
+      state.isLoggedIn = value;
     },
     clear(state) {
       state.name = '';

@@ -12,11 +12,14 @@
 </template>
 
 <script lang="ts" setup>
+import router from '@/router';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
+
 const store = useStore();
 const logout = () => {
   store.commit('clear');
+  router.push('sign-in');
 };
 
 const status = ref('status');

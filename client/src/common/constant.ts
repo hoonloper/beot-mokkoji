@@ -6,3 +6,11 @@ export const HttpStatus = {
   NOT_FOUNT: 404,
   INTERNER_SERVER_ERROR: 500,
 };
+
+export const RouterPath = {
+  MAIN: '/',
+  SIGN_IN: '/sign-in',
+  SIGN_UP: '/sign-up',
+  ROOMS: '/rooms',
+  SETTING: '/setting',
+};

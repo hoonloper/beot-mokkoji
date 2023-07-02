@@ -1,34 +1,41 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import MainPage from '../views/MainPage.vue';
-import SignUpPage from '../views/SignUpPage.vue';
-import SettingPage from '../views/SettingPage.vue';
-import RoomsPage from '../views/RoomsPage.vue';
-import RoomPage from '../views/rooms/RoomPage.vue';
-import NotFoundPage from '../views/NotFoundPage.vue';
+import MainPage from '@/views/MainPage.vue';
+import SignUpPage from '@/views/SignUpPage.vue';
+import SignInPage from '@/views/SignInPage.vue';
+import SettingPage from '@/views/SettingPage.vue';
+import RoomsPage from '@/views/RoomsPage.vue';
+import RoomPage from '@/views/rooms/RoomPage.vue';
+// import NotFoundPage from '@/views/NotFoundPage.vue';
+import { RouterPath } from '@/common/constant';
 
 const routes = [
   {
-    path: '/',
+    path: RouterPath.MAIN,
     name: 'MainPage',
     component: MainPage,
   },
   {
-    path: '/sign-up',
+    path: RouterPath.SIGN_UP,
     name: 'SignUpPage',
     component: SignUpPage,
   },
   {
-    path: '/setting',
+    path: RouterPath.SIGN_IN,
+    name: 'SignInPage',
+    component: SignInPage,
+  },
+  {
+    path: RouterPath.SETTING,
     name: 'SettingPage',
     component: SettingPage,
   },
   {
-    path: '/rooms',
+    path: RouterPath.ROOMS,
     name: 'RoomsPage',
     component: RoomsPage,
   },
   {
-    path: '/rooms/:roomId',
+    path: RouterPath.ROOMS + '/:roomId',
     name: 'RoomPage',
     props: true,
     component: RoomPage,
