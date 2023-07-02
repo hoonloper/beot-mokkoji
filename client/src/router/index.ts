@@ -1,11 +1,13 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import Main from '../views/main.vue';
 import About from '../views/about.vue';
-import * as NotFound from '../views/NotFound.vue';
+import Rooms from '../views/rooms.vue';
+import Room from '../views/rooms/index.vue';
+import NotFound from '../views/NotFound.vue';
 
 const routes = [
   {
-    path: '/main',
+    path: '/',
     name: 'Main',
     component: Main,
   },
@@ -15,9 +17,20 @@ const routes = [
     component: About,
   },
   {
-    path: '/:catchAll(.*)',
-    component: NotFound,
+    path: '/rooms',
+    name: 'Rooms',
+    component: Rooms,
   },
+  {
+    path: '/rooms/:roomId',
+    name: 'Room',
+    props: true,
+    component: Room,
+  },
+  // {
+  //   path: '/:*',
+  //   component: NotFound,
+  // },
 ];
 
 const router = createRouter({

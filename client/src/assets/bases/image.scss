@@ -1,0 +1,55 @@
+@import '../resources/index.scss';
+
+.image-circle {
+  &-xs {
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+    @include radius-full;
+  }
+  &-s {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    @include radius-full;
+  }
+  &-m {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    @include radius-full;
+  }
+  &-l {
+    width: 60px;
+    min-width: 60px;
+    height: 60px;
+    @include radius-full;
+  }
+}
+
+.image-square {
+  &-xs {
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+    @include radius-half;
+  }
+  &-s {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    @include radius-half;
+  }
+  &-m {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    @include radius-half;
+  }
+  &-l {
+    width: 60px;
+    min-width: 60px;
+    height: 60px;
+    @include radius-half;
+  }
+}

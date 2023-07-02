@@ -1,12 +1,12 @@
 <template>
   <LayoutHeader />
-  <router-view />
+  <RouterView />
   <LayoutFooter />
 </template>
 
 <script lang="ts" setup>
-import LayoutHeader from './layout/LayoutHeader.vue';
-import LayoutFooter from './layout/LayoutFooter.vue';
+import LayoutHeader from './layouts/LayoutHeader.vue';
+import LayoutFooter from './layouts/LayoutFooter.vue';
 </script>
 
 <style>
