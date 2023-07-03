@@ -1,5 +1,6 @@
 package com.example.server.domains.beot.entity;
 
+import com.example.server.domains.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,10 +13,18 @@ public class Beot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @ManyToOne(targetEntity = Member.class)
+    @JoinColumn(name = "from_member_id", insertable = false, updatable = false)
+    private Member fromMember;
+
+    @Column(name = "from_member_id")
     private String fromMemberId;
 
-    @Column
+    @ManyToOne(targetEntity = Member.class)
+    @JoinColumn(name = "to_member_id", insertable = false, updatable = false)
+    private Member toMember;
+
+    @Column(name = "to_member_id")
     private String toMemberId;
 
     @Column

@@ -99,7 +99,7 @@ const signUp = async () => {
     if (data.status === HttpStatus.CREATED) {
       router.push('/');
       store.commit('setAll', {
-        uuid: data.data,
+        id: data.data,
         name: name.value,
         nickname: nickname.value,
         isLoggedIn: true,

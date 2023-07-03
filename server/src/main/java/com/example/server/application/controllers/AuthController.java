@@ -24,7 +24,7 @@ public class AuthController {
 
     @PostMapping("sign-up")
     @ResponseStatus(HttpStatus.CREATED)
-    public UUID signUp(@RequestBody() MemberDto member) {
+    public String signUp(@RequestBody() MemberDto member) {
         System.out.println(member.toString());
         return memberWriteService.signUp(member);
     }

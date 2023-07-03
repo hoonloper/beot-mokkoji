@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity(name = "members")
 @NoArgsConstructor
@@ -16,7 +15,7 @@ import java.util.UUID;
 @Getter
 public class Member {
     @Id
-    private UUID id;
+    private String id;
 
     @Column
     private String name;

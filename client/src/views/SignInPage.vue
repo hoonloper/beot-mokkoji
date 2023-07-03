@@ -53,9 +53,9 @@ const signIn = async () => {
     if (data.status === HttpStatus.OK) {
       router.push('/');
       store.commit('setAll', {
-        uuid: data.data,
-        name: name.value,
-        nickname: nickname.value,
+        id: data.data.id,
+        name: data.data.name,
+        nickname: data.data.nickname,
         isLoggedIn: true,
       });
       console.log('SignIn Success!');

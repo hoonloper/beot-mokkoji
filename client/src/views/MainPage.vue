@@ -8,7 +8,11 @@
     />
     <div id="title">벗 목록</div>
     <div v-for="beot of beotList" :key="beot.id" class="beot-profile-container">
-      <ProfileCard :id="beot.id" :name="beot.name" :nickname="beot.nickname" />
+      <ProfileCard
+        :id="beot.toMember.id"
+        :name="beot.toMember.name"
+        :nickname="beot.toMember.nickname"
+      />
       <div>
         <button>친구삭제</button>
         <button>채팅하기</button>
@@ -19,15 +23,32 @@
 
 <script lang="ts" setup>
 import { useStore } from 'vuex';
+import axios from 'axios';
 import ProfileCard from '@/components/ProfileCard.vue';
+import { onMounted, ref } from 'vue';
 
 const store = useStore();
+type Beot = {
+  id: number;
+  toMember: {
+    id: string;
+    name: string;
+    nickname: string;
+    birthday: string;
+  };
+  createdAt: string;
+};
+const beotList = ref<Beot[]>([]);
 
-const beotList = Array.from({ length: 10 }, (_, i) => ({
-  id: 'test' + (i + 1),
-  name: '이름' + (i + 1),
-  nickname: '닉네임' + (i + 1),
-})).sort((a, b) => a.nickname.localeCompare(b.nickname));
+onMounted(async () => {
+  const data = await axios('http://localhost:8080/api/v1/beots/following/:id', {
+    method: 'GET',
+    params: {
+      id: '54fdad27-a0e0-40b8-82dc-a063aaf19562',
+    },
+  });
+  beotList.value = data.data;
+});
 </script>
 
 <style lang="scss" scoped>

@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps<{ id: string; name: string; nickname: string }>();
+defineProps<{ id: string; name: string; nickname: string }>();
 </script>
 
 <style lang="scss" scoped>

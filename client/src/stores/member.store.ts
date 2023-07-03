@@ -2,14 +2,14 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: {
-    uuid: '',
+    id: '',
     name: '',
     nickname: '',
     isLoggedIn: false,
   },
   getters: {
-    getUUID(state) {
-      return state.uuid;
+    getId(state) {
+      return state.id;
     },
     getName(state) {
       return state.name;
@@ -20,13 +20,13 @@ export default createStore({
   },
   mutations: {
     setAll(state, value) {
-      state.uuid = value.uuid;
+      state.id = value.id;
       state.name = value.name;
       state.nickname = value.nickname;
       state.isLoggedIn = value.isLoggedIn;
     },
-    setUUID(state, value) {
-      state.uuid = value;
+    setId(state, value) {
+      state.id = value;
     },
     setName(state, value) {
       state.name = value;
@@ -40,7 +40,7 @@ export default createStore({
     clear(state) {
       state.name = '';
       state.nickname = '';
-      state.uuid = '';
+      state.id = '';
     },
   },
 });
