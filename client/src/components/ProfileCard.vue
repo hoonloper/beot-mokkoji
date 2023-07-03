@@ -1,12 +1,16 @@
 <template>
   <div class="profile-card-container">
     <img class="image-square-l" src="../assets/logo.png" alt="profile image" />
-    <div>{{ nickname }}</div>
+    <div>{{ `${nickname}(${replacedName})` }}</div>
   </div>
 </template>
 
 <script lang="ts" setup>
-defineProps<{ id: string; name: string; nickname: string }>();
+const SLICE_NUMBER = 2;
+const props = defineProps<{ id: string; name: string; nickname: string }>();
+const replacedName =
+  props.name.slice(0, SLICE_NUMBER) +
+  '*'.repeat(props.name.length - SLICE_NUMBER);
 </script>
 
 <style lang="scss" scoped>

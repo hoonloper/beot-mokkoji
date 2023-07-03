@@ -2,25 +2,27 @@
   <RouterLink
     v-for="room of rooms"
     class="room-cantainer"
-    :key="room.key"
-    :to="{ path: '/rooms/' + room.key }"
+    :key="room.id"
+    :to="{ path: '/rooms/' + room.id }"
   >
     <img class="image-circle-l" src="../assets/logo.png" alt="room image" />
     <div class="room-info">
-      <div id="name">{{ room.name }}</div>
+      <div id="name">{{ room.toMember.nickname }}</div>
       <div id="chat">{{ room.latestChat }}</div>
     </div>
   </RouterLink>
 </template>
 
 <script lang="ts" setup>
-const DEFAULT_IMAGE = '../assets/logo.png';
-const rooms = Array.from({ length: 15 }, (_, i) => ({
-  key: i + 1,
-  image: DEFAULT_IMAGE,
-  name: '아무개' + (i + 1),
-  latestChat: i + 1 + '번째 채팅',
-})).sort((a, b) => b.key - a.key);
+import { ref } from 'vue';
+
+const rooms = ref([
+  {
+    id: '임시아이디',
+    toMember: { id: '임시', name: '임시', nickname: '임시' },
+    latestChat: '임시 채팅',
+  },
+]);
 </script>
 
 <style lang="scss" scoped>
