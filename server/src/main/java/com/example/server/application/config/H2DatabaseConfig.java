@@ -15,13 +15,6 @@ public class H2DatabaseConfig implements ApplicationRunner {
     @Autowired
     DataSource dataSource;
 
-    private String MEMBERS_TABLE = "CREATE TABLE members(" +
-            "id varchar(300) NOT NULL, " +
-            "name VARCHAR(30), " +
-            "nickname VARCHAR(30), " +
-            "birthday TIMESTAMP, " +
-            "PRIMARY KEY (ID) )";
-
     @Override
     public void run(ApplicationArguments args) throws SQLException {
         try(Connection connection = dataSource.getConnection()){
@@ -29,6 +22,21 @@ public class H2DatabaseConfig implements ApplicationRunner {
             System.out.println(connection.getMetaData().getUserName());
 
             Statement statement = connection.createStatement();
+            String BEOTS_TABLE = "CREATE TABLE beots(" +
+                    "id bigint NOT NULL auto_increment, " +
+                    "from_member_id VARCHAR(300) NOT NULL, " +
+                    "to_member_id VARCHAR(300) NOT NULL, " +
+                    "created_at TIMESTAMP NOT NULL, " +
+                    "PRIMARY KEY (id)" +
+                    ")";
+            statement.executeUpdate(BEOTS_TABLE); // 벗 테이블 구현
+            String MEMBERS_TABLE = "CREATE TABLE members(" +
+                    "id varchar(300) NOT NULL, " +
+                    "name VARCHAR(30), " +
+                    "nickname VARCHAR(30), " +
+                    "birthday TIMESTAMP, " +
+                    "PRIMARY KEY (id)" +
+                    ")";
             statement.executeUpdate(MEMBERS_TABLE); // 멤버 테이블 구현
         } catch (Exception e){
             System.out.println(e);
