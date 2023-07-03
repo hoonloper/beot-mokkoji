@@ -17,16 +17,16 @@ public class Beot {
     @JoinColumn(name = "from_member_id", insertable = false, updatable = false)
     private Member fromMember;
 
-    @Column(name = "from_member_id")
+    @Column(name = "from_member_id", nullable = false)
     private String fromMemberId;
 
     @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "to_member_id", insertable = false, updatable = false)
     private Member toMember;
 
-    @Column(name = "to_member_id")
+    @Column(name = "to_member_id", nullable = false)
     private String toMemberId;
 
-    @Column
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 }

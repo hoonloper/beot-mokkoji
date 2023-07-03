@@ -17,10 +17,10 @@ public class Member {
     @Id
     private String id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String nickname;
 
     @Column

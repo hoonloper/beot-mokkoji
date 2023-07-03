@@ -14,7 +14,7 @@
         :nickname="beot.toMember.nickname"
       />
       <div>
-        <button>친구삭제</button>
+        <button>팔로우 끊기</button>
         <button>채팅하기</button>
       </div>
     </div>
@@ -44,9 +44,10 @@ onMounted(async () => {
   const data = await axios('http://localhost:8080/api/v1/beots/following/:id', {
     method: 'GET',
     params: {
-      id: '54fdad27-a0e0-40b8-82dc-a063aaf19562',
+      id: store.state.id,
     },
   });
+  console.log(data.data);
   beotList.value = data.data;
 });
 </script>
