@@ -1,0 +1,18 @@
+package com.example.server.application.controllers;
+
+import com.example.server.domains.chat.services.ChatRoom;
+import com.example.server.domains.room.service.RoomService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@Slf4j
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/rooms")
+public class RoomController {
+    private final RoomService roomService;
+
+}

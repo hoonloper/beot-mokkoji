@@ -16,6 +16,7 @@ import java.util.*;
 @Service
 public class ChatService {
     private final ObjectMapper mapper;
+
     private Map<String, ChatRoom> chatRooms;
 
     @PostConstruct

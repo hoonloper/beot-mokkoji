@@ -25,9 +25,6 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         log.info("payload {}", payload);
 
-//        TextMessage textMessage = new TextMessage("Welcome Chatting Server");
-//        session.sendMessage(textMessage);
-
         ChatDto chatMessage = mapper.readValue(payload, ChatDto.class);
         log.info("session {}", chatMessage.toString());
 
