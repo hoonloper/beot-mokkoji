@@ -1,5 +1,7 @@
 package com.example.server.domains.chat.services;
 
+import com.example.server.domains.room.entity.Room;
+import com.example.server.domains.room.repository.RoomRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
@@ -16,6 +18,7 @@ import java.util.*;
 @Service
 public class ChatService {
     private final ObjectMapper mapper;
+    private final RoomRepository roomRepository;
 
     private Map<String, ChatRoom> chatRooms;
 
@@ -32,14 +35,17 @@ public class ChatService {
         return chatRooms.get(roomId);
     }
 
-    public ChatRoom createRoom(String name) {
+    public ChatRoom createRoom(String name, String memberId) {
         String roomId = UUID.randomUUID().toString(); // 랜덤한 방 아이디 생성
 
         // Builder 를 이용해서 ChatRoom 을 Building
         ChatRoom room = ChatRoom.builder()
                 .roomId(roomId)
                 .name(name)
+                .memberId(memberId)
                 .build();
+
+        roomRepository.save(new Room(room.getMemberId(), room.getRoomId(), room.getName()));
 
         chatRooms.put(roomId, room); // 랜덤 아이디와 room 정보를 Map 에 저장
         return room;

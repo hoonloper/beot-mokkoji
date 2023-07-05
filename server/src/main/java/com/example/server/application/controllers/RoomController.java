@@ -1,6 +1,9 @@
 package com.example.server.application.controllers;
 
 import com.example.server.domains.chat.services.ChatRoom;
+import com.example.server.domains.room.entity.Room;
+import com.example.server.domains.room.interfaces.FindAllByMemberIdInterface;
+import com.example.server.domains.room.service.RoomGroup;
 import com.example.server.domains.room.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,4 +18,8 @@ import java.util.List;
 public class RoomController {
     private final RoomService roomService;
 
+    @GetMapping("{memberId}")
+    public List<RoomGroup> getAllRoomsByMemberId(@PathVariable("memberId") String memberId) {
+        return roomService.getAllRoomsByMemberId(memberId);
+    }
 }

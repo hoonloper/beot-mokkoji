@@ -1,28 +1,54 @@
 <template>
+  <div id="title">
+    <div>채팅방 목록</div>
+    <div>총 {{ rooms.length }}개</div>
+  </div>
   <RouterLink
-    v-for="room of rooms"
+    v-for="(room, i) of rooms"
     class="room-cantainer"
-    :key="room.id"
-    :to="{ path: '/rooms/' + room.id }"
+    :key="i"
+    :to="{ path: '/rooms/' + room.roomId }"
   >
     <img class="image-circle-l" src="../assets/logo.png" alt="room image" />
     <div class="room-info">
-      <div id="name">{{ room.toMember.nickname }}</div>
-      <div id="chat">{{ room.latestChat }}</div>
+      <div id="name">{{ room.name }}</div>
+      <div id="members">{{ room.roomMembers.length }}명 참여중</div>
     </div>
   </RouterLink>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
+import axios from 'axios';
 
-const rooms = ref([
+const store = useStore();
+
+const rooms = ref<
   {
-    id: '임시아이디',
-    toMember: { id: '임시', name: '임시', nickname: '임시' },
-    latestChat: '임시 채팅',
-  },
-]);
+    roomId: string;
+    name: string;
+    roomMembers: [
+      {
+        id: number;
+        memberName: string;
+        memberNickname: string;
+        memberId: string;
+      }
+    ];
+  }[]
+>([]);
+
+onMounted(async () => {
+  const data = await axios(
+    'http://localhost:8080/api/v1/rooms/' + store.state.id,
+    {
+      method: 'GET',
+    }
+  );
+  console.log(data.data);
+  rooms.value = data.data;
+});
 </script>
 
 <style lang="scss" scoped>
@@ -33,17 +59,20 @@ const rooms = ref([
   align-items: center;
   gap: 8px;
   padding: 8px;
+  text-decoration-line: none;
   .room-info {
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
     gap: 4px;
-    font-size: 14px;
+    font-size: 16px;
     #name {
       font-weight: 700;
+      color: #333333;
     }
-    #chat {
-      color: gray;
+    #members {
       font-size: 0.8rem;
+      color: #636363;
     }
   }
 }
@@ -53,5 +82,17 @@ const rooms = ref([
 }
 .room-cantainer:active {
   background-color: #d0d0d0;
+}
+
+#title {
+  font-size: 0.8rem;
+  padding: 8px 0px 4px 0px;
+  margin-left: 8px;
+  margin-right: 8px;
+  color: #505050;
+  font-weight: 700;
+  border-bottom: 1px #505050 solid;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

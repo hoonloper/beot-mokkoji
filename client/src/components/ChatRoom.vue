@@ -29,7 +29,7 @@ import { ref } from 'vue';
 
 const props = defineProps(['room']);
 const text = ref('');
-const chats = ref<string[]>([props.room.latestChat]);
+const chats = ref<string[]>([]);
 
 const sendChat = () => {
   chats.value.push(text.value);

@@ -10,7 +10,6 @@ const rooms = Array.from({ length: 10 }, (_, i) => ({
   key: i + 1,
   image: DEFAULT_IMAGE,
   name: '아무개' + (i + 1),
-  latestChat: i + 1 + '번째 채팅',
 })).sort((a, b) => b.key - a.key);
 const props = defineProps(['roomId']);
 
