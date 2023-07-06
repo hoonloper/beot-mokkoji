@@ -7,7 +7,7 @@
     v-for="(room, i) of rooms"
     class="room-cantainer"
     :key="i"
-    :to="{ path: '/rooms/' + room.roomId }"
+    :to="{ path: '/rooms/room/' + room.roomId }"
   >
     <img class="image-circle-l" src="../assets/logo.png" alt="room image" />
     <div class="room-info">

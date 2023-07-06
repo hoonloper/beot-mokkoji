@@ -35,7 +35,7 @@ const routes = [
     component: RoomsPage,
   },
   {
-    path: RouterPath.ROOMS + '/:roomId',
+    path: RouterPath.ROOMS + '/room/:roomId',
     name: 'RoomPage',
     props: true,
     component: RoomPage,

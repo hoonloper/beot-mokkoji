@@ -4,11 +4,12 @@ import com.example.server.domains.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+
 @Entity(name = "rooms")
 @Getter
 public class Room {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(targetEntity = Member.class)
@@ -25,7 +26,6 @@ public class Room {
     private String name;
 
     public Room(String memberId, String roomId, String name) {
-        this.id = null;
         this.memberId = memberId;
         this.roomId = roomId;
         this.name = name;

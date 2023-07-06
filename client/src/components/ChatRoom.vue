@@ -27,7 +27,16 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 
-const props = defineProps(['room']);
+type Room = {
+  name: string;
+  roomId: string;
+  members: {
+    id: number;
+    memberId: string;
+  }[];
+};
+const props = defineProps<{ room: Room }>();
+
 const text = ref('');
 const chats = ref<string[]>([]);
 

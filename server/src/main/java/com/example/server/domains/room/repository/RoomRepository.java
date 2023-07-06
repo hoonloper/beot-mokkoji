@@ -2,6 +2,7 @@ package com.example.server.domains.room.repository;
 
 import com.example.server.domains.room.entity.Room;
 import com.example.server.domains.room.interfaces.FindAllByMemberIdInterface;
+import com.example.server.domains.room.interfaces.FindAllByRoomIdInterface;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,4 +17,6 @@ public interface RoomRepository extends CrudRepository<Room, Long> {
             "INNER JOIN members m ON rm.member_id = m.id " +
             "WHERE room_id IN (SELECT room_id FROM ROOMS WHERE member_id != :memberId) AND member_id != :memberId")
     List<FindAllByMemberIdInterface> findAllByMemberId(@Param("memberId") String memberId);
+
+    List<FindAllByRoomIdInterface> findAllByRoomId(String roomId);
 }

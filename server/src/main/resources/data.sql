@@ -20,3 +20,10 @@ INSERT INTO BEOTS (id, from_member_id, to_member_id, created_at) VALUES (8, 'UUI
 INSERT INTO BEOTS (id, from_member_id, to_member_id, created_at) VALUES (9, 'UUID2', 'UUID1', '2022-01-01');
 INSERT INTO BEOTS (id, from_member_id, to_member_id, created_at) VALUES (10, 'UUID2', 'UUID3', '2022-01-01');
 INSERT INTO BEOTS (id, from_member_id, to_member_id, created_at) VALUES (11, 'UUID2', 'UUID4', '2022-01-01');
+
+INSERT INTO ROOMS (member_id, room_id, name) VALUES ('UUID1', 'ROOM1', '채팅방1');
+INSERT INTO ROOMS (member_id, room_id, name) VALUES ('UUID2', 'ROOM1', '채팅방1');
+INSERT INTO ROOMS (member_id, room_id, name) VALUES ('UUID1', 'ROOM2', '채팅방2');
+INSERT INTO ROOMS (member_id, room_id, name) VALUES ('UUID3', 'ROOM2', '채팅방2');
+INSERT INTO ROOMS (member_id, room_id, name) VALUES ('UUID1', 'ROOM3', '채팅방3');
+INSERT INTO ROOMS (member_id, room_id, name) VALUES ('UUID5', 'ROOM3', '채팅방3');

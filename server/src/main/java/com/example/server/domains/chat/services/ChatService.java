@@ -44,7 +44,6 @@ public class ChatService {
                 .name(name)
                 .memberId(memberId)
                 .build();
-
         roomRepository.save(new Room(room.getMemberId(), room.getRoomId(), room.getName()));
 
         chatRooms.put(roomId, room); // 랜덤 아이디와 room 정보를 Map 에 저장

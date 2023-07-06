@@ -1,17 +1,57 @@
 <template>
-  <ChatRoom :room="room" />
+  <ChatRoom v-if="pending" :room="room" />
 </template>
 
 <script lang="ts" setup>
+import { onMounted, ref } from 'vue';
+import axios from 'axios';
 import ChatRoom from '@/components/ChatRoom.vue';
 
 const DEFAULT_IMAGE = '../assets/logo.png';
-const rooms = Array.from({ length: 10 }, (_, i) => ({
-  key: i + 1,
-  image: DEFAULT_IMAGE,
-  name: '아무개' + (i + 1),
-})).sort((a, b) => b.key - a.key);
 const props = defineProps(['roomId']);
 
-const room = rooms.find((el) => el.key === +props.roomId);
+type Room = {
+  name: string;
+  roomId: string;
+  members: {
+    id: number;
+    memberId: string;
+  }[];
+};
+
+// onMounted(async () => {
+
+const pending = ref(false);
+const room = ref<Room>();
+onMounted(async () => {
+  const data = await axios(
+    'http://localhost:8080/api/v1/rooms/room/' + props.roomId,
+    {
+      method: 'GET',
+    }
+  );
+  console.log(data);
+  room.value = data.data.reduce(
+    (
+      acc: Room,
+      cur: {
+        name: string;
+        roomId: string;
+        id: number;
+        memberId: string;
+      }
+    ) => {
+      const member = { id: cur.id, memberId: cur.memberId };
+      if (acc.roomId) {
+        acc.members.push(member);
+      } else {
+        acc = { roomId: cur.roomId, name: cur.name, members: [member] };
+      }
+      return acc;
+    },
+    {}
+  );
+  pending.value = true;
+});
+// });
 </script>
