@@ -30,7 +30,6 @@ onMounted(async () => {
       method: 'GET',
     }
   );
-  console.log(data);
   room.value = data.data.reduce(
     (
       acc: Room,

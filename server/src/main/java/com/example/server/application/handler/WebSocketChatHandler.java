@@ -30,13 +30,12 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
 
         ChatDto chat = mapper.readValue(payload, ChatDto.class);
         log.info("session {}", chat.toString());
-
-
-
+        // TODO: DB에서 채팅방 정보 가져와서 세션에 등록하는 코드 추가해야 함
         ChatRoom room = chatService.findRoomById(chat.getRoomId());
-        log.info("room {}", room.toString());
+        System.out.println(chatService.findRoomById(chat.getRoomId()));
+//        log.info("room {}", room.toString());
 
-        roomService.saveRoom(new Room(chat.getSenderId(), room.getRoomId(), room.getName()));
+//            roomService.saveRoom(new Room(chat.getSenderId(), room.getRoomId(), room.getName()));
 
         room.handleAction(session, chat, chatService);
     }

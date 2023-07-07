@@ -35,6 +35,14 @@ public class ChatService {
         return chatRooms.get(roomId);
     }
 
+    public void setRooms(List<ChatRoom> rooms) {
+        rooms.forEach(e -> chatRooms.putIfAbsent(e.getRoomId(), e));
+    }
+
+    public void setRoom(ChatRoom room) {
+        chatRooms.putIfAbsent(room.getRoomId(), room);
+    }
+
     public ChatRoom createRoom(String name, String memberId) {
         String roomId = UUID.randomUUID().toString(); // 랜덤한 방 아이디 생성
 
@@ -46,7 +54,7 @@ public class ChatService {
                 .build();
         roomRepository.save(new Room(room.getMemberId(), room.getRoomId(), room.getName()));
 
-        chatRooms.put(roomId, room); // 랜덤 아이디와 room 정보를 Map 에 저장
+        setRoom(room); // 랜덤 아이디와 room 정보를 Map 에 저장
         return room;
     }
 

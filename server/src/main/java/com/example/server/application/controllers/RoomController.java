@@ -1,6 +1,7 @@
 package com.example.server.application.controllers;
 
 import com.example.server.domains.chat.services.ChatRoom;
+import com.example.server.domains.chat.services.ChatService;
 import com.example.server.domains.room.entity.Room;
 import com.example.server.domains.room.interfaces.FindAllByMemberIdInterface;
 import com.example.server.domains.room.interfaces.FindAllByRoomIdInterface;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequestMapping("/api/v1/rooms")
 public class RoomController {
     private final RoomService roomService;
+    private final ChatService chatService;
 
     @GetMapping("{memberId}")
     public List<RoomGroup> getAllRoomsByMemberId(@PathVariable("memberId") String memberId) {
@@ -26,6 +28,8 @@ public class RoomController {
 
     @GetMapping("room/{roomId}")
     public List<FindAllByRoomIdInterface> findRoomByRoomId(@PathVariable("roomId") String roomId) {
-        return roomService.findRoomByRoomId(roomId);
+        List<FindAllByRoomIdInterface> rooms = roomService.findRoomByRoomId(roomId);
+        chatService.setRooms(rooms.stream().map(e -> new ChatRoom(e.getRoomId(), e.getName(), e.getMemberId())).toList());
+        return rooms;
     }
 }

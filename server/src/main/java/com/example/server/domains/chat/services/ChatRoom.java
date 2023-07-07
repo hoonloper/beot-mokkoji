@@ -26,7 +26,7 @@ public class ChatRoom {
     public void handleAction(WebSocketSession session, ChatDto message, ChatService service) {
         // message 에 담긴 타입을 확인한다.
         // 이때 message 에서 getType 으로 가져온 내용이
-        // ChatDTO 의 열거형인 MessageType 안에 있는 ENTER 과 동일한 값이라면
+        // ChatDTO 의 열거형인 MessageType 안에 있는 CONNECT 과 동일한 값이라면
         if (message.getType().equals(ChatEventType.CONNECT)) {
             // sessions 에 넘어온 session 을 담고,
             sessions.add(session);
