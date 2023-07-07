@@ -2,6 +2,7 @@ package com.example.server.domains.chat.services;
 
 import com.example.server.domains.chat.dto.ChatDto;
 import com.example.server.domains.chat.entity.Chat;
+import com.example.server.domains.chat.interfaces.ChatsInterface;
 import com.example.server.domains.chat.repository.ChatRepository;
 import com.example.server.domains.room.entity.Room;
 import com.example.server.domains.room.repository.RoomRepository;
@@ -69,6 +70,10 @@ public class ChatService {
     public void save(ChatDto chat) {
         LocalDateTime sendAt = LocalDateTime.from(Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(chat.getSendAt())).atZone(ZoneId.of("Asia/Seoul")));
         chatRepository.save(new Chat(chat.getRoomId(), chat.getSenderId(), chat.getMessage(), chat.getType(), sendAt));
+    }
+
+    public List<ChatsInterface> findAllByRoomId(String roomId) {
+        return chatRepository.findAllByRoomId(roomId);
     }
 
     public <T> void sendMessage(WebSocketSession session, T message) {

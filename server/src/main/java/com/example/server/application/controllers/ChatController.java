@@ -1,5 +1,6 @@
 package com.example.server.application.controllers;
 
+import com.example.server.domains.chat.interfaces.ChatsInterface;
 import com.example.server.domains.chat.services.ChatRoom;
 import com.example.server.domains.chat.services.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,11 @@ public class ChatController {
     @PostMapping
     public ChatRoom createRoom(@RequestParam("name") String name, @RequestParam("memberId") String memberId){
         return chatService.createRoom(name, memberId);
+    }
+
+    @GetMapping("{roomId}")
+    public List<ChatsInterface> findAllByRoomId(@PathVariable("roomId") String roomId) {
+        return chatService.findAllByRoomId(roomId);
     }
 
     @GetMapping

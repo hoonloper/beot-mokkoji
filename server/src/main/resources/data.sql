@@ -28,10 +28,12 @@ INSERT INTO ROOMS (member_id, room_id, name) VALUES ('UUID3', 'ROOM2', '채팅�
 INSERT INTO ROOMS (member_id, room_id, name) VALUES ('UUID1', 'ROOM3', '채팅방3');
 INSERT INTO ROOMS (member_id, room_id, name) VALUES ('UUID5', 'ROOM3', '채팅방3');
 
-INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID1', '안녕하세요.', '2023-07-07 20:54:00.883', 0);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID2', '저도 안녕하세요.', '2023-07-07 20:54:00.883', 0);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID1', '오늘 날씨 좋죠?', '2023-07-07 20:54:00.883', 1);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID1', '정말 푸른 거 같아요.', '2023-07-07 20:54:00.883', 1);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID2', '아녀? 흐린데요.', '2023-07-07 20:54:00.883', 1);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID2', '비올 거 같은데 좋은 날씨로 보여요?', '2023-07-07 20:54:00.883', 1);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID1', '착가했네요..', '2023-07-07 20:54:00.883', 1);
+INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID1', 'UUID1님이 채팅방에 접속했습니다.', '2023-07-07 20:54:00.883', 0);
+INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID2', 'UUID2님이 채팅방에 접속했습니다.', '2023-07-07 20:55:00.883', 0);
+INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID1', '안녕하세요.', '2023-07-07 20:55:00.883', 1);
+INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID2', '저도 안녕하세요.', '2023-07-07 20:56:00.883', 1);
+INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID1', '오늘 날씨 좋죠?', '2023-07-07 20:58:00.883', 1);
+INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID1', '정말 푸른 거 같아요.', '2023-07-07 20:59:00.883', 1);
+INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID2', '아녀? 흐린데요.', '2023-07-07 21:00:00.883', 1);
+INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID2', '비올 거 같은데 좋은 날씨로 보여요?', '2023-07-07 21:01:00.883', 1);
+INSERT INTO CHATS (room_id, sender_id, message, send_at, event_type) VALUES ('ROOM1', 'UUID1', '착가했네요..', '2023-07-07 22:36:00.883', 1);

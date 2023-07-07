@@ -2,8 +2,6 @@ package com.example.server.application.controllers;
 
 import com.example.server.domains.chat.services.ChatRoom;
 import com.example.server.domains.chat.services.ChatService;
-import com.example.server.domains.room.entity.Room;
-import com.example.server.domains.room.interfaces.FindAllByMemberIdInterface;
 import com.example.server.domains.room.interfaces.FindAllByRoomIdInterface;
 import com.example.server.domains.room.service.RoomGroup;
 import com.example.server.domains.room.service.RoomService;

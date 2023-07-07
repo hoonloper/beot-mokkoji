@@ -2,12 +2,13 @@ package com.example.server.domains.chat.entity;
 
 import com.example.server.domains.chat.dto.ChatEventType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity(name = "chats")
+@AllArgsConstructor
 @Getter
 public class Chat {
     @Id

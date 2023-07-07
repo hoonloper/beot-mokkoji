@@ -3,13 +3,24 @@
   <h2>상태: {{ status }}</h2>
   <h2>연결 메시지: {{ connectionMessage }}</h2>
   <h2>받은 메시지: {{ responseMessage }}</h2>
-  <div
-    v-for="(chat, i) of chats"
-    :class="[chat.senderId === store.state.id ? 'me' : 'you']"
-    :key="i"
-  >
-    {{ chat.message }}
-    {{ chat.sendAt }}
+  <div class="chat-wrap">
+    <div
+      v-for="chat of chats"
+      :class="[chat.senderId === store.state.id ? 'me' : 'you']"
+      :key="chat.id"
+    >
+      <div>
+        {{ chat.eventType === 'CONNECT' ? '🟢' : '🔵' }}
+        {{ chat.message }}
+      </div>
+      <div>
+        {{
+          new Date(chat.sendAt).getHours() +
+          ':' +
+          new Date(chat.sendAt).getMinutes()
+        }}
+      </div>
+    </div>
   </div>
   <div>
     <input
@@ -26,10 +37,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
 
+type EventType = 'CONNECT' | 'MESSAGE';
 type Room = {
   name: string;
   roomId: string;
@@ -40,10 +52,28 @@ type Room = {
 };
 const props = defineProps<{ room: Room }>();
 const store = useStore();
-const text = ref('');
-const chats = ref<{ senderId: string; message: string; sendAt: string }[]>([]);
+
+const chats = ref<
+  {
+    id: number;
+    eventType: EventType;
+    senderId: string;
+    message: string;
+    sendAt: string;
+  }[]
+>([]);
+onMounted(async () => {
+  const { data } = await axios(
+    'http://localhost:8080/api/v1/chats/' + props.room.roomId,
+    {
+      method: 'GET',
+    }
+  );
+  chats.value = data;
+});
+
 const chat = ref<{
-  type: string;
+  type: EventType;
   senderId: string;
   roomId: string;
   message: string;
@@ -55,12 +85,13 @@ const chat = ref<{
   message: '',
   sendAt: new Date().toISOString(),
 });
+
+const text = ref('');
 const sendChat = () => {
   chat.value.type = 'MESSAGE';
   chat.value.message = text.value;
   chat.value.sendAt = new Date().toISOString();
   ws.value.send(JSON.stringify(chat.value));
-  // chats.value.push({ ...chat.value });
   text.value = '';
 };
 
@@ -120,10 +151,27 @@ ws.value.onerror = (e) => {
 </script>
 
 <style lang="scss" scoped>
-.me {
-  margin-right: 0px;
-}
-.you {
-  background-color: cadetblue;
+@import '../assets/bases/image.scss';
+
+.chat-wrap {
+  display: flex;
+  flex-direction: column;
+  > * {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+    height: 42px;
+    width: 300px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 2px 3px 15px -10px;
+  }
+  > .me {
+    margin: 10px 10px 10px auto;
+  }
+  > .you {
+    margin: 10px auto 10px 10px;
+  }
 }
 </style>

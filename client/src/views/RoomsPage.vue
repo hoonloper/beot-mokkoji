@@ -46,7 +46,6 @@ onMounted(async () => {
       method: 'GET',
     }
   );
-  console.log(data.data);
   rooms.value = data.data;
 });
 </script>
