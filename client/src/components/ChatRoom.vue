@@ -17,11 +17,12 @@
       id="input-chat"
       :value="text"
       @input="(event) => (text = event.target!.value)"
+      @keyup.enter="sendChat()"
     />
-    <button type="button" @click="sendChat">입력</button>
+    입력하기
   </div>
+  <button @click="connect">연결하기</button>
   <button @click="disconnect">연결끊기</button>
-  <button @click="sendMessage">메시지 보내기</button>
 </template>
 
 <script lang="ts" setup>
@@ -41,9 +42,26 @@ const props = defineProps<{ room: Room }>();
 const store = useStore();
 const text = ref('');
 const chats = ref<{ senderId: string; message: string; sendAt: string }[]>([]);
-
+const chat = ref<{
+  type: string;
+  senderId: string;
+  roomId: string;
+  message: string;
+  sendAt: string;
+}>({
+  type: 'CONNECT',
+  senderId: store.state.id,
+  roomId: props.room.roomId,
+  message: '',
+  sendAt: new Date().toISOString(),
+});
 const sendChat = () => {
-  chats.value.push();
+  chat.value.type = 'MESSAGE';
+  chat.value.message = text.value;
+  chat.value.sendAt = new Date().toISOString();
+  ws.value.send(JSON.stringify(chat.value));
+  // chats.value.push({ ...chat.value });
+  text.value = '';
 };
 
 const status = ref('status');
@@ -51,15 +69,9 @@ const connectionMessage = ref('connectionMessage');
 const responseMessage = ref('responseMessage');
 const isConnected = ref(false);
 
-const sendMessage = () => {
-  const event = {
-    type: 'CONNECT',
-    roomId: props.room.roomId,
-    senderId: store.state.id,
-    sendAt: new Date(),
-  };
+const connect = () => {
   if (isConnected.value) {
-    ws.value.send(JSON.stringify(event));
+    ws.value.send(JSON.stringify(chat.value));
     // ws.value.send(connectionMessage.value);
     // ws.value.onmessage = (event: MessageEvent) => {
     //   const msg = event.data.split(' ');
