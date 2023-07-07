@@ -69,14 +69,10 @@ const connectionMessage = ref('connectionMessage');
 const responseMessage = ref('responseMessage');
 const isConnected = ref(false);
 
+// TODO: 웹소켓이 연결됐을 때 바로 커넥트해줘야 함
 const connect = () => {
   if (isConnected.value) {
     ws.value.send(JSON.stringify(chat.value));
-    // ws.value.send(connectionMessage.value);
-    // ws.value.onmessage = (event: MessageEvent) => {
-    //   const msg = event.data.split(' ');
-    //   responseMessage.value = msg.at(-1);
-    // };
   }
 };
 const disconnect = () => {

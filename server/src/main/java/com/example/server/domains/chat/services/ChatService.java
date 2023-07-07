@@ -1,5 +1,8 @@
 package com.example.server.domains.chat.services;
 
+import com.example.server.domains.chat.dto.ChatDto;
+import com.example.server.domains.chat.entity.Chat;
+import com.example.server.domains.chat.repository.ChatRepository;
 import com.example.server.domains.room.entity.Room;
 import com.example.server.domains.room.repository.RoomRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +14,10 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Slf4j
@@ -19,6 +26,7 @@ import java.util.*;
 public class ChatService {
     private final ObjectMapper mapper;
     private final RoomRepository roomRepository;
+    private final ChatRepository chatRepository;
 
     private Map<String, ChatRoom> chatRooms;
 
@@ -56,6 +64,11 @@ public class ChatService {
 
         setRoom(room); // 랜덤 아이디와 room 정보를 Map 에 저장
         return room;
+    }
+
+    public void save(ChatDto chat) {
+        LocalDateTime sendAt = LocalDateTime.from(Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(chat.getSendAt())).atZone(ZoneId.of("Asia/Seoul")));
+        chatRepository.save(new Chat(chat.getRoomId(), chat.getSenderId(), chat.getMessage(), chat.getType(), sendAt));
     }
 
     public <T> void sendMessage(WebSocketSession session, T message) {
