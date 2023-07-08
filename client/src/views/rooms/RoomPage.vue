@@ -24,13 +24,13 @@ type Room = {
 const pending = ref(false);
 const room = ref<Room>();
 onMounted(async () => {
-  const data = await axios(
+  const response = await axios(
     'http://localhost:8080/api/v1/rooms/room/' + props.roomId,
     {
       method: 'GET',
     }
   );
-  room.value = data.data.reduce(
+  room.value = response.data.reduce(
     (
       acc: Room,
       cur: {

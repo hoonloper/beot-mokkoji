@@ -88,7 +88,7 @@ const signUp = async () => {
     return;
   }
   try {
-    const data = await axios('http://localhost:8080/api/v1/auth/sign-up', {
+    const response = await axios('http://localhost:8080/api/v1/auth/sign-up', {
       method: 'POST',
       data: {
         name: name.value,
@@ -96,10 +96,10 @@ const signUp = async () => {
         birthday: birthday.value,
       },
     });
-    if (data.status === HttpStatus.CREATED) {
+    if (response.status === HttpStatus.CREATED) {
       router.push('/');
       store.commit('setAll', {
-        id: data.data,
+        id: response.data,
         name: name.value,
         nickname: nickname.value,
         isLoggedIn: true,

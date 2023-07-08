@@ -40,13 +40,13 @@ const rooms = ref<
 >([]);
 
 onMounted(async () => {
-  const data = await axios(
+  const response = await axios(
     'http://localhost:8080/api/v1/rooms/' + store.state.id,
     {
       method: 'GET',
     }
   );
-  rooms.value = data.data;
+  rooms.value = response.data;
 });
 </script>
 

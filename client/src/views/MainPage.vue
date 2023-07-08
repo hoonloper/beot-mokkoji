@@ -44,13 +44,16 @@ type Beot = {
 const beotList = ref<Beot[]>([]);
 
 onMounted(async () => {
-  const data = await axios('http://localhost:8080/api/v1/beots/following/:id', {
-    method: 'GET',
-    params: {
-      id: store.state.id,
-    },
-  });
-  beotList.value = data.data;
+  const response = await axios(
+    'http://localhost:8080/api/v1/beots/following/:id',
+    {
+      method: 'GET',
+      params: {
+        id: store.state.id,
+      },
+    }
+  );
+  beotList.value = response.data;
 });
 </script>
 

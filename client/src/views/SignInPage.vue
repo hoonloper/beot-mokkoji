@@ -43,19 +43,19 @@ const signIn = async () => {
     return;
   }
   try {
-    const data = await axios('http://localhost:8080/api/v1/auth/sign-in', {
+    const response = await axios('http://localhost:8080/api/v1/auth/sign-in', {
       method: 'POST',
       data: {
         name: name.value,
         nickname: nickname.value,
       },
     });
-    if (data.status === HttpStatus.OK) {
+    if (response.status === HttpStatus.OK) {
       router.push('/');
       store.commit('setAll', {
-        id: data.data.id,
-        name: data.data.name,
-        nickname: data.data.nickname,
+        id: response.data.id,
+        name: response.data.name,
+        nickname: response.data.nickname,
         isLoggedIn: true,
       });
       console.log('SignIn Success!');
