@@ -2,7 +2,7 @@
   <div class="sign-in-container">
     <h2>로그인</h2>
     <div>
-      <input
+      <BeotInput
         id="name"
         type="text"
         placeholder="이름"
@@ -11,7 +11,7 @@
       />
     </div>
     <div>
-      <input
+      <BeotInput
         id="nickname"
         type="text"
         placeholder="닉네임"
@@ -34,6 +34,7 @@ import { ref } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
 import BeotButton from '@/components/BeotButton.vue';
+import BeotInput from '@/components/BeotInput.vue';
 
 const store = useStore();
 const name = ref('');

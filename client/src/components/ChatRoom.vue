@@ -26,15 +26,14 @@
         </div>
       </div>
     </div>
-    <div>
-      <input
-        type="text"
-        id="input-chat"
-        :value="text"
-        @input="inputTest"
-        @keyup.enter="sendChat()"
-      />
-    </div>
+    <BeotInput
+      type="text"
+      class="text-input"
+      :value="text"
+      placeholder="채팅을 입력해 주세요!"
+      @input="inputTest"
+      @keyup.enter="sendChat()"
+    />
   </div>
 </template>
 
@@ -43,6 +42,7 @@ import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
 import BeotButton from './BeotButton.vue';
+import BeotInput from './BeotInput.vue';
 
 type EventType = 'CONNECT' | 'MESSAGE';
 type Room = {
@@ -162,6 +162,14 @@ ws.value.onerror = (e) => {
 .chatroom-wrap {
   overflow: auto;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .text-input {
+    flex: 1;
+    position: sticky;
+    bottom: 0;
+  }
 }
 .chatroom-name {
   position: sticky;
