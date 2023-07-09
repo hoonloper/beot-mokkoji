@@ -1,45 +1,48 @@
 <template>
-  <h1>{{ room.name }}</h1>
-  <h2>상태: {{ status }}</h2>
-  <h2>연결 메시지: {{ connectionMessage }}</h2>
-  <h2>받은 메시지: {{ responseMessage }}</h2>
-  <div class="chat-wrap">
-    <div
-      v-for="chat of chats"
-      :class="[chat.senderId === store.state.id ? 'me' : 'you']"
-      :key="chat.id"
-    >
-      <div>
-        {{ chat.eventType === 'CONNECT' ? '🟢' : '🔵' }}
-        {{ chat.message }}
-      </div>
-      <div>
-        {{
-          new Date(chat.sendAt).getHours() +
-          ':' +
-          new Date(chat.sendAt).getMinutes()
-        }}
+  <div class="chatroom-wrap">
+    <div class="chatroom-name">
+      <div class="status">{{ isConnected ? '🟢' : '🔴' }}</div>
+      <div class="name">{{ room.name }}</div>
+      <BeotButton @click="connect">연결하기</BeotButton>
+      <BeotButton @click="disconnect">연결끊기</BeotButton>
+    </div>
+    <div class="chat-wrap">
+      <div
+        v-for="chat of chats"
+        :class="[chat.senderId === store.state.id ? 'me' : 'you']"
+        :key="chat.id"
+      >
+        <div class="message">
+          {{ chat.message }}
+        </div>
+        <div align="right" class="time">
+          {{
+            new Date(chat.sendAt).getHours() +
+            ':' +
+            ((new Date(chat.sendAt).getMinutes() + '').length === 1
+              ? '0' + new Date(chat.sendAt).getMinutes()
+              : new Date(chat.sendAt).getMinutes())
+          }}
+        </div>
       </div>
     </div>
+    <div>
+      <input
+        type="text"
+        id="input-chat"
+        :value="text"
+        @input="inputTest"
+        @keyup.enter="sendChat()"
+      />
+    </div>
   </div>
-  <div>
-    <input
-      type="text"
-      id="input-chat"
-      :value="text"
-      @input="inputTest"
-      @keyup.enter="sendChat()"
-    />
-    입력하기
-  </div>
-  <button @click="connect">연결하기</button>
-  <button @click="disconnect">연결끊기</button>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
+import BeotButton from './BeotButton.vue';
 
 type EventType = 'CONNECT' | 'MESSAGE';
 type Room = {
@@ -98,14 +101,13 @@ const sendChat = () => {
   text.value = '';
 };
 
-const status = ref('status');
 const connectionMessage = ref('connectionMessage');
-const responseMessage = ref('responseMessage');
 const isConnected = ref(false);
 
 // TODO: 웹소켓이 연결됐을 때 바로 커넥트해줘야 함
 const connect = () => {
   if (isConnected.value) {
+    chat.value.type = 'CONNECT';
     ws.value.send(JSON.stringify(chat.value));
   }
 };
@@ -116,6 +118,7 @@ const disconnect = () => {
   } else {
     connectionMessage.value = '이미 연결이 끊겼습니다.';
   }
+  isConnected.value = false;
 };
 
 // 소켓 연결
@@ -156,25 +159,47 @@ ws.value.onerror = (e) => {
 <style lang="scss" scoped>
 @import '../assets/bases/image.scss';
 
+.chatroom-wrap {
+  overflow: auto;
+  height: 100%;
+}
+.chatroom-name {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 0px;
+  font-size: 1.2rem;
+  background-color: #dddddd;
+}
 .chat-wrap {
   display: flex;
   flex-direction: column;
   > * {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 4px;
-    height: 42px;
+    padding: 8px 16px;
     width: 300px;
     background-color: #f9f9f9;
     border-radius: 12px;
     box-shadow: 2px 3px 15px -10px;
+    word-break: break-all;
   }
   > .me {
     margin: 10px 10px 10px auto;
   }
   > .you {
     margin: 10px auto 10px 10px;
+  }
+  .message {
+    flex: 5;
+    font-weight: 500;
+  }
+  .time {
+    flex: 1;
+    color: #999999;
   }
 }
 </style>

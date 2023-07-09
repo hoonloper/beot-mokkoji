@@ -15,18 +15,23 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  background-color: cornflowerblue;
+  background-color: #111111;
   > a {
     flex: 1;
-    padding: 20px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: large;
+    text-decoration-line: none;
+    color: #ffffff;
   }
   > a:hover {
-    background-color: darkcyan;
+    background-color: #444444;
     cursor: pointer;
   }
   > a:active {
-    background-color: blue;
+    background-color: #777777;
   }
 }
 </style>

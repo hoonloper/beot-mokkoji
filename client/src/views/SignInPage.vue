@@ -19,10 +19,12 @@
         @input="(event:any) => (nickname = event.target.value)"
       />
     </div>
-    <button @click="signIn()">로그인</button>
-    <button @click="handleSignUp()">회원가입</button>
+    <div>
+      <BeotButton @click="signIn()">로그인</BeotButton>
+      <BeotButton @click="handleSignUp()">회원가입</BeotButton>
+    </div>
+    <div id="error" v-if="errorMessage">{{ errorMessage }}</div>
   </div>
-  <div id="error" v-if="errorMessage">{{ errorMessage }}</div>
 </template>
 
 <script lang="ts" setup>
@@ -31,6 +33,7 @@ import router from '@/router';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
+import BeotButton from '@/components/BeotButton.vue';
 
 const store = useStore();
 const name = ref('');
@@ -89,6 +92,12 @@ const handleSignUp = () => {
   max-width: 400px;
   border-radius: 12px;
   box-shadow: 2px 3px 15px -10px;
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 300px;
+  }
 }
 #error {
   font-size: small;

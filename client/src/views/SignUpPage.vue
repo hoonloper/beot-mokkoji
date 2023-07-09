@@ -1,6 +1,6 @@
 <template>
-  <h2 align="center">회원가입</h2>
   <div class="sign-up-container">
+    <h2>회원가입</h2>
     <div>
       <input
         id="name"
@@ -31,8 +31,8 @@
       <div id="error">{{ birthdayMessage }}</div>
     </div>
     <div>
-      <button @click="signUp()">가입하기</button>
-      <button @click="handleSignIn()">로그인 하기</button>
+      <BeotButton @click="signUp()">가입하기</BeotButton>
+      <BeotButton @click="handleSignIn()">로그인 하기</BeotButton>
     </div>
     <div id="error" v-if="errorMessage">{{ errorMessage }}</div>
   </div>
@@ -44,6 +44,7 @@ import { useStore } from 'vuex';
 import axios from 'axios';
 import { HttpStatus } from '@/common/constant';
 import router from '@/router';
+import BeotButton from '@/components/BeotButton.vue';
 
 const store = useStore();
 const name = ref('');
@@ -122,7 +123,16 @@ const signUp = async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 16px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin: 0 auto;
+  margin-top: 50px;
+  background-color: #f9f9f9;
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 2px 3px 15px -10px;
   div {
     display: flex;
     flex-direction: column;

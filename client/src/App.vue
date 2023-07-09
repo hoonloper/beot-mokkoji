@@ -1,7 +1,9 @@
 <template>
-  <LayoutHeader v-if="isLoggedIn" id="header" />
-  <RouterView />
-  <LayoutFooter v-if="isLoggedIn" id="footer" />
+  <LayoutHeader style="height: 5%" v-if="isLoggedIn" id="header" />
+  <div style="height: 90%">
+    <RouterView />
+  </div>
+  <LayoutFooter style="height: 5%" v-if="isLoggedIn" id="footer" />
 </template>
 
 <script lang="ts" setup>
@@ -27,7 +29,16 @@ body {
   height: 100%;
   background-color: #f0f0f0;
 }
+@font-face {
+  font-family: 'ChosunGs';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGs.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 #app {
   height: 100%;
+  font-size: 16px;
+  font-family: ChosunGs;
 }
 </style>

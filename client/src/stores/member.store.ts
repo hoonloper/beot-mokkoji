@@ -41,6 +41,7 @@ export default createStore({
       state.name = '';
       state.nickname = '';
       state.id = '';
+      state.isLoggedIn = false;
     },
   },
 });

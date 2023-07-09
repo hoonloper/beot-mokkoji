@@ -1,11 +1,12 @@
 <template>
   <div>
     <h1>Setting</h1>
-    <button @click="logout">로그아웃</button>
+    <BeotButton @click="logout">로그아웃</BeotButton>
   </div>
 </template>
 
 <script lang="ts" setup>
+import BeotButton from '@/components/BeotButton.vue';
 import router from '@/router';
 import { useStore } from 'vuex';
 

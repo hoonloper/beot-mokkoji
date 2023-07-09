@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div id="title">내 프로필</div>
+    <div class="title">내 프로필</div>
     <ProfileCard
       :id="store.state.id"
       :name="store.state.name"
       :nickname="store.state.nickname"
     />
-    <div id="title">
+    <div class="title">
       <div>벗 목록</div>
       <div>팔로우한 사람: {{ beotList.length }}명</div>
     </div>
@@ -16,9 +16,9 @@
         :name="beot.toMember.name"
         :nickname="beot.toMember.nickname"
       />
-      <div>
-        <button>팔로우 끊기</button>
-        <button>채팅하기</button>
+      <div class="buttons">
+        <BeotButton>팔로우 끊기</BeotButton>
+        <BeotButton>채팅하기</BeotButton>
       </div>
     </div>
   </div>
@@ -29,6 +29,7 @@ import { useStore } from 'vuex';
 import axios from 'axios';
 import ProfileCard from '@/components/ProfileCard.vue';
 import { onMounted, ref } from 'vue';
+import BeotButton from '@/components/BeotButton.vue';
 
 const store = useStore();
 type Beot = {
@@ -63,14 +64,11 @@ onMounted(async () => {
   align-items: center;
   justify-content: space-between;
   margin-right: 8px;
-  button {
-    padding: 8px;
-  }
 }
 .beot-profile-container:hover {
   background-color: #f9f9f9;
 }
-#title {
+.title {
   font-size: 0.8rem;
   padding: 8px 0px 4px 0px;
   margin-left: 8px;
@@ -80,5 +78,9 @@ onMounted(async () => {
   border-bottom: 1px #505050 solid;
   display: flex;
   justify-content: space-between;
+}
+.buttons {
+  display: flex;
+  gap: 8px;
 }
 </style>

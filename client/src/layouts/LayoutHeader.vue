@@ -1,13 +1,15 @@
 <template>
   <div class="header-container">
-    <img
-      class="image-square-m"
-      alt="Vue logo"
-      :width="50"
-      :height="50"
-      src="../assets/logo.png"
-    />
-    <span>벗-모꼬지</span>
+    <div class="logo-container">
+      <img
+        class="image-square-m"
+        alt="Vue logo"
+        :width="50"
+        :height="50"
+        src="../assets/logo.png"
+      />
+      <span>벗-모꼬지</span>
+    </div>
   </div>
 </template>
 
@@ -16,12 +18,18 @@
 
 .header-container {
   position: sticky;
-  top: 0;
+  top: 0px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 16px;
-  background-color: cornflowerblue;
+  background-color: #111111;
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+  }
 }
 </style>
