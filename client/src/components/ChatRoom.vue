@@ -6,20 +6,23 @@
         <div class="status">{{ isConnected ? '🟢' : '🔴' }}</div>
         <div class="name">{{ room.name }}</div>
       </div>
-      <div>
-        <BeotButton @click="disconnect">연결끊기</BeotButton>
-      </div>
     </div>
     <div class="chat-wrap">
       <div
         v-for="chat of chats"
-        :class="[chat.senderId === store.state.id ? 'me' : 'you']"
+        :class="[
+          chat.eventType !== 'MESSAGE'
+            ? 'connection'
+            : chat.senderId === store.state.id
+            ? 'me'
+            : 'you',
+        ]"
         :key="chat.id"
       >
         <div class="message">
           {{ chat.message }}
         </div>
-        <div align="right" class="time">
+        <div v-if="chat.eventType === 'MESSAGE'" align="right" class="time">
           {{
             new Date(chat.sendAt).getHours() +
             ':' +
@@ -218,6 +221,15 @@ ws.value.onerror = (e) => {
     border-radius: 12px;
     box-shadow: 2px 3px 15px -10px;
     word-break: break-all;
+  }
+  > .connection {
+    margin: 4px auto;
+    background-color: inherit;
+    border: none;
+    box-shadow: none;
+    font-size: 0.7rem;
+    color: #999999;
+    text-align: center;
   }
   > .me {
     margin: 10px 10px 10px auto;
