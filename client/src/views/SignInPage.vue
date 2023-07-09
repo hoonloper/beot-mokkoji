@@ -8,6 +8,7 @@
         placeholder="이름"
         :value="name"
         @input="(event:any) => (name = event.target.value)"
+        @keyup.enter="signIn()"
       />
     </div>
     <div>
@@ -17,6 +18,7 @@
         placeholder="닉네임"
         :value="nickname"
         @input="(event:any) => (nickname = event.target.value)"
+        @keyup.enter="signIn()"
       />
     </div>
     <div>

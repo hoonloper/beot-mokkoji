@@ -8,7 +8,7 @@
 
 <style lang="scss" scoped>
 button {
-  font-family: 'ChosunGs';
+  font-family: SUITE-Regular;
   text-align: center;
   background-color: #111111;
   padding: 8px;

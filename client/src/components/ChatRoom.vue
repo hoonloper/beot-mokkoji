@@ -1,10 +1,14 @@
 <template>
   <div class="chatroom-wrap">
-    <div class="chatroom-name">
-      <div class="status">{{ isConnected ? '🟢' : '🔴' }}</div>
-      <div class="name">{{ room.name }}</div>
-      <BeotButton @click="connect">연결하기</BeotButton>
-      <BeotButton @click="disconnect">연결끊기</BeotButton>
+    <div class="chatroom-header">
+      <BeotButton @click="back">뒤로</BeotButton>
+      <div class="chatroom-header-name">
+        <div class="status">{{ isConnected ? '🟢' : '🔴' }}</div>
+        <div class="name">{{ room.name }}</div>
+      </div>
+      <div>
+        <BeotButton @click="disconnect">연결끊기</BeotButton>
+      </div>
     </div>
     <div class="chat-wrap">
       <div
@@ -26,14 +30,17 @@
         </div>
       </div>
     </div>
-    <BeotInput
-      type="text"
-      class="text-input"
-      :value="text"
-      placeholder="채팅을 입력해 주세요!"
-      @input="inputTest"
-      @keyup.enter="sendChat()"
-    />
+    <div class="chat-input-wrap">
+      <BeotInput
+        type="text"
+        class="text-input"
+        :value="text"
+        placeholder="채팅을 입력해 주세요!"
+        @input="inputTest"
+        @keyup.enter="sendChat()"
+      />
+      <BeotButton @click="sendChat()">전송</BeotButton>
+    </div>
   </div>
 </template>
 
@@ -43,8 +50,9 @@ import { useStore } from 'vuex';
 import axios from 'axios';
 import BeotButton from './BeotButton.vue';
 import BeotInput from './BeotInput.vue';
+import router from '@/router';
 
-type EventType = 'CONNECT' | 'MESSAGE';
+type EventType = 'CONNECT' | 'MESSAGE' | 'DISCONNECT';
 type Room = {
   name: string;
   roomId: string;
@@ -55,6 +63,11 @@ type Room = {
 };
 const props = defineProps<{ room: Room }>();
 const store = useStore();
+
+const back = () => {
+  router.push('/rooms');
+  disconnect();
+};
 
 const chats = ref<
   {
@@ -104,15 +117,11 @@ const sendChat = () => {
 const connectionMessage = ref('connectionMessage');
 const isConnected = ref(false);
 
-// TODO: 웹소켓이 연결됐을 때 바로 커넥트해줘야 함
-const connect = () => {
-  if (isConnected.value) {
-    chat.value.type = 'CONNECT';
-    ws.value.send(JSON.stringify(chat.value));
-  }
-};
 const disconnect = () => {
   if (isConnected.value) {
+    chat.value.type = 'DISCONNECT';
+    chat.value.message = '';
+    ws.value.send(JSON.stringify(chat.value));
     ws.value.close(1000);
     connectionMessage.value = '연결이 끊어졌습니다.';
   } else {
@@ -130,6 +139,9 @@ ws.value.onopen = (e) => {
   console.log('[open] Web Socket connected!');
   isConnected.value = e.isTrusted;
   connectionMessage.value = '연결되었습니다.';
+  chat.value.type = 'CONNECT';
+  chat.value.message = '';
+  ws.value.send(JSON.stringify(chat.value));
 };
 
 // 응답 받은 메시지
@@ -164,23 +176,35 @@ ws.value.onerror = (e) => {
   height: 100%;
   display: flex;
   flex-direction: column;
-
-  .text-input {
+}
+.chat-input-wrap {
+  display: flex;
+  position: sticky;
+  bottom: 0;
+  background-color: #dddddd;
+  input {
+    flex: 5;
+    margin: 6px;
+  }
+  button {
     flex: 1;
-    position: sticky;
-    bottom: 0;
+    margin: 6px;
   }
 }
-.chatroom-name {
+.chatroom-header {
   position: sticky;
   top: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 0px;
+  justify-content: space-between;
+  padding: 10px;
   font-size: 1.2rem;
   background-color: #dddddd;
+  .chatroom-header-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 }
 .chat-wrap {
   display: flex;

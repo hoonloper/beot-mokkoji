@@ -16,6 +16,7 @@
   align-items: center;
   justify-content: space-evenly;
   background-color: #111111;
+  height: 50px;
   > a {
     flex: 1;
     display: flex;

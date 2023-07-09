@@ -32,11 +32,15 @@ public class ChatRoom {
             sessions.add(session);
 
             // chat 에는 입장하였다는 메시지를 띄운다
-            chat.setMessage(chat.getSenderId() + " 님이 입장하셨습니다");
+            chat.setMessage(chat.getSenderId() + " 님이 입장하셨습니다.");
             sendMessage(chat, chatService);
         } else if (chat.getType().equals(ChatEventType.MESSAGE)) {
             chat.setMessage(chat.getMessage());
             sendMessage(chat, chatService);
+        } else if (chat.getType().equals(ChatEventType.DISCONNECT)) {
+            chat.setMessage(chat.getSenderId() + " 님이 퇴장하셨습니다.");
+            sendMessage(chat, chatService);
+            sessions.remove(session);
         }
         chatService.save(chat);
     }

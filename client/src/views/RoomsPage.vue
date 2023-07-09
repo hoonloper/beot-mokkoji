@@ -1,4 +1,5 @@
 <template>
+  <LayoutHeader v-if="store.state.isLoggedIn" id="header" />
   <div id="title">
     <div>채팅방 목록</div>
     <div>총 {{ rooms.length }}개</div>
@@ -15,12 +16,15 @@
       <div id="members">{{ room.roomMembers.length }}명 참여중</div>
     </div>
   </RouterLink>
+  <LayoutFooter v-if="store.state.isLoggedIn" id="footer" />
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
+import LayoutHeader from '@/layouts/LayoutHeader.vue';
+import LayoutFooter from '@/layouts/LayoutFooter.vue';
 
 const store = useStore();
 

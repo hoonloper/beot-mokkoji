@@ -1,4 +1,5 @@
 <template>
+  <LayoutHeader v-if="store.state.isLoggedIn" id="header" />
   <div>
     <div class="title">내 프로필</div>
     <ProfileCard
@@ -22,6 +23,7 @@
       </div>
     </div>
   </div>
+  <LayoutFooter v-if="store.state.isLoggedIn" id="footer" />
 </template>
 
 <script lang="ts" setup>
@@ -30,6 +32,8 @@ import axios from 'axios';
 import ProfileCard from '@/components/ProfileCard.vue';
 import { onMounted, ref } from 'vue';
 import BeotButton from '@/components/BeotButton.vue';
+import LayoutHeader from '@/layouts/LayoutHeader.vue';
+import LayoutFooter from '@/layouts/LayoutFooter.vue';
 
 const store = useStore();
 type Beot = {

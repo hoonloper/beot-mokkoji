@@ -1,23 +1,15 @@
 <template>
-  <LayoutHeader style="height: 5%" v-if="isLoggedIn" id="header" />
-  <div style="height: 90%">
-    <RouterView />
-  </div>
-  <LayoutFooter style="height: 5%" v-if="isLoggedIn" id="footer" />
+  <RouterView />
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { useStore } from 'vuex';
 import router from './router';
-import LayoutHeader from './layouts/LayoutHeader.vue';
-import LayoutFooter from './layouts/LayoutFooter.vue';
 
 const store = useStore();
 if (!store.state.isLoggedIn) {
   router.push('sign-in');
 }
-const isLoggedIn = computed(() => store.state.isLoggedIn);
 </script>
 
 <style>
@@ -30,15 +22,15 @@ body {
   background-color: #f0f0f0;
 }
 @font-face {
-  font-family: 'ChosunGs';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGs.woff')
-    format('woff');
-  font-weight: normal;
+  font-family: 'SUITE-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2')
+    format('woff2');
+  font-weight: 400;
   font-style: normal;
 }
 #app {
   height: 100%;
   font-size: 16px;
-  font-family: ChosunGs;
+  font-family: SUITE-Regular;
 }
 </style>
