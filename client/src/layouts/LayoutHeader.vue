@@ -22,9 +22,11 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 4px;
-    border-radius: 4px;
-    background-color: #f0f0f0;
+    color: #ffffff;
+    font-weight: 700;
+    img {
+      box-shadow: 0px 0px 10px 0px #ffffff;
+    }
   }
 }
 </style>
