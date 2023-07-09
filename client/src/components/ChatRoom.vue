@@ -11,7 +11,7 @@
       <div
         v-for="chat of chats"
         :class="[
-          chat.eventType !== 'MESSAGE'
+          chat.type !== 'MESSAGE'
             ? 'connection'
             : chat.senderId === store.state.id
             ? 'me'
@@ -22,14 +22,8 @@
         <div class="message">
           {{ chat.message }}
         </div>
-        <div v-if="chat.eventType === 'MESSAGE'" align="right" class="time">
-          {{
-            new Date(chat.sendAt).getHours() +
-            ':' +
-            ((new Date(chat.sendAt).getMinutes() + '').length === 1
-              ? '0' + new Date(chat.sendAt).getMinutes()
-              : new Date(chat.sendAt).getMinutes())
-          }}
+        <div v-if="chat.type === 'MESSAGE'" align="right" class="time">
+          {{ formatSendAt(chat.sendAt) }}
         </div>
       </div>
     </div>
@@ -67,6 +61,15 @@ type Room = {
 const props = defineProps<{ room: Room }>();
 const store = useStore();
 
+const formatSendAt = (time: string) => {
+  return (
+    new Date(time).getHours() +
+    ':' +
+    ((new Date(time).getMinutes() + '').length === 1
+      ? '0' + new Date(time).getMinutes()
+      : new Date(time).getMinutes())
+  );
+};
 const back = () => {
   router.push('/rooms');
   disconnect();
@@ -75,7 +78,7 @@ const back = () => {
 const chats = ref<
   {
     id: number;
-    eventType: EventType;
+    type: EventType;
     senderId: string;
     message: string;
     sendAt: string;
@@ -138,7 +141,6 @@ const ws = ref<WebSocket>(new WebSocket('ws://localhost:8080/ws/chat'));
 
 // 연결되었을 때
 ws.value.onopen = (e) => {
-  console.log(e);
   console.log('[open] Web Socket connected!');
   isConnected.value = e.isTrusted;
   connectionMessage.value = '연결되었습니다.';

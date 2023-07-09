@@ -21,11 +21,11 @@
         @keyup.enter="signIn()"
       />
     </div>
-    <div>
+    <div class="buttons">
       <BeotButton @click="signIn()">로그인</BeotButton>
       <BeotButton @click="handleSignUp()">회원가입</BeotButton>
     </div>
-    <div id="error" v-if="errorMessage">{{ errorMessage }}</div>
+    <div class="error" v-if="errorMessage">{{ errorMessage }}</div>
   </div>
 </template>
 
@@ -87,22 +87,22 @@ const handleSignUp = () => {
   align-items: center;
   justify-content: center;
   gap: 16px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px;
   margin: 0 auto;
   margin-top: 50px;
-  background-color: #f9f9f9;
   max-width: 400px;
+  background-color: #f9f9f9;
   border-radius: 12px;
   box-shadow: 2px 3px 15px -10px;
-  div {
+  .buttons {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    width: 300px;
+    gap: 8px;
+    * {
+      width: 80px;
+    }
   }
 }
-#error {
+.error {
   font-size: small;
   font-weight: 500;
   color: red;

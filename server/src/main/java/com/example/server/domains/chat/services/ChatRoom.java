@@ -27,7 +27,7 @@ public class ChatRoom {
         // chat 에 담긴 타입을 확인한다.
         // 이때 chat 에서 getType 으로 가져온 내용이
         // ChatDTO 의 열거형인 MessageType 안에 있는 CONNECT 과 동일한 값이라면
-        if (chat.getType().equals(ChatEventType.CONNECT)) {
+        if (chat.getType().equals(ChatEventType.CONNECT) && !sessions.contains(session)) {
             // sessions 에 넘어온 session 을 담고,
             sessions.add(session);
 

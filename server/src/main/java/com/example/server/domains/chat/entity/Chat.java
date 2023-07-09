@@ -25,16 +25,16 @@ public class Chat {
     private String message;
 
     @Enumerated
-    private ChatEventType eventType;
+    private ChatEventType type;
 
     @Column
     private LocalDateTime sendAt;
 
-    public Chat(String roomId, String senderId, String message, ChatEventType eventType, LocalDateTime sendAt) {
+    public Chat(String roomId, String senderId, String message, ChatEventType type, LocalDateTime sendAt) {
         this.roomId = roomId;
         this.senderId = senderId;
         this.message = message;
-        this.eventType = eventType;
+        this.type = type;
         this.sendAt = sendAt;
     }
 }

@@ -8,6 +8,6 @@ public interface ChatsInterface {
     Long getId();
     String getSenderId();
     String getMessage();
-    ChatEventType getEventType();
+    ChatEventType getType();
     LocalDateTime getSendAt();
 }
