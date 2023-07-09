@@ -7,7 +7,7 @@
         type="text"
         placeholder="이름"
         :value="name"
-        @input="(event) => (name = event.target.value)"
+        @input="(event:any) => (name = event.target.value)"
       />
     </div>
     <div>
@@ -16,7 +16,7 @@
         type="text"
         placeholder="닉네임"
         :value="nickname"
-        @input="(event) => (nickname = event.target.value)"
+        @input="(event:any) => (nickname = event.target.value)"
       />
     </div>
     <button @click="signIn()">로그인</button>

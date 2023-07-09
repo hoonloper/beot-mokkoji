@@ -63,7 +63,7 @@ const isValidatedNickname = computed(
 const handleSignIn = () => {
   router.push('sign-in');
 };
-const onChangeName = (event) => {
+const onChangeName = (event: any) => {
   name.value = event.target.value;
   if (!isValidatedName.value) {
     nameMessage.value = '이름은 2글자 이상, 20글자 이하만 가능합니다.';
@@ -71,7 +71,7 @@ const onChangeName = (event) => {
     nameMessage.value = '';
   }
 };
-const onChangeNickname = (event) => {
+const onChangeNickname = (event: any) => {
   nickname.value = event.target.value;
   if (!isValidatedNickname.value) {
     nicknameMessage.value = '닉네임은 3글자 이상, 15글자 이하만 가능합니다.';
@@ -79,7 +79,7 @@ const onChangeNickname = (event) => {
     nicknameMessage.value = '';
   }
 };
-const onChangeBirthday = (event) => {
+const onChangeBirthday = (event: any) => {
   birthday.value = event.target.value ?? null;
 };
 const signUp = async () => {

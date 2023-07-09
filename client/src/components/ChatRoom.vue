@@ -27,7 +27,7 @@
       type="text"
       id="input-chat"
       :value="text"
-      @input="(event) => (text = event.target!.value)"
+      @input="inputTest"
       @keyup.enter="sendChat()"
     />
     입력하기
@@ -87,6 +87,9 @@ const chat = ref<{
 });
 
 const text = ref('');
+const inputTest = (e: any) => {
+  text.value = e.target.value;
+};
 const sendChat = () => {
   chat.value.type = 'MESSAGE';
   chat.value.message = text.value;

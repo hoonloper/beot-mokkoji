@@ -1,5 +1,5 @@
 <template>
-  <ChatRoom v-if="pending" :room="room" />
+  <ChatRoom v-if="pending" :room="(room as Room)" />
 </template>
 
 <script lang="ts" setup>
@@ -7,7 +7,7 @@ import { onMounted, ref } from 'vue';
 import axios from 'axios';
 import ChatRoom from '@/components/ChatRoom.vue';
 
-const DEFAULT_IMAGE = '../assets/logo.png';
+// const DEFAULT_IMAGE = '../assets/logo.png';
 const props = defineProps(['roomId']);
 
 type Room = {
@@ -18,8 +18,6 @@ type Room = {
     memberId: string;
   }[];
 };
-
-// onMounted(async () => {
 
 const pending = ref(false);
 const room = ref<Room>();
@@ -52,5 +50,4 @@ onMounted(async () => {
   );
   pending.value = true;
 });
-// });
 </script>
