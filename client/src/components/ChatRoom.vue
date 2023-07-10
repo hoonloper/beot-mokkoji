@@ -60,21 +60,6 @@ type Room = {
 };
 const props = defineProps<{ room: Room }>();
 const store = useStore();
-
-const formatSendAt = (time: string) => {
-  return (
-    new Date(time).getHours() +
-    ':' +
-    ((new Date(time).getMinutes() + '').length === 1
-      ? '0' + new Date(time).getMinutes()
-      : new Date(time).getMinutes())
-  );
-};
-const back = () => {
-  router.push('/rooms');
-  disconnect();
-};
-
 const chats = ref<
   {
     id: number;
@@ -93,6 +78,20 @@ onMounted(async () => {
   );
   chats.value = data;
 });
+
+const formatSendAt = (time: string) => {
+  return (
+    new Date(time).getHours() +
+    ':' +
+    ((new Date(time).getMinutes() + '').length === 1
+      ? '0' + new Date(time).getMinutes()
+      : new Date(time).getMinutes())
+  );
+};
+const back = () => {
+  router.push('/rooms');
+  disconnect();
+};
 
 const chat = ref<{
   type: EventType;
