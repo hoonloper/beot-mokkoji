@@ -19,7 +19,7 @@ public class AuthController {
 
     @PostMapping("sign-up")
     @ResponseStatus(HttpStatus.CREATED)
-    public String signUp(@RequestBody() MemberDto member) {
+    public MemberDto signUp(@RequestBody() MemberDto member) {
         return memberService.signUp(member);
     }
 }

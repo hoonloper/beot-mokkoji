@@ -100,9 +100,9 @@ const signUp = async () => {
     if (response.status === HttpStatus.CREATED) {
       router.push('/');
       store.commit('setAll', {
-        id: response.data,
-        name: name.value,
-        nickname: nickname.value,
+        id: response.data.id,
+        name: response.data.name,
+        nickname: response.data.nickname,
         isLoggedIn: true,
       });
       console.log('SignUp Success!');
@@ -111,7 +111,7 @@ const signUp = async () => {
       store.commit('clear');
     }
   } catch (err) {
-    console.error(err);
+    console.error('error:', err);
     errorMessage.value = '에러가 발생했습니다. 다시 가입하십시오.';
     store.commit('clear');
   }
