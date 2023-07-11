@@ -1,11 +1,35 @@
 <template>
-  <input :type="type" :placeholder="placeholder" />
+  <input ref="beotInput" :type="type" :placeholder="placeholder" />
 </template>
 
 <script lang="ts" setup>
-withDefaults(defineProps<{ type?: 'text' | 'date'; placeholder?: string }>(), {
-  type: 'text',
-  placeholder: '',
+import { onMounted, ref } from 'vue';
+
+const beotInput = ref<any>(null);
+
+const setFocus = () => {
+  if (beotInput.value) {
+    beotInput.value.focus();
+  }
+};
+
+const props = withDefaults(
+  defineProps<{
+    type?: 'text' | 'date';
+    placeholder?: string;
+    canFocus?: boolean;
+  }>(),
+  {
+    type: 'text',
+    placeholder: '',
+    canFocus: false,
+  }
+);
+
+onMounted(() => {
+  if (props.canFocus) {
+    setFocus();
+  }
 });
 </script>
 

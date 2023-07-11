@@ -1,6 +1,6 @@
 <template>
   <LayoutHeader v-if="store.state.isLoggedIn" id="header" />
-  <div>
+  <div class="contents-wrap">
     <h1>Setting</h1>
     <BeotButton @click="logout">로그아웃</BeotButton>
   </div>
@@ -20,3 +20,9 @@ const logout = () => {
   router.push('sign-in');
 };
 </script>
+
+<style lang="scss" scoped>
+.contents-wrap {
+  min-height: calc(100% - 100px);
+}
+</style>

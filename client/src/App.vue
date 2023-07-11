@@ -14,12 +14,16 @@ if (!store.state.isLoggedIn) {
 
 <style>
 html,
-body {
+body,
+h1,
+h2,
+h3,
+p,
+li,
+ul {
+  height: 100%;
   margin: 0px;
   padding: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: #f0f0f0;
 }
 @font-face {
   font-family: 'SUITE-Regular';
@@ -32,5 +36,6 @@ body {
   height: 100%;
   font-size: 16px;
   font-family: SUITE-Regular;
+  background-color: #f0f0f0;
 }
 </style>

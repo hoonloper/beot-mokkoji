@@ -1,6 +1,6 @@
 <template>
   <LayoutHeader v-if="store.state.isLoggedIn" id="header" />
-  <div>
+  <div class="contents-wrap">
     <div class="title">내 프로필</div>
     <ProfileCard
       :id="store.state.id"
@@ -63,6 +63,9 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+.contents-wrap {
+  min-height: calc(100% - 100px);
+}
 .beot-profile-container {
   display: flex;
   align-items: center;

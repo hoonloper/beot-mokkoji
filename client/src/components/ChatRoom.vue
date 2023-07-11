@@ -1,13 +1,13 @@
 <template>
   <div class="chatroom-wrap">
     <div class="chatroom-header">
-      <BeotButton @click="back">뒤로</BeotButton>
+      <BeotButton @click="back()">뒤로</BeotButton>
       <div class="chatroom-header-name">
         <div class="status">{{ isConnected ? '🟢' : '🔴' }}</div>
         <div class="name">{{ room.name }}</div>
       </div>
     </div>
-    <div class="chat-wrap">
+    <div ref="chatWrap" class="chat-wrap">
       <div
         v-for="chat of chats"
         :class="[
@@ -31,8 +31,9 @@
       <BeotInput
         type="text"
         class="text-input"
-        :value="text"
         placeholder="채팅을 입력해 주세요!"
+        can-focus
+        :value="text"
         @input="inputText"
         @keyup.enter="sendChat()"
       />
@@ -69,6 +70,14 @@ const chats = ref<
     sendAt: string;
   }[]
 >([]);
+
+const chatWrap = ref();
+// TODO: 스크롤 바텀 이슈 해결해야 함
+const scrollToBottom = () => {
+  if (chatWrap.value) {
+    chatWrap.value.scrollTop = chatWrap.value.scrollHeight;
+  }
+};
 onMounted(async () => {
   const { data } = await axios(
     'http://localhost:8080/api/v1/chats/' + props.room.roomId,
@@ -77,6 +86,7 @@ onMounted(async () => {
     }
   );
   chats.value = data;
+  scrollToBottom();
 });
 
 const formatSendAt = (time: string) => {
@@ -178,31 +188,32 @@ ws.value.onerror = (e) => {
 @import '../assets/bases/image.scss';
 
 .chatroom-wrap {
-  overflow: auto;
   height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 .chat-input-wrap {
+  bottom: 0;
   display: flex;
-  position: sticky;
+  align-items: center;
+  gap: 10px;
   bottom: 0;
   background-color: #dddddd;
+  height: 50px;
+  padding: 10px;
   input {
     flex: 5;
-    margin: 6px;
   }
   button {
     flex: 1;
-    margin: 6px;
+    height: 100%;
   }
 }
 .chatroom-header {
   position: sticky;
-  top: 0;
+  top: 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 30px;
   padding: 10px;
   font-size: 1.2rem;
   background-color: #dddddd;
@@ -213,6 +224,8 @@ ws.value.onerror = (e) => {
   }
 }
 .chat-wrap {
+  overflow-y: scroll;
+  height: calc(100% - 120px);
   display: flex;
   flex-direction: column;
   > * {

@@ -8,10 +8,10 @@
 
 <script lang="ts" setup></script>
 
-<style scoped>
+<style lang="scss" scoped>
 .footer-container {
-  position: sticky;
-  bottom: 0;
+  // position: absolute;
+  // bottom: 0;
   display: flex;
   align-items: center;
   justify-content: space-evenly;

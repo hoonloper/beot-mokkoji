@@ -1,21 +1,23 @@
 <template>
   <LayoutHeader v-if="store.state.isLoggedIn" id="header" />
-  <div id="title">
-    <div>채팅방 목록</div>
-    <div>총 {{ rooms.length }}개</div>
-  </div>
-  <RouterLink
-    v-for="(room, i) of rooms"
-    class="room-cantainer"
-    :key="i"
-    :to="{ path: '/rooms/room/' + room.roomId }"
-  >
-    <img class="image-circle-l" src="../assets/logo.png" alt="room image" />
-    <div class="room-info">
-      <div id="name">{{ room.name }}</div>
-      <div id="members">{{ room.roomMembers.length }}명 참여중</div>
+  <div class="contents-wrap">
+    <div id="title">
+      <div>채팅방 목록</div>
+      <div>총 {{ rooms.length }}개</div>
     </div>
-  </RouterLink>
+    <RouterLink
+      v-for="(room, i) of rooms"
+      class="room-cantainer"
+      :key="i"
+      :to="{ path: '/rooms/room/' + room.roomId }"
+    >
+      <img class="image-circle-l" src="../assets/logo.png" alt="room image" />
+      <div class="room-info">
+        <div id="name">{{ room.name }}</div>
+        <div id="members">{{ room.roomMembers.length }}명 참여중</div>
+      </div>
+    </RouterLink>
+  </div>
   <LayoutFooter v-if="store.state.isLoggedIn" id="footer" />
 </template>
 
@@ -56,6 +58,10 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 @import '../assets/bases/image.scss';
+
+.contents-wrap {
+  min-height: calc(100% - 100px);
+}
 
 .room-cantainer {
   display: flex;
