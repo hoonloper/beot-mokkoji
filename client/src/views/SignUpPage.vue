@@ -2,7 +2,7 @@
   <div class="sign-up-container">
     <h2>회원가입</h2>
     <div>
-      <input
+      <BeotInput
         id="name"
         type="text"
         placeholder="이름"
@@ -12,7 +12,7 @@
       <div id="error">{{ nameMessage }}</div>
     </div>
     <div>
-      <input
+      <BeotInput
         id="nickname"
         type="text"
         placeholder="닉네임"
@@ -22,7 +22,7 @@
       <div id="error">{{ nicknameMessage }}</div>
     </div>
     <div>
-      <input
+      <BeotInput
         id="birthday"
         type="date"
         :value="birthday"
@@ -30,7 +30,7 @@
       />
       <div id="error">{{ birthdayMessage }}</div>
     </div>
-    <div>
+    <div class="buttons">
       <BeotButton @click="signUp()">가입하기</BeotButton>
       <BeotButton @click="handleSignIn()">로그인 하기</BeotButton>
     </div>
@@ -45,6 +45,7 @@ import axios from 'axios';
 import { HttpStatus } from '@/common/constant';
 import router from '@/router';
 import BeotButton from '@/components/BeotButton.vue';
+import BeotInput from '@/components/BeotInput.vue';
 
 const store = useStore();
 const name = ref('');
@@ -127,17 +128,20 @@ const signUp = async () => {
   gap: 16px;
   padding-top: 20px;
   padding-bottom: 20px;
-  margin: 0 auto;
+  margin: auto;
   margin-top: 50px;
   background-color: #f9f9f9;
   max-width: 400px;
+  min-width: 200px;
+  width: 100%;
   border-radius: 12px;
   box-shadow: 2px 3px 15px -10px;
-  div {
+  .buttons {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    width: 300px;
+    gap: 8px;
+    * {
+      width: 80px;
+    }
   }
 }
 
