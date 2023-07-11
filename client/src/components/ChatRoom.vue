@@ -33,7 +33,7 @@
         class="text-input"
         :value="text"
         placeholder="채팅을 입력해 주세요!"
-        @input="inputTest"
+        @input="inputText"
         @keyup.enter="sendChat()"
       />
       <BeotButton @click="sendChat()">전송</BeotButton>
@@ -108,14 +108,16 @@ const chat = ref<{
 });
 
 const text = ref('');
-const inputTest = (e: any) => {
+const inputText = (e: any) => {
   text.value = e.target.value;
 };
 const sendChat = () => {
-  chat.value.type = 'MESSAGE';
-  chat.value.message = text.value;
-  chat.value.sendAt = new Date().toISOString();
-  ws.value.send(JSON.stringify(chat.value));
+  if (text.value.length !== 0) {
+    chat.value.type = 'MESSAGE';
+    chat.value.message = text.value;
+    chat.value.sendAt = new Date().toISOString();
+    ws.value.send(JSON.stringify(chat.value));
+  }
   text.value = '';
 };
 
