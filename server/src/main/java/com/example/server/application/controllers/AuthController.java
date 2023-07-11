@@ -1,8 +1,7 @@
 package com.example.server.application.controllers;
 
 import com.example.server.domains.member.dto.MemberDto;
-import com.example.server.domains.member.services.MemberReadService;
-import com.example.server.domains.member.services.MemberWriteService;
+import com.example.server.domains.member.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,19 +10,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
     @Autowired
-    private MemberWriteService memberWriteService;
-    @Autowired
-    private MemberReadService memberReadService;
+    private MemberService memberService;
 
     @PostMapping("sign-in")
     public MemberDto signIn(@RequestBody() MemberDto member) {
-        return memberReadService.signIn(member);
+        return memberService.signIn(member);
     }
 
     @PostMapping("sign-up")
     @ResponseStatus(HttpStatus.CREATED)
     public String signUp(@RequestBody() MemberDto member) {
-        System.out.println(member.toString());
-        return memberWriteService.signUp(member);
+        return memberService.signUp(member);
     }
 }
