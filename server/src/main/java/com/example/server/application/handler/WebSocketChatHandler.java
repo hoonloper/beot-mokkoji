@@ -1,7 +1,9 @@
 package com.example.server.application.handler;
 
 import com.example.server.domains.chat.dto.ChatDto;
-import com.example.server.domains.chat.services.ChatRoom;
+import com.example.server.domains.chat.dto.ChatEventType;
+import com.example.server.domains.room.service.RoomService;
+import com.example.server.domains.room.vos.RoomVO;
 import com.example.server.domains.chat.services.ChatService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +17,9 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 @Component
 @RequiredArgsConstructor
 public class WebSocketChatHandler extends TextWebSocketHandler {
-
     private final ObjectMapper mapper;
-
     private final ChatService chatService;
+    private final RoomService roomService;
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -28,10 +29,21 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         ChatDto chat = mapper.readValue(payload, ChatDto.class);
         log.info("session {}", chat.toString());
 
-        ChatRoom room = chatService.findRoomById(chat.getRoomId());
+        RoomVO room = roomService.findRoomById(chat.getRoomId());
         log.info("room {}", room.toString());
 
-
-        room.handleAction(session, chat, chatService);
+        if (chat.getType().equals(ChatEventType.CONNECT) && !room.containsSession(session)) {
+            room.addSession(session);
+            chat.setMessage(chat.getSenderId() + " 님이 입장하셨습니다.");
+            room.sendMessage(chat, chatService);
+        } else if (chat.getType().equals(ChatEventType.MESSAGE)) {
+            chat.setMessage(chat.getMessage());
+            room.sendMessage(chat, chatService);
+        } else if (chat.getType().equals(ChatEventType.DISCONNECT)) {
+            chat.setMessage(chat.getSenderId() + " 님이 퇴장하셨습니다.");
+            room.sendMessage(chat, chatService);
+            room.removeSession(session);
+        }
+        chatService.save(chat);
     }
 }

@@ -1,7 +1,6 @@
 package com.example.server.application.controllers;
 
 import com.example.server.domains.chat.interfaces.ChatsInterface;
-import com.example.server.domains.chat.services.ChatRoom;
 import com.example.server.domains.chat.services.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,21 +13,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/chats")
 public class ChatController {
-
     private final ChatService chatService;
-
-    @PostMapping
-    public ChatRoom createRoom(@RequestParam("name") String name, @RequestParam("memberId") String memberId){
-        return chatService.createRoom(name, memberId);
-    }
 
     @GetMapping("{roomId}")
     public List<ChatsInterface> findAllByRoomId(@PathVariable("roomId") String roomId) {
         return chatService.findAllByRoomId(roomId);
-    }
-
-    @GetMapping
-    public List<ChatRoom> findAllRooms(){
-        return chatService.findAllRoom();
     }
 }

@@ -1,7 +1,6 @@
 package com.example.server.application.controllers;
 
-import com.example.server.domains.chat.services.ChatRoom;
-import com.example.server.domains.chat.services.ChatService;
+import com.example.server.domains.room.vos.RoomVO;
 import com.example.server.domains.room.interfaces.FindAllByRoomIdInterface;
 import com.example.server.domains.room.service.RoomGroup;
 import com.example.server.domains.room.service.RoomService;
@@ -17,7 +16,16 @@ import java.util.List;
 @RequestMapping("/api/v1/rooms")
 public class RoomController {
     private final RoomService roomService;
-    private final ChatService chatService;
+
+    @PostMapping
+    public RoomVO createRoom(@RequestParam("name") String name, @RequestParam("memberId") String memberId){
+        return roomService.createRoom(name, memberId);
+    }
+
+    @GetMapping
+    public List<RoomVO> findAllRooms(){
+        return roomService.findAllRoom();
+    }
 
     @GetMapping("{memberId}")
     public List<RoomGroup> getAllRoomsByMemberId(@PathVariable("memberId") String memberId) {
@@ -26,8 +34,6 @@ public class RoomController {
 
     @GetMapping("room/{roomId}")
     public List<FindAllByRoomIdInterface> findRoomByRoomId(@PathVariable("roomId") String roomId) {
-        List<FindAllByRoomIdInterface> rooms = roomService.findRoomByRoomId(roomId);
-        chatService.setRooms(rooms.stream().map(e -> new ChatRoom(e.getRoomId(), e.getName(), e.getMemberId())).toList());
-        return rooms;
+        return roomService.findRoomByRoomId(roomId);
     }
 }
