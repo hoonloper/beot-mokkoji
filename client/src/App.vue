@@ -38,4 +38,28 @@ ul {
   font-family: SUITE-Regular;
   background-color: #f0f0f0;
 }
+.error {
+  font-size: small;
+  font-weight: 500;
+  color: red;
+  text-align: center;
+}
+
+.sign-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 400px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 2px 3px 15px -10px;
+}
+.buttons {
+  display: flex;
+  gap: 8px;
+}
 </style>

@@ -1,40 +1,34 @@
 <template>
-  <div class="sign-up-container">
+  <div class="sign-container">
     <h2>회원가입</h2>
-    <div>
-      <BeotInput
-        id="name"
-        type="text"
-        placeholder="이름"
-        :value="name"
-        @input="onChangeName"
-      />
-      <div id="error">{{ nameMessage }}</div>
-    </div>
-    <div>
-      <BeotInput
-        id="nickname"
-        type="text"
-        placeholder="닉네임"
-        :value="nickname"
-        @input="onChangeNickname"
-      />
-      <div id="error">{{ nicknameMessage }}</div>
-    </div>
-    <div>
-      <BeotInput
-        id="birthday"
-        type="date"
-        :value="birthday"
-        @input="onChangeBirthday"
-      />
-      <div id="error">{{ birthdayMessage }}</div>
-    </div>
+    <BeotInput
+      id="name"
+      type="text"
+      placeholder="이름"
+      :value="name"
+      @input="onChangeName"
+    />
+    <div v-if="nameMessage" class="error">{{ nameMessage }}</div>
+    <BeotInput
+      id="nickname"
+      type="text"
+      placeholder="닉네임"
+      :value="nickname"
+      @input="onChangeNickname"
+    />
+    <div v-if="nicknameMessage" class="error">{{ nicknameMessage }}</div>
+    <BeotInput
+      id="birthday"
+      type="date"
+      :value="birthday"
+      @input="onChangeBirthday"
+    />
+    <div v-if="birthdayMessage" class="error">{{ birthdayMessage }}</div>
     <div class="buttons">
       <BeotButton @click="signUp()">가입하기</BeotButton>
       <BeotButton @click="handleSignIn()">로그인 하기</BeotButton>
     </div>
-    <div id="error" v-if="errorMessage">{{ errorMessage }}</div>
+    <div class="error" v-if="errorMessage">{{ errorMessage }}</div>
   </div>
 </template>
 
@@ -118,36 +112,3 @@ const signUp = async () => {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.sign-up-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  margin: auto;
-  margin-top: 50px;
-  background-color: #f9f9f9;
-  max-width: 400px;
-  min-width: 200px;
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: 2px 3px 15px -10px;
-  .buttons {
-    display: flex;
-    gap: 8px;
-    * {
-      width: 80px;
-    }
-  }
-}
-
-#error {
-  font-size: small;
-  font-weight: 500;
-  color: red;
-}
-</style>

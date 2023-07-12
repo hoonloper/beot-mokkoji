@@ -1,26 +1,22 @@
 <template>
-  <div class="sign-in-container">
+  <div class="sign-container">
     <h2>로그인</h2>
-    <div>
-      <BeotInput
-        id="name"
-        type="text"
-        placeholder="이름"
-        :value="name"
-        @input="(event:any) => (name = event.target.value)"
-        @keyup.enter="signIn()"
-      />
-    </div>
-    <div>
-      <BeotInput
-        id="nickname"
-        type="text"
-        placeholder="닉네임"
-        :value="nickname"
-        @input="(event:any) => (nickname = event.target.value)"
-        @keyup.enter="signIn()"
-      />
-    </div>
+    <BeotInput
+      id="name"
+      type="text"
+      placeholder="이름"
+      :value="name"
+      @input="(event:any) => (name = event.target.value)"
+      @keyup.enter="signIn()"
+    />
+    <BeotInput
+      id="nickname"
+      type="text"
+      placeholder="닉네임"
+      :value="nickname"
+      @input="(event:any) => (nickname = event.target.value)"
+      @keyup.enter="signIn()"
+    />
     <div class="buttons">
       <BeotButton @click="signIn()">로그인</BeotButton>
       <BeotButton @click="handleSignUp()">회원가입</BeotButton>
@@ -79,32 +75,3 @@ const handleSignUp = () => {
   router.push('sign-up');
 };
 </script>
-
-<style lang="scss" scoped>
-.sign-in-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 20px;
-  margin: 0 auto;
-  margin-top: 50px;
-  max-width: 400px;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 2px 3px 15px -10px;
-  .buttons {
-    display: flex;
-    gap: 8px;
-    * {
-      width: 80px;
-    }
-  }
-}
-.error {
-  font-size: small;
-  font-weight: 500;
-  color: red;
-}
-</style>
