@@ -17,8 +17,8 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionError handleValidException(final MethodArgumentNotValidException ex) {
-        log.warn("Validator Exception: " + ex.getMessage());
-        return new ExceptionError(ex.getMessage(), HttpStatus.BAD_REQUEST.getReasonPhrase(), HttpStatus.BAD_REQUEST.value());
+        log.warn("Validator Exception: ", ex);
+        return buildExceptionError(ex, HttpStatus.BAD_REQUEST);
     }
     /* 400 - Bad Request */
     @ExceptionHandler(BadRequestException.class)
@@ -26,7 +26,7 @@ public class ExceptionController {
     @ResponseBody
     public ExceptionError handleBadRequest(final RuntimeException ex) {
         log.warn("Bad Request: ", ex);
-        return new ExceptionError(ex.getMessage(), HttpStatus.BAD_REQUEST.getReasonPhrase(), HttpStatus.BAD_REQUEST.value());
+        return buildExceptionError(ex, HttpStatus.BAD_REQUEST);
     }
 
     /* 401 - Unauthorized */
@@ -35,7 +35,7 @@ public class ExceptionController {
     @ResponseBody
     public ExceptionError handleUnauthorized(final RuntimeException ex) {
         log.warn("Unauthorized: ", ex);
-        return new ExceptionError(ex.getMessage(), HttpStatus.UNAUTHORIZED.getReasonPhrase(), HttpStatus.UNAUTHORIZED.value());
+        return buildExceptionError(ex, HttpStatus.UNAUTHORIZED);
     }
 
     /* 403 - Forbidden */
@@ -44,7 +44,7 @@ public class ExceptionController {
     @ResponseBody
     public ExceptionError handleForbidden(final RuntimeException ex) {
         log.warn("Forbidden: ", ex);
-        return new ExceptionError(ex.getMessage(), HttpStatus.FORBIDDEN.getReasonPhrase(), HttpStatus.FORBIDDEN.value());
+        return buildExceptionError(ex, HttpStatus.FORBIDDEN);
     }
 
     /* 404 - Not Found */
@@ -53,7 +53,7 @@ public class ExceptionController {
     @ResponseBody
     public ExceptionError handleNotFound(final RuntimeException ex) {
         log.warn("Not Found: ", ex);
-        return new ExceptionError(ex.getMessage(), HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+        return buildExceptionError(ex, HttpStatus.NOT_FOUND);
     }
 
 
@@ -64,7 +64,7 @@ public class ExceptionController {
     public ExceptionError handleServerError(final Exception ex) {
         log.info(ex.getClass().getName());
         log.error("Server Error: ", ex);
-        return new ExceptionError(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return buildExceptionError(ex, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /* 알 수 없는 에러 */
@@ -73,6 +73,15 @@ public class ExceptionController {
     @ResponseBody
     public ExceptionError handleUnknownException(final RuntimeException ex) {
         log.warn("알 수 없음, ", ex);
-        return new ExceptionError(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return buildExceptionError(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private ExceptionError buildExceptionError(Exception exception, HttpStatus status) {
+        return ExceptionError
+                .builder()
+                .message(exception.getMessage())
+                .statusMessage(status.getReasonPhrase())
+                .statusCode(status.value())
+                .build();
     }
 }
