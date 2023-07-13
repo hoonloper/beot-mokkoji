@@ -1,5 +1,6 @@
 package com.example.server.domains.room.service;
 
+import com.example.server.domains.room.dtos.RoomDto;
 import com.example.server.domains.room.entity.Room;
 import com.example.server.domains.room.interfaces.FindAllByMemberIdInterface;
 import com.example.server.domains.room.interfaces.FindAllByRoomIdInterface;
@@ -55,9 +56,9 @@ public class RoomService {
 
         return roomGroups;
     }
-    public RoomVO createRoom(String name, String memberId) {
+    public RoomVO createRoom(RoomDto roomDto) {
         String roomId = UUID.randomUUID().toString(); // 랜덤한 방 아이디 생성
-        RoomVO room = toRoomVO(roomRepository.save(new Room(memberId, roomId, name)));
+        RoomVO room = toRoomVO(roomRepository.save(new Room(roomDto.memberId(), roomId, roomDto.name())));
         registerRoom(room); // 랜덤 아이디와 room 정보를 Map 에 저장
         return room;
     }

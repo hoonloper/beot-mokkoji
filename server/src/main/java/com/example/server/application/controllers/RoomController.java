@@ -1,9 +1,11 @@
 package com.example.server.application.controllers;
 
+import com.example.server.domains.room.dtos.RoomDto;
 import com.example.server.domains.room.vos.RoomVO;
 import com.example.server.domains.room.interfaces.FindAllByRoomIdInterface;
 import com.example.server.domains.room.service.RoomGroup;
 import com.example.server.domains.room.service.RoomService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ public class RoomController {
     private final RoomService roomService;
 
     @PostMapping
-    public RoomVO createRoom(@RequestParam("name") String name, @RequestParam("memberId") String memberId){
-        return roomService.createRoom(name, memberId);
+    public RoomVO createRoom(@RequestBody @Valid RoomDto roomDto){
+        return roomService.createRoom(roomDto);
     }
 
     @GetMapping

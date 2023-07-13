@@ -2,6 +2,7 @@ package com.example.server.application.controllers;
 
 import com.example.server.domains.member.dto.MemberDto;
 import com.example.server.domains.member.services.MemberService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,14 @@ public class AuthController {
     private MemberService memberService;
 
     @PostMapping("sign-in")
-    public MemberDto signIn(@RequestBody() MemberDto member) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public MemberDto signIn(@RequestBody @Valid MemberDto member) {
         return memberService.signIn(member);
     }
 
     @PostMapping("sign-up")
     @ResponseStatus(HttpStatus.CREATED)
-    public MemberDto signUp(@RequestBody() MemberDto member) {
+    public MemberDto signUp(@RequestBody @Valid MemberDto member) {
         return memberService.signUp(member);
     }
 }
