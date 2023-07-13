@@ -1,29 +1,21 @@
 # client
 
-## Project setup
+## 🚀 벗-모꼬지 클라이언트 실행법
+
+### 💾 client 루트 경로에서 NPM 설치
 
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
-
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Lints and fixes files
+### 🔍 lint를 통한 문법, 규칙 검사
 
 ```
 npm run lint
 ```
 
-### Customize configuration
+### 🏃🏻 server 명령어로 서버 실행!
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+npm run serve
+```
