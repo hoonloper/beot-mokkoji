@@ -52,7 +52,7 @@ const signIn = async () => {
         nickname: nickname.value,
       },
     });
-    if (response.status === HttpStatus.OK) {
+    if (response.status === HttpStatus.CREATED) {
       router.push('/');
       store.commit('setAll', {
         id: response.data.id,

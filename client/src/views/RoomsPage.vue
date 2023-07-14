@@ -1,22 +1,19 @@
 <template>
   <LayoutHeader v-if="store.state.isLoggedIn" id="header" />
   <div class="contents-wrap">
-    <div id="title">
-      <div>채팅방 목록</div>
-      <div>총 {{ rooms.length }}개</div>
+    <ItemDivider prefix="채팅방 목록" :suffix="`총 ${rooms.length}개`" />
+    <div v-for="(room, i) of rooms" :key="i">
+      <RouterLink
+        class="room-cantainer"
+        :to="{ path: '/rooms/room/' + room.roomId }"
+      >
+        <img class="image-circle-l" src="../assets/logo.png" alt="room image" />
+        <div class="room-info">
+          <div id="name">{{ room.name }}</div>
+          <div id="members">{{ room.roomMembers.length }}명 참여중</div>
+        </div>
+      </RouterLink>
     </div>
-    <RouterLink
-      v-for="(room, i) of rooms"
-      class="room-cantainer"
-      :key="i"
-      :to="{ path: '/rooms/room/' + room.roomId }"
-    >
-      <img class="image-circle-l" src="../assets/logo.png" alt="room image" />
-      <div class="room-info">
-        <div id="name">{{ room.name }}</div>
-        <div id="members">{{ room.roomMembers.length }}명 참여중</div>
-      </div>
-    </RouterLink>
   </div>
   <LayoutFooter v-if="store.state.isLoggedIn" id="footer" />
 </template>
@@ -27,6 +24,7 @@ import { useStore } from 'vuex';
 import axios from 'axios';
 import LayoutHeader from '@/layouts/LayoutHeader.vue';
 import LayoutFooter from '@/layouts/LayoutFooter.vue';
+import ItemDivider from '@/components/ItemDivider.vue';
 
 const store = useStore();
 
@@ -91,17 +89,5 @@ onMounted(async () => {
 }
 .room-cantainer:active {
   background-color: #d0d0d0;
-}
-
-#title {
-  font-size: 0.8rem;
-  padding: 8px 0px 4px 0px;
-  margin-left: 8px;
-  margin-right: 8px;
-  color: #505050;
-  font-weight: 700;
-  border-bottom: 1px #505050 solid;
-  display: flex;
-  justify-content: space-between;
 }
 </style>

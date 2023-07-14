@@ -1,7 +1,7 @@
 <template>
   <LayoutHeader v-if="store.state.isLoggedIn" id="header" />
   <div class="contents-wrap">
-    <h1>Setting</h1>
+    <ItemDivider prefix="설정" />
     <BeotButton @click="logout">로그아웃</BeotButton>
   </div>
   <LayoutFooter v-if="store.state.isLoggedIn" id="footer" />
@@ -9,6 +9,7 @@
 
 <script lang="ts" setup>
 import BeotButton from '@/components/BeotButton.vue';
+import ItemDivider from '@/components/ItemDivider.vue';
 import LayoutFooter from '@/layouts/LayoutFooter.vue';
 import LayoutHeader from '@/layouts/LayoutHeader.vue';
 import router from '@/router';
