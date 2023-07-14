@@ -2,6 +2,7 @@
   <LayoutHeader v-if="store.state.isLoggedIn" id="header" />
   <div class="contents-wrap">
     <ItemDivider prefix="설정" />
+    <div>내 프로필 보기</div>
     <BeotButton @click="logout">로그아웃</BeotButton>
   </div>
   <LayoutFooter v-if="store.state.isLoggedIn" id="footer" />
