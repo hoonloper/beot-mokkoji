@@ -1,9 +1,9 @@
 package com.example.server.application.controllers;
 
-import com.example.server.domains.beot.dto.BeotDto;
-import com.example.server.domains.beot.dto.BeotFollowingsVO;
-import com.example.server.domains.beot.services.BeotReadService;
-import com.example.server.domains.beot.services.BeotWirteService;
+import com.example.server.domain.beot.dto.BeotDto;
+import com.example.server.domain.beot.dto.BeotFollowingsVO;
+import com.example.server.domain.beot.services.BeotReadService;
+import com.example.server.domain.beot.services.BeotWirteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,10 +1,10 @@
 package com.example.server.application.handler;
 
-import com.example.server.domains.chat.dto.ChatDto;
-import com.example.server.domains.chat.dto.ChatEventType;
-import com.example.server.domains.room.service.RoomService;
-import com.example.server.domains.room.vos.RoomVO;
-import com.example.server.domains.chat.services.ChatService;
+import com.example.server.domain.chat.dto.ChatDto;
+import com.example.server.domain.chat.dto.ChatEventType;
+import com.example.server.domain.room.service.RoomService;
+import com.example.server.domain.room.vos.RoomVO;
+import com.example.server.domain.chat.services.ChatService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

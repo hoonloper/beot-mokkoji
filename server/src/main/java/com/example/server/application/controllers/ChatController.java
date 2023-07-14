@@ -1,7 +1,7 @@
 package com.example.server.application.controllers;
 
-import com.example.server.domains.chat.interfaces.ChatsInterface;
-import com.example.server.domains.chat.services.ChatService;
+import com.example.server.domain.chat.interfaces.ChatsInterface;
+import com.example.server.domain.chat.services.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package com.example.server.application.controllers;
 
-import com.example.server.domains.member.dto.MemberDto;
-import com.example.server.domains.member.services.MemberService;
+import com.example.server.domain.member.dto.MemberDto;
+import com.example.server.domain.member.services.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
