@@ -4,6 +4,7 @@ import com.example.server.domains.beot.dto.BeotDto;
 import com.example.server.domains.beot.dto.BeotFollowingsVO;
 import com.example.server.domains.beot.services.BeotReadService;
 import com.example.server.domains.beot.services.BeotWirteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class BeotController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void follow(@RequestBody() BeotDto beot) {
+    public void follow(@RequestBody @Valid BeotDto beot) {
         beotWirteService.follow(beot);
     }
 }
