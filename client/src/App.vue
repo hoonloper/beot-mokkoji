@@ -2,26 +2,19 @@
   <RouterView />
 </template>
 
-<script lang="ts" setup>
-import { useStore } from 'vuex';
-import router from './router';
-
-const store = useStore();
-if (!store.state.isLoggedIn) {
-  router.push('sign-in');
-}
-</script>
-
 <style>
 html,
-body,
+body {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
 h1,
 h2,
 h3,
 p,
 li,
 ul {
-  height: 100%;
   margin: 0px;
   padding: 0px;
 }
@@ -45,7 +38,7 @@ ul {
   text-align: center;
 }
 
-.sign-container {
+.box-container {
   display: flex;
   flex-direction: column;
   align-items: center;

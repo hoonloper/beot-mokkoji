@@ -5,7 +5,7 @@ import SignInPage from '@/views/SignInPage.vue';
 import SettingPage from '@/views/SettingPage.vue';
 import RoomsPage from '@/views/RoomsPage.vue';
 import RoomPage from '@/views/rooms/RoomPage.vue';
-// import NotFoundPage from '@/views/NotFoundPage.vue';
+import NotFoundPage from '@/views/NotFoundPage.vue';
 import { RouterPath } from '@/common/constant';
 
 const routes = [
@@ -40,10 +40,11 @@ const routes = [
     props: true,
     component: RoomPage,
   },
-  // {
-  //   path: '/:*',
-  //   component: NotFoundPage,
-  // },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NOT_FOUND',
+    component: NotFoundPage,
+  },
 ];
 
 const router = createRouter({

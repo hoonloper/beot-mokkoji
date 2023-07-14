@@ -1,29 +1,35 @@
 <template>
-  <LayoutHeader v-if="store.state.isLoggedIn" id="header" />
-  <div class="contents-wrap">
-    <ItemDivider prefix="내 프로필" />
-    <ProfileCard
-      :id="store.state.id"
-      :name="store.state.name"
-      :nickname="store.state.nickname"
-    />
-    <ItemDivider
-      prefix="벗 목록"
-      :suffix="`팔로우한 사람: ${beotList.length}명`"
-    />
-    <div v-for="beot of beotList" :key="beot.id" class="beot-profile-container">
+  <div v-if="store.state.isLoggedIn" style="height: 100%">
+    <LayoutHeader id="header" />
+    <div class="contents-wrap">
+      <ItemDivider prefix="내 프로필" />
       <ProfileCard
-        :id="beot.toMember.id"
-        :name="beot.toMember.name"
-        :nickname="beot.toMember.nickname"
+        :id="store.state.id"
+        :name="store.state.name"
+        :nickname="store.state.nickname"
       />
-      <div class="buttons">
-        <BeotButton>팔로우 끊기</BeotButton>
-        <BeotButton>채팅하기</BeotButton>
+      <ItemDivider
+        prefix="벗 목록"
+        :suffix="`팔로우한 사람: ${beotList.length}명`"
+      />
+      <div
+        v-for="beot of beotList"
+        :key="beot.id"
+        class="beot-profile-container"
+      >
+        <ProfileCard
+          :id="beot.toMember.id"
+          :name="beot.toMember.name"
+          :nickname="beot.toMember.nickname"
+        />
+        <div class="buttons">
+          <BeotButton>팔로우 끊기</BeotButton>
+          <BeotButton>채팅하기</BeotButton>
+        </div>
       </div>
     </div>
+    <LayoutFooter id="footer" />
   </div>
-  <LayoutFooter v-if="store.state.isLoggedIn" id="footer" />
 </template>
 
 <script lang="ts" setup>
@@ -35,8 +41,14 @@ import BeotButton from '@/components/BeotButton.vue';
 import LayoutHeader from '@/layouts/LayoutHeader.vue';
 import LayoutFooter from '@/layouts/LayoutFooter.vue';
 import ItemDivider from '@/components/ItemDivider.vue';
+import router from '@/router';
 
 const store = useStore();
+// 비로그인 사용자는 로그인 페이지로 이동
+if (router.currentRoute.value.name !== 'NOT_FOUND' && !store.state.isLoggedIn) {
+  router.push('sign-in');
+}
+
 type Beot = {
   id: number;
   toMember: {

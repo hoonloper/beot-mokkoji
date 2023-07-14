@@ -1,21 +1,27 @@
 <template>
-  <LayoutHeader v-if="store.state.isLoggedIn" id="header" />
-  <div class="contents-wrap">
-    <ItemDivider prefix="채팅방 목록" :suffix="`총 ${rooms.length}개`" />
-    <div v-for="(room, i) of rooms" :key="i">
-      <RouterLink
-        class="room-cantainer"
-        :to="{ path: '/rooms/room/' + room.roomId }"
-      >
-        <img class="image-circle-l" src="../assets/logo.png" alt="room image" />
-        <div class="room-info">
-          <div id="name">{{ room.name }}</div>
-          <div id="members">{{ room.roomMembers.length }}명 참여중</div>
-        </div>
-      </RouterLink>
+  <div v-if="store.state.isLoggedIn" style="height: 100%">
+    <LayoutHeader id="header" />
+    <div class="contents-wrap">
+      <ItemDivider prefix="채팅방 목록" :suffix="`총 ${rooms.length}개`" />
+      <div v-for="(room, i) of rooms" :key="i">
+        <RouterLink
+          class="room-cantainer"
+          :to="{ path: '/rooms/room/' + room.roomId }"
+        >
+          <img
+            class="image-circle-l"
+            src="../assets/logo.png"
+            alt="room image"
+          />
+          <div class="room-info">
+            <div id="name">{{ room.name }}</div>
+            <div id="members">{{ room.roomMembers.length }}명 참여중</div>
+          </div>
+        </RouterLink>
+      </div>
     </div>
+    <LayoutFooter id="footer" />
   </div>
-  <LayoutFooter v-if="store.state.isLoggedIn" id="footer" />
 </template>
 
 <script lang="ts" setup>
@@ -25,8 +31,13 @@ import axios from 'axios';
 import LayoutHeader from '@/layouts/LayoutHeader.vue';
 import LayoutFooter from '@/layouts/LayoutFooter.vue';
 import ItemDivider from '@/components/ItemDivider.vue';
+import router from '@/router';
 
 const store = useStore();
+// 비로그인 사용자는 로그인 페이지로 이동
+if (router.currentRoute.value.name !== 'NOT_FOUND' && !store.state.isLoggedIn) {
+  router.push('sign-in');
+}
 
 const rooms = ref<
   {
@@ -44,13 +55,15 @@ const rooms = ref<
 >([]);
 
 onMounted(async () => {
-  const response = await axios(
-    'http://localhost:8080/api/v1/rooms/' + store.state.id,
-    {
-      method: 'GET',
-    }
-  );
-  rooms.value = response.data;
+  if (store.state.isLoggedIn) {
+    const response = await axios(
+      'http://localhost:8080/api/v1/rooms/' + store.state.id,
+      {
+        method: 'GET',
+      }
+    );
+    rooms.value = response.data;
+  }
 });
 </script>
 

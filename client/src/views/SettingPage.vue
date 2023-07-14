@@ -1,11 +1,13 @@
 <template>
-  <LayoutHeader v-if="store.state.isLoggedIn" id="header" />
-  <div class="contents-wrap">
-    <ItemDivider prefix="설정" />
-    <div>내 프로필 보기</div>
-    <BeotButton @click="logout">로그아웃</BeotButton>
+  <div v-if="store.state.isLoggedIn" style="height: 100%">
+    <LayoutHeader id="header" />
+    <div class="contents-wrap">
+      <ItemDivider prefix="설정" />
+      <div>내 프로필 보기</div>
+      <BeotButton @click="logout">로그아웃</BeotButton>
+    </div>
+    <LayoutFooter id="footer" />
   </div>
-  <LayoutFooter v-if="store.state.isLoggedIn" id="footer" />
 </template>
 
 <script lang="ts" setup>
@@ -17,6 +19,11 @@ import router from '@/router';
 import { useStore } from 'vuex';
 
 const store = useStore();
+// 비로그인 사용자는 로그인 페이지로 이동
+if (router.currentRoute.value.name !== 'NOT_FOUND' && !store.state.isLoggedIn) {
+  router.push('sign-in');
+}
+
 const logout = () => {
   store.commit('clear');
   router.push('sign-in');

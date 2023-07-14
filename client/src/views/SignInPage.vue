@@ -1,5 +1,5 @@
 <template>
-  <div class="sign-container">
+  <div class="box-container">
     <h2>로그인</h2>
     <BeotInput
       id="name"
