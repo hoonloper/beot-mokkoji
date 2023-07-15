@@ -38,7 +38,7 @@ public class RoomController {
     }
 
     @GetMapping("/room/{roomId}")
-    public List<FindAllByRoomIdInterface> findRoomByRoomId(@PathVariable("roomId") String roomId) {
+    public List<FindAllByRoomIdInterface> findRoomByRoomId(@PathVariable("roomId") @Valid @NotNull String roomId) {
         return roomService.findRoomByRoomId(roomId);
     }
 }
