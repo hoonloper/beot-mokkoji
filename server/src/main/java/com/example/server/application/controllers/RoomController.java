@@ -6,6 +6,7 @@ import com.example.server.domain.room.interfaces.FindAllByRoomIdInterface;
 import com.example.server.domain.room.service.RoomGroup;
 import com.example.server.domain.room.service.RoomService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class RoomController {
     }
 
     @GetMapping("/{memberId}")
-    public List<RoomGroup> getAllRoomsByMemberId(@PathVariable("memberId") String memberId) {
+    public List<RoomGroup> getAllRoomsByMemberId(@PathVariable("memberId") @Valid @NotNull String memberId) {
         return roomService.getAllRoomsByMemberId(memberId);
     }
 
