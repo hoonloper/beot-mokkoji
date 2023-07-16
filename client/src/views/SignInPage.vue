@@ -33,8 +33,20 @@ import { useStore } from 'vuex';
 import axios from 'axios';
 import BeotButton from '@/components/BeotButton.vue';
 import BeotInput from '@/components/BeotInput.vue';
+import { useMemberStorage } from '@/composables/useMemberStorage';
 
 const store = useStore();
+const memberStorage = useMemberStorage();
+if (memberStorage.hasSignInInfo) {
+  store.commit('setAll', {
+    id: memberStorage.getItem('id'),
+    name: memberStorage.getItem('name'),
+    nickname: memberStorage.getItem('nickname'),
+    isLoggedIn: true,
+  });
+  router.push('/');
+}
+
 const name = ref('');
 const nickname = ref('');
 const errorMessage = ref('');
@@ -53,13 +65,19 @@ const signIn = async () => {
       },
     });
     if (response.status === HttpStatus.CREATED) {
+      const user = { ...response.data };
       router.push('/');
       store.commit('setAll', {
-        id: response.data.id,
-        name: response.data.name,
-        nickname: response.data.nickname,
+        id: user.id,
+        name: user.name,
+        nickname: user.nickname,
         isLoggedIn: true,
       });
+      memberStorage.setItems([
+        ['name', user.name],
+        ['nickname', user.nickname],
+        ['id', user.id],
+      ]);
       console.log('SignIn Success!');
     } else {
       errorMessage.value = '에러가 발생했습니다. 다시 가입하십시오.';
