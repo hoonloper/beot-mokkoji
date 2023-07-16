@@ -44,7 +44,7 @@ if (memberStorage.hasSignInInfo) {
     nickname: memberStorage.getItem('nickname'),
     isLoggedIn: true,
   });
-  router.push('/');
+  router.push(memberStorage.getItem('end-point') ?? '/');
 }
 
 const name = ref('');
