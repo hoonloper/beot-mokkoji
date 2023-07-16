@@ -6,10 +6,16 @@ export const useMemberStorage = () => {
   const setItems = (items: [Key, string][]) => {
     items.forEach(([key, item]) => setItem(key, item));
   };
+  const clear = () => {
+    localStorage.removeItem('id');
+    localStorage.removeItem('name');
+    localStorage.removeItem('nickname');
+    localStorage.removeItem('end-point');
+  };
   const hasSignInInfo =
     typeof getItem('id') === 'string' &&
     typeof getItem('name') === 'string' &&
     typeof getItem('nickname') === 'string';
 
-  return { localStorage, hasSignInInfo, getItem, setItem, setItems };
+  return { localStorage, hasSignInInfo, getItem, setItem, setItems, clear };
 };

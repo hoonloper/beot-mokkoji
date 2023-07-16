@@ -17,6 +17,7 @@ import LayoutFooter from '@/layouts/LayoutFooter.vue';
 import LayoutHeader from '@/layouts/LayoutHeader.vue';
 import router from '@/router';
 import { useStore } from 'vuex';
+import { useMemberStorage } from '@/composables/useMemberStorage';
 
 const store = useStore();
 // 비로그인 사용자는 로그인 페이지로 이동
@@ -25,6 +26,7 @@ if (router.currentRoute.value.name !== 'NOT_FOUND' && !store.state.isLoggedIn) {
 }
 
 const logout = () => {
+  useMemberStorage().clear();
   store.commit('clear');
   router.push('sign-in');
 };
