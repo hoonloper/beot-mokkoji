@@ -32,6 +32,9 @@ import LayoutHeader from '@/layouts/LayoutHeader.vue';
 import LayoutFooter from '@/layouts/LayoutFooter.vue';
 import ItemDivider from '@/components/ItemDivider.vue';
 import router from '@/router';
+import { useMemberStorage } from '@/composables/useMemberStorage';
+
+useMemberStorage().setItem('end-point', '/rooms');
 
 const store = useStore();
 // 비로그인 사용자는 로그인 페이지로 이동
