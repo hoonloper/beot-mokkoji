@@ -24,9 +24,6 @@ public class MemberService {
         return toDto(member);
     }
 
-    private MemberDto toDto(Member member) {
-        return new MemberDto(member.getId(), member.getName(), member.getNickname(), member.getBirthday());
-    }
 
     /* WRITE */
     public MemberDto signUp(MemberDto memberDto) {
@@ -34,8 +31,10 @@ public class MemberService {
         if(foundMember != null) {
             throw new UnauthorizedException("이미 가입된 회원입니다.");
         }
-        String memberUUID = memberDto.id() == null ? UUID.randomUUID().toString() : memberDto.id();
-        Member member = memberRepository.save(new Member(memberUUID, memberDto.name(), memberDto.nickname(), memberDto.birthday()));
-        return toDto(member);
+        return toDto(memberRepository.save(new Member(UUID.randomUUID().toString(), memberDto.name(), memberDto.nickname(), memberDto.birthday())));
+    }
+
+    private MemberDto toDto(Member member) {
+        return new MemberDto(member.getId(), member.getName(), member.getNickname(), member.getBirthday());
     }
 }
