@@ -4,6 +4,7 @@ import com.example.server.domain.member.dto.MemberDto;
 import com.example.server.domain.member.entity.Member;
 import com.example.server.domain.member.repository.MemberRepository;
 import com.example.server.domain.member.services.MemberService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.time.Month;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,13 +27,21 @@ public class MemberServiceTest {
     @Nested
     @DisplayName("성공 케이스")
     class Success {
+        private final String NAME = "이름";
+        private final String NICKNAME = "닉네임";
+        private final LocalDate BIRTHDAY = LocalDate.of(2022, Month.JUNE, 30);
+        private MemberDto memberDto;
+
+        @BeforeEach
+        void setup() {
+            memberDto = new MemberDto(null, NAME, NICKNAME, BIRTHDAY);
+        }
 
         @Test
-        @DisplayName("로그인을 위해 멤버 정보를 가져온다.")
+        @DisplayName("로그인 정보로 멤버 정보 가져오기 테스트")
         void signIn() {
-            MemberDto memberDto = new MemberDto(null, "이름", "닉네임", LocalDate.of(2022, Month.JUNE, 30));
-            Member member = new Member("UUID1", "이름", "닉네임", LocalDate.of(2022, Month.JUNE, 30));
-            when(memberRepository.findByNameAndNickname("이름", "닉네임")).thenReturn(member);
+            Member member = new Member("UUID1", NAME, NICKNAME, BIRTHDAY);
+            when(memberRepository.findByNameAndNickname(NAME, NICKNAME)).thenReturn(member);
 
             MemberService memberService = new MemberService(memberRepository);
             MemberDto resultMemberDto = memberService.signIn(memberDto);
@@ -40,7 +50,22 @@ public class MemberServiceTest {
             assertThat(resultMemberDto.name()).isEqualTo(memberDto.name());
             assertThat(resultMemberDto.nickname()).isEqualTo(memberDto.nickname());
             assertThat(resultMemberDto.birthday()).isEqualTo(memberDto.birthday());
-            assertThat(resultMemberDto.id()).isNotNull();
+            assertThat(resultMemberDto.id()).isNotNull().isEqualTo("UUID1");
+        }
+
+        @Test
+        @DisplayName("입력한 정보로 회원가입 테스트")
+        void signUp() {
+            when(memberRepository.save(any(Member.class))).thenReturn(new Member("NEW-UUID", NAME, NICKNAME, BIRTHDAY));
+
+            MemberService memberService = new MemberService(memberRepository);
+            MemberDto resultMemberDto = memberService.signUp(memberDto);
+
+            assertThat(resultMemberDto).isNotNull();
+            assertThat(resultMemberDto.name()).isEqualTo(memberDto.name());
+            assertThat(resultMemberDto.nickname()).isEqualTo(memberDto.nickname());
+            assertThat(resultMemberDto.birthday()).isEqualTo(memberDto.birthday());
+            assertThat(resultMemberDto.id()).isNotNull().isEqualTo("NEW-UUID");
         }
     }
 }
