@@ -9,11 +9,12 @@ import com.example.server.domain.room.vos.RoomVO;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-
+@Profile("prod")
 @Slf4j
 @Data
 @Service
@@ -22,6 +23,7 @@ public class RoomService {
 
     private Map<String, RoomVO> roomVO;
 
+    // TODO: PostConstruct Profile을 이용해서 테스트 환경 분리
     @PostConstruct
     private void init() {
         roomVO = new LinkedHashMap<>();
