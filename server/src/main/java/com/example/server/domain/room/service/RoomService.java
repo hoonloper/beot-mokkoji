@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Profile("prod")
+// @Profile("prod")
 @Slf4j
 @Data
 @Service
@@ -24,7 +24,7 @@ public class RoomService {
     private Map<String, RoomVO> roomVO;
 
     // TODO: PostConstruct Profile을 이용해서 테스트 환경 분리
-    @PostConstruct
+    @PostConstruct()
     private void init() {
         roomVO = new LinkedHashMap<>();
     }
