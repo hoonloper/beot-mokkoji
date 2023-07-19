@@ -47,10 +47,10 @@ public class MemberServiceTest {
             MemberDto resultMemberDto = memberService.signIn(memberDto);
 
             assertThat(resultMemberDto).isNotNull();
-            assertThat(resultMemberDto.name()).isEqualTo(memberDto.name());
-            assertThat(resultMemberDto.nickname()).isEqualTo(memberDto.nickname());
-            assertThat(resultMemberDto.birthday()).isEqualTo(memberDto.birthday());
-            assertThat(resultMemberDto.id()).isNotNull().isEqualTo("UUID1");
+            assertThat(resultMemberDto.getName()).isEqualTo(memberDto.getName());
+            assertThat(resultMemberDto.getNickname()).isEqualTo(memberDto.getNickname());
+            assertThat(resultMemberDto.getBirthday()).isEqualTo(memberDto.getBirthday());
+            assertThat(resultMemberDto.getId()).isNotNull().isEqualTo("UUID1");
         }
 
         @Test
@@ -62,10 +62,10 @@ public class MemberServiceTest {
             MemberDto resultMemberDto = memberService.signUp(memberDto);
 
             assertThat(resultMemberDto).isNotNull();
-            assertThat(resultMemberDto.name()).isEqualTo(memberDto.name());
-            assertThat(resultMemberDto.nickname()).isEqualTo(memberDto.nickname());
-            assertThat(resultMemberDto.birthday()).isEqualTo(memberDto.birthday());
-            assertThat(resultMemberDto.id()).isNotNull().isEqualTo("NEW-UUID");
+            assertThat(resultMemberDto.getName()).isEqualTo(memberDto.getName());
+            assertThat(resultMemberDto.getNickname()).isEqualTo(memberDto.getNickname());
+            assertThat(resultMemberDto.getBirthday()).isEqualTo(memberDto.getBirthday());
+            assertThat(resultMemberDto.getId()).isNotNull().isEqualTo("NEW-UUID");
         }
     }
 }

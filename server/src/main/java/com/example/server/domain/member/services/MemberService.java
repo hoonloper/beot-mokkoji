@@ -17,24 +17,20 @@ public class MemberService {
 
     /* READ */
     public MemberDto signIn(MemberDto memberDto) {
-        Member member = memberRepository.findByNameAndNickname(memberDto.name(), memberDto.nickname());
+        Member member = memberRepository.findByNameAndNickname(memberDto.getName(), memberDto.getNickname());
         if(member == null) {
             throw new NotFoundException("회원 정보를 찾을 수 없습니다.");
         }
-        return toDto(member);
+        return MemberDto.of(member);
     }
 
 
     /* WRITE */
     public MemberDto signUp(MemberDto memberDto) {
-        Member foundMember = memberRepository.findByNameAndNickname(memberDto.name(), memberDto.nickname());
+        Member foundMember = memberRepository.findByNameAndNickname(memberDto.getName(), memberDto.getNickname());
         if(foundMember != null) {
             throw new UnauthorizedException("이미 가입된 회원입니다.");
         }
-        return toDto(memberRepository.save(new Member(UUID.randomUUID().toString(), memberDto.name(), memberDto.nickname(), memberDto.birthday())));
-    }
-
-    private MemberDto toDto(Member member) {
-        return new MemberDto(member.getId(), member.getName(), member.getNickname(), member.getBirthday());
+        return MemberDto.of(memberRepository.save(new Member(UUID.randomUUID().toString(), memberDto.getName(), memberDto.getNickname(), memberDto.getBirthday())));
     }
 }
