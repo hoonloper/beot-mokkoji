@@ -8,14 +8,14 @@ import org.springframework.web.socket.WebSocketSession;
 import java.util.*;
 
 @Data
-public class RoomVO {
+public class RoomVo {
     private String roomId; // 채팅방 아이디
     private String memberId; // 채팅방 멤버 아이디
     private String name; // 채팅방 이름
     private Set<WebSocketSession> sessions = new HashSet<>();
 
     @Builder
-    public RoomVO(String roomId, String name, String memberId){
+    public RoomVo(String roomId, String name, String memberId){
         this.roomId = roomId;
         this.name = name;
         this.memberId = memberId;

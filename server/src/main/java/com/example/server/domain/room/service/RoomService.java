@@ -5,11 +5,10 @@ import com.example.server.domain.room.entity.Room;
 import com.example.server.domain.room.interfaces.FindAllByMemberIdInterface;
 import com.example.server.domain.room.interfaces.FindAllByRoomIdInterface;
 import com.example.server.domain.room.repository.RoomRepository;
-import com.example.server.domain.room.vos.RoomVO;
+import com.example.server.domain.room.vos.RoomVo;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,7 +20,7 @@ import java.util.*;
 public class RoomService {
     private final RoomRepository roomRepository;
 
-    private Map<String, RoomVO> roomVO;
+    private Map<String, RoomVo> roomVO;
 
     // TODO: PostConstruct Profile을 이용해서 테스트 환경 분리
     @PostConstruct()
@@ -30,7 +29,7 @@ public class RoomService {
     }
     public List<FindAllByRoomIdInterface> findRoomByRoomId(String roomId) {
         List<FindAllByRoomIdInterface> rooms = roomRepository.findAllByRoomId(roomId);
-        rooms.stream().map(room -> new RoomVO(room.getRoomId(), room.getName(), room.getMemberId())).forEach(this::registerRoom);
+        rooms.stream().map(room -> new RoomVo(room.getRoomId(), room.getName(), room.getMemberId())).forEach(this::registerRoom);
         return rooms;
     }
 
@@ -58,26 +57,26 @@ public class RoomService {
 
         return roomGroups;
     }
-    public RoomVO createRoom(RoomDto roomDto) {
+    public RoomVo createRoom(RoomDto roomDto) {
         String roomId = UUID.randomUUID().toString(); // 랜덤한 방 아이디 생성
-        RoomVO room = toRoomVO(roomRepository.save(new Room(roomDto.memberId(), roomId, roomDto.name())));
+        RoomVo room = toRoomVO(roomRepository.save(new Room(roomDto.memberId(), roomId, roomDto.name())));
         registerRoom(room); // 랜덤 아이디와 room 정보를 Map 에 저장
         return room;
     }
 
-    public List<RoomVO> findAllRoom(){
+    public List<RoomVo> findAllRoom(){
         return new ArrayList<>(roomVO.values());
     }
 
-    public RoomVO findRoomById(String roomId){
+    public RoomVo findRoomById(String roomId){
         return roomVO.get(roomId);
     }
 
-    private void registerRoom(RoomVO room) {
+    private void registerRoom(RoomVo room) {
         roomVO.putIfAbsent(room.getRoomId(), room);
     }
-    private RoomVO toRoomVO(Room room) {
-        return RoomVO.builder()
+    private RoomVo toRoomVO(Room room) {
+        return RoomVo.builder()
                 .roomId(room.getRoomId())
                 .memberId(room.getMemberId())
                 .name(room.getName())

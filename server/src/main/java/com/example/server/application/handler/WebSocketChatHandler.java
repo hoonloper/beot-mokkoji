@@ -3,7 +3,7 @@ package com.example.server.application.handler;
 import com.example.server.domain.chat.dto.ChatDto;
 import com.example.server.domain.chat.dto.ChatEventType;
 import com.example.server.domain.room.service.RoomService;
-import com.example.server.domain.room.vos.RoomVO;
+import com.example.server.domain.room.vos.RoomVo;
 import com.example.server.domain.chat.services.ChatService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         ChatDto chat = mapper.readValue(payload, ChatDto.class);
         log.info("session {}", chat.toString());
 
-        RoomVO room = roomService.findRoomById(chat.getRoomId());
+        RoomVo room = roomService.findRoomById(chat.getRoomId());
         log.info("room {}", room.toString());
 
         if (chat.getType().equals(ChatEventType.CONNECT) && !room.containsSession(session)) {

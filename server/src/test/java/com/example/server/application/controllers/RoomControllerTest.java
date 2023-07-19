@@ -1,7 +1,7 @@
 package com.example.server.application.controllers;
 
 import com.example.server.domain.room.service.RoomService;
-import com.example.server.domain.room.vos.RoomVO;
+import com.example.server.domain.room.vos.RoomVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ public class RoomControllerTest {
         // given
         String roomId = UUID.randomUUID().toString();
         String memberId = UUID.randomUUID().toString();
-        RoomVO roomVO = RoomVO
+        RoomVo roomVO = RoomVo
                 .builder()
                 .roomId(roomId)
                 .memberId(memberId)
