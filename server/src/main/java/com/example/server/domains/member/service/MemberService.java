@@ -21,7 +21,7 @@ public class MemberService {
         if(member == null) {
             throw new NotFoundException("회원 정보를 찾을 수 없습니다.");
         }
-        return MemberDto.of(member);
+        return MemberDto.toDto(member);
     }
 
 
@@ -31,7 +31,7 @@ public class MemberService {
         if(foundMember != null) {
             throw new UnauthorizedException("이미 가입된 회원입니다.");
         }
-        return MemberDto.of(memberRepository.save(Member
+        return MemberDto.toDto(memberRepository.save(Member
                 .builder()
                 .id(UUID.randomUUID().toString())
                 .name(memberDto.name())

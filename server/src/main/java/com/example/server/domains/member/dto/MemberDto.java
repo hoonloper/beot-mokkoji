@@ -27,7 +27,7 @@ public record MemberDto(
         @Nullable @PastOrPresent(message = "생년월일이 잘못됐습니다.")
         LocalDate birthday
 ) {
-        public static MemberDto of(Member member) {
+        public static MemberDto toDto(Member member) {
                 return MemberDto.builder()
                         .id(member.getId())
                         .name(member.getName())
