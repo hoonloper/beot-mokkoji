@@ -64,13 +64,7 @@ public class RoomService {
     }
     public RoomVo createRoom(RoomDto roomDto) {
         String roomId = UUID.randomUUID().toString(); // 랜덤한 방 아이디 생성
-        RoomVo room = RoomVo.toRoomVo(roomRepository.save(Room
-                .builder()
-                .memberId(roomDto.memberId())
-                .roomId(roomId)
-                .name(roomDto.name())
-                .build()
-        ));
+        RoomVo room = RoomVo.toRoomVo(roomRepository.save(new Room(roomDto.memberId(), roomId, roomDto.name())));
         registerRoom(room); // 랜덤 아이디와 room 정보를 Map 에 저장
         return room;
     }

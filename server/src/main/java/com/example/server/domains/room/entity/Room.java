@@ -2,28 +2,37 @@ package com.example.server.domains.room.entity;
 
 import com.example.server.domains.member.entity.Member;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Entity(name = "rooms")
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final Long id;
+    private Long id;
 
     @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "member_id", insertable = false, updatable = false)
-    private final Member member;
+    private Member member;
 
     @Column(name = "member_id", nullable = false)
-    private final String memberId;
+    private String memberId;
 
     @Column
-    private final String roomId;
+    private String roomId;
 
     @Column
-    private final String name;
+    private String name;
+
+    public Room(String memberId, String roomId, String name) {
+        this.memberId = memberId;
+        this.roomId = roomId;
+        this.name = name;
+    }
 }

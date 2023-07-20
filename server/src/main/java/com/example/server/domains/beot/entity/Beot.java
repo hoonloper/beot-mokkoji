@@ -7,27 +7,34 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "beots")
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class Beot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final Long id;
+    private Long id;
 
     @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "from_member_id", insertable = false, updatable = false)
-    private final Member fromMember;
+    private Member fromMember;
 
     @Column(name = "from_member_id", nullable = false)
-    private final String fromMemberId;
+    private String fromMemberId;
 
     @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "to_member_id", insertable = false, updatable = false)
-    private final Member toMember;
+    private Member toMember;
 
     @Column(name = "to_member_id", nullable = false)
-    private final String toMemberId;
+    private String toMemberId;
 
     @Column(name = "created_at", nullable = false)
-    private final LocalDateTime createdAt;
+    private LocalDateTime createdAt;
+
+    public Beot(String fromMemberId, String toMemberId, LocalDateTime createdAt) {
+        this.fromMemberId = fromMemberId;
+        this.toMemberId = toMemberId;
+        this.createdAt = createdAt;
+    }
 }

@@ -23,15 +23,7 @@ public class ChatService {
     private final ChatRepository chatRepository;
 
     public void save(ChatVo chat) {
-        chatRepository.save(Chat
-                .builder()
-                .roomId(chat.getRoomId())
-                .senderId(chat.getSenderId())
-                .message(chat.getMessage())
-                .type(chat.getType())
-                .sendAt(LocalDateTime.now())
-                .build()
-        );
+        chatRepository.save(new Chat(chat.getRoomId(), chat.getSenderId(), chat.getMessage(), chat.getType(), LocalDateTime.now()));
     }
 
     public List<ChatsInterface> findAllByRoomId(String roomId) {
