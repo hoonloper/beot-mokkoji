@@ -1,7 +1,7 @@
 package com.example.server.application.controllers;
 
-import com.example.server.domain.member.dto.MemberDto;
-import com.example.server.domain.member.services.MemberService;
+import com.example.server.domains.member.dto.MemberDto;
+import com.example.server.domains.member.service.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -21,7 +21,6 @@ import java.time.LocalDate;
 import java.time.Month;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc

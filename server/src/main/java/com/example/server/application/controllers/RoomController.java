@@ -1,10 +1,10 @@
 package com.example.server.application.controllers;
 
-import com.example.server.domain.room.dtos.RoomDto;
-import com.example.server.domain.room.vos.RoomVo;
-import com.example.server.domain.room.interfaces.FindAllByRoomIdInterface;
-import com.example.server.domain.room.service.RoomGroup;
-import com.example.server.domain.room.service.RoomService;
+import com.example.server.domains.room.dto.RoomDto;
+import com.example.server.domains.room.vo.RoomVo;
+import com.example.server.domains.room.interfaces.FindAllByRoomIdInterface;
+import com.example.server.domains.room.services.RoomGroup;
+import com.example.server.domains.room.services.RoomService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
