@@ -20,13 +20,14 @@ import java.util.*;
 public class RoomService {
     private final RoomRepository roomRepository;
 
-    private Map<String, RoomVo> roomVO;
+    private Map<String, RoomVo> roomVoMap;
 
     // TODO: PostConstruct Profile을 이용해서 테스트 환경 분리
     @PostConstruct()
     private void init() {
-        roomVO = new LinkedHashMap<>();
+        roomVoMap = new LinkedHashMap<>();
     }
+
     public List<FindAllByRoomIdInterface> findRoomByRoomId(String roomId) {
         List<FindAllByRoomIdInterface> rooms = roomRepository.findAllByRoomId(roomId);
         rooms.stream().map(room -> new RoomVo(room.getRoomId(), room.getName(), room.getMemberId())).forEach(this::registerRoom);
@@ -65,14 +66,14 @@ public class RoomService {
     }
 
     public List<RoomVo> findAllRoom(){
-        return new ArrayList<>(roomVO.values());
+        return new ArrayList<>(roomVoMap.values());
     }
 
     public RoomVo findRoomById(String roomId){
-        return roomVO.get(roomId);
+        return roomVoMap.get(roomId);
     }
 
     private void registerRoom(RoomVo room) {
-        roomVO.putIfAbsent(room.getRoomId(), room);
+        roomVoMap.putIfAbsent(room.getRoomId(), room);
     }
 }
