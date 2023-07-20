@@ -1,4 +1,4 @@
-package com.example.server.domains.beot.services;
+package com.example.server.domains.beot.service;
 
 import com.example.server.domains.beot.dto.BeotDto;
 import com.example.server.domains.beot.entity.Beot;

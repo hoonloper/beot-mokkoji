@@ -2,7 +2,7 @@ package com.example.server.application.controllers;
 
 import com.example.server.domains.beot.dto.BeotDto;
 import com.example.server.domains.beot.vo.BeotFollowingsVo;
-import com.example.server.domains.beot.services.BeotService;
+import com.example.server.domains.beot.service.BeotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
