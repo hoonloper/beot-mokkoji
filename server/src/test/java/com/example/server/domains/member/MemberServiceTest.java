@@ -40,7 +40,7 @@ public class MemberServiceTest {
         @Test
         @DisplayName("로그인 정보로 멤버 정보 가져오기 테스트")
         void signIn() {
-            Member member = Member.builder().id("UUID1").name(NAME).nickname(NICKNAME).birthday(BIRTHDAY).build();
+            Member member = new Member("UUID1", NAME, NICKNAME, BIRTHDAY);
             when(memberRepository.findByNameAndNickname(NAME, NICKNAME)).thenReturn(member);
 
             MemberService memberService = new MemberService(memberRepository);
@@ -57,7 +57,7 @@ public class MemberServiceTest {
         @DisplayName("입력한 정보로 회원가입 테스트")
         void signUp() {
             when(memberRepository.save(any(Member.class)))
-                    .thenReturn(Member.builder().id("NEW-UUID").name(NAME).nickname(NICKNAME).birthday(BIRTHDAY).build());
+                    .thenReturn(new Member("NEW-UUID", NAME, NICKNAME, BIRTHDAY));
 
             MemberService memberService = new MemberService(memberRepository);
             MemberDto resultMemberDto = memberService.signUp(memberDto);
