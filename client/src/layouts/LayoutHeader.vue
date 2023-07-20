@@ -8,7 +8,7 @@
 </template>
 
 <style lang="scss" scoped>
-// @import '../assets/bases/image.scss';
+@import '../assets/styles/image.scss';
 
 .header-container {
   position: sticky;

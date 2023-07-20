@@ -51,5 +51,3 @@ onMounted(async () => {
   pending.value = true;
 });
 </script>
-
-<style lang="scss" scoped></style>

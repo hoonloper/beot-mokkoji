@@ -4,6 +4,7 @@
 
 <style>
 @import './assets/styles/index.scss';
+
 html,
 body {
   height: 100%;

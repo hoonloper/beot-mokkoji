@@ -18,7 +18,7 @@ const replacedName =
 </script>
 
 <style lang="scss" scoped>
-// @import '../assets/bases/image.scss';
+@import '../assets/styles/image.scss';
 
 .profile-card-container {
   display: flex;

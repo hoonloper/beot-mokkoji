@@ -185,7 +185,7 @@ ws.value.onerror = (e) => {
 </script>
 
 <style lang="scss" scoped>
-// @import '../assets/bases/image.scss';
+@import '../assets/styles/image.scss';
 
 .chatroom-wrap {
   height: 100%;
