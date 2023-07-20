@@ -2,8 +2,7 @@ package com.example.server.application.controllers;
 
 import com.example.server.domains.beot.dto.BeotDto;
 import com.example.server.domains.beot.vo.BeotFollowingsVO;
-import com.example.server.domains.beot.services.BeotReadService;
-import com.example.server.domains.beot.services.BeotWirteService;
+import com.example.server.domains.beot.services.BeotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,19 +14,16 @@ import java.util.List;
 @RequestMapping("/api/v1/beots")
 public class BeotController {
     @Autowired
-    private BeotWirteService beotWirteService;
-
-    @Autowired
-    private BeotReadService beotReadService;
+    private BeotService beotService;
 
     @GetMapping("/following/:id")
     public List<BeotFollowingsVO> getFollowingBeots(@RequestParam("id") String id) {
-        return beotReadService.getFollowingBeots(id);
+        return beotService.getFollowingBeots(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void follow(@RequestBody @Valid BeotDto beot) {
-        beotWirteService.follow(beot);
+        beotService.follow(beot);
     }
 }
