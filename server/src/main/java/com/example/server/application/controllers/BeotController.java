@@ -1,7 +1,7 @@
 package com.example.server.application.controllers;
 
 import com.example.server.domains.beot.dto.BeotDto;
-import com.example.server.domains.beot.vo.BeotFollowingsVO;
+import com.example.server.domains.beot.vo.BeotFollowingsVo;
 import com.example.server.domains.beot.services.BeotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class BeotController {
     private BeotService beotService;
 
     @GetMapping("/following/:id")
-    public List<BeotFollowingsVO> getFollowingBeots(@RequestParam("id") String id) {
+    public List<BeotFollowingsVo> getFollowingBeots(@RequestParam("id") String id) {
         return beotService.getFollowingBeots(id);
     }
 
