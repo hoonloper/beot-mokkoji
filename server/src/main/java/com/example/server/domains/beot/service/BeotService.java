@@ -29,10 +29,12 @@ public class BeotService {
     }
 
     public void follow(BeotDto beotDto) {
-        Beot beot = new Beot();
-        beot.setToMemberId(beotDto.toMemberId());
-        beot.setFromMemberId(beotDto.fromMemberId());
-        beot.setCreatedAt(LocalDateTime.now());
-        beotRepository.save(beot);
+        beotRepository.save(Beot
+                .builder()
+                .toMemberId(beotDto.toMemberId())
+                .fromMemberId(beotDto.fromMemberId())
+                .createdAt(beotDto.createdAt())
+                .build()
+        );
     }
 }

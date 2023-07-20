@@ -7,7 +7,8 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "beots")
-@Data
+@Builder
+@Getter
 public class Beot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
