@@ -12,22 +12,22 @@ import java.time.LocalDateTime;
 public class Beot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final Long id;
 
     @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "from_member_id", insertable = false, updatable = false)
-    private Member fromMember;
+    private final Member fromMember;
 
     @Column(name = "from_member_id", nullable = false)
-    private String fromMemberId;
+    private final String fromMemberId;
 
     @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "to_member_id", insertable = false, updatable = false)
-    private Member toMember;
+    private final Member toMember;
 
     @Column(name = "to_member_id", nullable = false)
-    private String toMemberId;
+    private final String toMemberId;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    private final LocalDateTime createdAt;
 }
