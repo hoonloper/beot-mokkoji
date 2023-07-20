@@ -1,6 +1,7 @@
 package com.example.server.domain.room.vos;
 
 import com.example.server.domain.chat.services.ChatService;
+import com.example.server.domain.room.entity.Room;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.web.socket.WebSocketSession;
@@ -34,5 +35,13 @@ public class RoomVo {
 
     public boolean containsSession(WebSocketSession session) {
         return sessions.contains(session);
+    }
+
+    public static RoomVo toRoomVo(Room room) {
+        return RoomVo.builder()
+                .roomId(room.getRoomId())
+                .memberId(room.getMemberId())
+                .name(room.getName())
+                .build();
     }
 }
