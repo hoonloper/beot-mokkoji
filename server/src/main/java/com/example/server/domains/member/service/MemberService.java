@@ -31,6 +31,13 @@ public class MemberService {
         if(foundMember != null) {
             throw new UnauthorizedException("이미 가입된 회원입니다.");
         }
-        return MemberDto.of(memberRepository.save(new Member(UUID.randomUUID().toString(), memberDto.name(), memberDto.nickname(), memberDto.birthday())));
+        return MemberDto.of(memberRepository.save(Member
+                .builder()
+                .id(UUID.randomUUID().toString())
+                .name(memberDto.name())
+                .nickname(memberDto.nickname())
+                .birthday(memberDto.birthday())
+                .build()
+            ));
     }
 }
