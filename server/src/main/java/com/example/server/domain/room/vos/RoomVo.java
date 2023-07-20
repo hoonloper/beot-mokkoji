@@ -9,18 +9,12 @@ import org.springframework.web.socket.WebSocketSession;
 import java.util.*;
 
 @Data
+@Builder
 public class RoomVo {
     private String roomId; // 채팅방 아이디
     private String memberId; // 채팅방 멤버 아이디
     private String name; // 채팅방 이름
     private Set<WebSocketSession> sessions = new HashSet<>();
-
-    @Builder
-    public RoomVo(String roomId, String name, String memberId){
-        this.roomId = roomId;
-        this.name = name;
-        this.memberId = memberId;
-    }
 
     public <T> void sendMessage(T message, ChatService service) {
         sessions.parallelStream().forEach(session -> service.sendMessage(session, message));

@@ -30,7 +30,12 @@ public class RoomService {
 
     public List<FindAllByRoomIdInterface> findRoomByRoomId(String roomId) {
         List<FindAllByRoomIdInterface> rooms = roomRepository.findAllByRoomId(roomId);
-        rooms.stream().map(room -> new RoomVo(room.getRoomId(), room.getName(), room.getMemberId())).forEach(this::registerRoom);
+        rooms.stream().map(room -> RoomVo
+                        .builder()
+                        .roomId(room.getRoomId())
+                        .name(room.getName())
+                        .memberId(room.getMemberId())
+                        .build()).forEach(this::registerRoom);
         return rooms;
     }
 
@@ -52,7 +57,6 @@ public class RoomService {
                         roomGroups.add(newGroup);
                         return newGroup;
                     });
-
             roomGroup.getRoomMembers().add(roomMember);
         }
 
