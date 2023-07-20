@@ -1,6 +1,6 @@
 <img align="left" width="90" alt="logo" src="https://github.com/hoonloper/beot-mokkoji/assets/78959175/de13e37b-7f51-43d7-918a-70eb98fc8bcf">
 
-# 벗, 모꼬지 - 우리들의 채팅 플랫폼
+# 벗, 모꼬지 - 채팅(웹소켓)
 
 <br />
 
@@ -11,33 +11,3 @@
 ### 데모 영상
 
 https://github.com/hoonloper/beot-mokkoji/assets/78959175/cbf5c85e-e390-4709-9d52-0991fcbe0f05
-
-## 🤓 시작하기
-
-```bash
-git clone https://github.com/hoonloper/beot-mokkoji.git
-```
-
-### 🏃🏻 클라이언트 - `/beot-mokkoji/client` 경로에서 아래 명령어 실행
-
-```bash
-npm install
-
-npm run lint
-
-npm run serve
-```
-
-### 🏃🏻 서버 - `/beot-mokkoji/server`(준비중...)
-
-```
-...😪
-```
-
-## 💿 데이터베이스(준비중...)
-
-...😪
-
-## 🖼️ 아키텍처(준비중...)
-
-...😪
