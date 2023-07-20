@@ -22,9 +22,16 @@ public class ChatService {
     private final ObjectMapper mapper;
     private final ChatRepository chatRepository;
 
-
     public void save(ChatVo chat) {
-        chatRepository.save(new Chat(chat.getRoomId(), chat.getSenderId(), chat.getMessage(), chat.getType(), LocalDateTime.now()));
+        chatRepository.save(Chat
+                .builder()
+                .roomId(chat.getRoomId())
+                .senderId(chat.getSenderId())
+                .message(chat.getMessage())
+                .type(chat.getType())
+                .sendAt(LocalDateTime.now())
+                .build()
+        );
     }
 
     public List<ChatsInterface> findAllByRoomId(String roomId) {

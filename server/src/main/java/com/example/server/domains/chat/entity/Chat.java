@@ -2,39 +2,31 @@ package com.example.server.domains.chat.entity;
 
 import com.example.server.domains.chat.vo.ChatEventType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Entity(name = "chats")
-@AllArgsConstructor
+@Builder
 @Getter
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final Long id;
 
     @Column
-    private String roomId;
+    private final String roomId;
 
     @Column
-    private String senderId;
+    private final String senderId;
 
     @Column
-    private String message;
+    private final String message;
 
     @Enumerated
-    private ChatEventType type;
+    private final ChatEventType type;
 
     @Column
-    private LocalDateTime sendAt;
-
-    public Chat(String roomId, String senderId, String message, ChatEventType type, LocalDateTime sendAt) {
-        this.roomId = roomId;
-        this.senderId = senderId;
-        this.message = message;
-        this.type = type;
-        this.sendAt = sendAt;
-    }
+    private final LocalDateTime sendAt;
 }
