@@ -5,9 +5,11 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
+@Builder
 public record BeotDto(
         @Nullable
         @Pattern(regexp = "[^0-9]", message = "잘못된 고유 번호입니다.")
