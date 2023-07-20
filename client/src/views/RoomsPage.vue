@@ -71,7 +71,7 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/bases/image.scss';
+// @import '../assets/bases/image.scss';
 
 .contents-wrap {
   min-height: calc(100% - 100px);
