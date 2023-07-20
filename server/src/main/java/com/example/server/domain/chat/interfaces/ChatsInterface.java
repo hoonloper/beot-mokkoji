@@ -1,6 +1,6 @@
 package com.example.server.domain.chat.interfaces;
 
-import com.example.server.domain.chat.dto.ChatEventType;
+import com.example.server.domain.chat.vo.ChatEventType;
 
 import java.time.LocalDateTime;
 

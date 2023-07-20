@@ -1,6 +1,6 @@
 package com.example.server.domain.chat.entity;
 
-import com.example.server.domain.chat.dto.ChatEventType;
+import com.example.server.domain.chat.vo.ChatEventType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

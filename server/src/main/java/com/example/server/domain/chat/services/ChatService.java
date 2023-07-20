@@ -1,6 +1,6 @@
 package com.example.server.domain.chat.services;
 
-import com.example.server.domain.chat.dto.ChatDto;
+import com.example.server.domain.chat.vo.ChatVo;
 import com.example.server.domain.chat.entity.Chat;
 import com.example.server.domain.chat.interfaces.ChatsInterface;
 import com.example.server.domain.chat.repository.ChatRepository;
@@ -23,7 +23,7 @@ public class ChatService {
     private final ChatRepository chatRepository;
 
 
-    public void save(ChatDto chat) {
+    public void save(ChatVo chat) {
         chatRepository.save(new Chat(chat.getRoomId(), chat.getSenderId(), chat.getMessage(), chat.getType(), LocalDateTime.now()));
     }
 

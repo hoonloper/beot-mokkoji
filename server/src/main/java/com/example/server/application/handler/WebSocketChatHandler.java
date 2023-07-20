@@ -1,7 +1,7 @@
 package com.example.server.application.handler;
 
-import com.example.server.domain.chat.dto.ChatDto;
-import com.example.server.domain.chat.dto.ChatEventType;
+import com.example.server.domain.chat.vo.ChatVo;
+import com.example.server.domain.chat.vo.ChatEventType;
 import com.example.server.domain.room.service.RoomService;
 import com.example.server.domain.room.vos.RoomVo;
 import com.example.server.domain.chat.services.ChatService;
@@ -26,7 +26,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         log.info("payload {}", payload);
 
-        ChatDto chat = mapper.readValue(payload, ChatDto.class);
+        ChatVo chat = mapper.readValue(payload, ChatVo.class);
         log.info("session {}", chat.toString());
 
         RoomVo room = roomService.findRoomById(chat.getRoomId());
