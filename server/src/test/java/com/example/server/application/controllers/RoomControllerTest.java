@@ -1,5 +1,6 @@
 package com.example.server.application.controllers;
 
+import com.example.server.domains.room.dto.RoomDto;
 import com.example.server.domains.room.services.RoomService;
 import com.example.server.domains.room.vo.RoomVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,14 +12,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -34,30 +35,29 @@ public class RoomControllerTest {
     @Test
     @DisplayName("룸 생성 성공 테스트")
     void createRoomTest() throws Exception {
-        // given
         String roomId = UUID.randomUUID().toString();
         String memberId = UUID.randomUUID().toString();
+        String name = "TEST";
         RoomVo roomVO = RoomVo
                 .builder()
                 .roomId(roomId)
                 .memberId(memberId)
-                .name("TEST")
+                .name(name)
                 .build();
-        String json = new ObjectMapper().writeValueAsString(roomVO);
+        given(roomService.createRoom(any())).willReturn(roomVO);
 
-        try {
-            // when
-            ResultActions resultActions = mvc.perform(MockMvcRequestBuilders.post(END_POINT)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(json)
-                    .accept(MediaType.APPLICATION_JSON)
-            );
+        RoomDto roomDto = new RoomDto(name, memberId);
+        String json = new ObjectMapper().writeValueAsString(roomDto);
 
-            // then
-            resultActions.andDo(print()).andExpect(status().isCreated());
-        } catch (Exception e) {
-            fail("Failed: createRoom");
-        }
+        mvc.perform(MockMvcRequestBuilders.post(END_POINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.memberId").value(memberId))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(name))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roomId").value(roomId));
     }
 
     @Test
@@ -67,6 +67,7 @@ public class RoomControllerTest {
         String memberId = "UUID1";
         mvc.perform(MockMvcRequestBuilders.get(END_POINT + "/" + memberId)
                 .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isOk()).andDo(print());
+        ).andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
