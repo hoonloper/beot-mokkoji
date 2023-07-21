@@ -5,6 +5,7 @@ import com.example.server.domains.room.services.RoomService;
 import com.example.server.domains.room.vo.RoomVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,42 +33,46 @@ public class RoomControllerTest {
     @Autowired
     MockMvc mvc;
 
-    @Test
-    @DisplayName("룸 생성 성공 테스트")
-    void createRoomTest() throws Exception {
-        String roomId = UUID.randomUUID().toString();
-        String memberId = UUID.randomUUID().toString();
-        String name = "TEST";
-        RoomVo roomVO = RoomVo
-                .builder()
-                .roomId(roomId)
-                .memberId(memberId)
-                .name(name)
-                .build();
-        given(roomService.createRoom(any())).willReturn(roomVO);
+    @Nested
+    @DisplayName("성공 케이스")
+    class Success {
+        @Test
+        @DisplayName("룸 생성 API")
+        void createRoomTest() throws Exception {
+            String roomId = UUID.randomUUID().toString();
+            String memberId = UUID.randomUUID().toString();
+            String name = "TEST";
+            RoomVo roomVO = RoomVo
+                    .builder()
+                    .roomId(roomId)
+                    .memberId(memberId)
+                    .name(name)
+                    .build();
+            given(roomService.createRoom(any())).willReturn(roomVO);
 
-        RoomDto roomDto = new RoomDto(name, memberId);
-        String json = new ObjectMapper().writeValueAsString(roomDto);
+            RoomDto roomDto = new RoomDto(name, memberId);
+            String json = new ObjectMapper().writeValueAsString(roomDto);
 
-        mvc.perform(MockMvcRequestBuilders.post(END_POINT)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON)
-        ).andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.memberId").value(memberId))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(name))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.roomId").value(roomId));
-    }
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(MockMvcResultHandlers.print())
+                    .andExpect(MockMvcResultMatchers.status().isCreated())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.memberId").value(memberId))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(name))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.roomId").value(roomId));
+        }
 
-    @Test
-    @DisplayName("멤버가 가지고 있는 전체 채팅방 가져오기")
-    void getAllRoomsByMemberId() throws Exception {
+        @Test
+        @DisplayName("멤버가 가진 전체 채팅방 가져오기 API")
+        void getAllRoomsByMemberId() throws Exception {
 
-        String memberId = "UUID1";
-        mvc.perform(MockMvcRequestBuilders.get(END_POINT + "/" + memberId)
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());
+            String memberId = "UUID1";
+            mvc.perform(MockMvcRequestBuilders.get(END_POINT + "/" + memberId)
+                            .contentType(MediaType.APPLICATION_JSON)
+                    ).andDo(MockMvcResultHandlers.print())
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+        }
     }
 }
