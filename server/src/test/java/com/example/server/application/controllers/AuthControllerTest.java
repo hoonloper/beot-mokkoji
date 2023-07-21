@@ -93,5 +93,15 @@ public class AuthControllerTest {
                     .andExpect(MockMvcResultMatchers.jsonPath("$.nickname").value("닉네임"))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.birthday").value("2022-06-30"));;
         }
+
+        @Test
+        @DisplayName("회원탈퇴 API")
+        void resign() throws Exception {
+            mvc.perform(MockMvcRequestBuilders.delete(END_POINT + "/resign")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(json)
+                    .accept(MediaType.APPLICATION_JSON)
+            ).andDo(print()).andExpect(MockMvcResultMatchers.status().isNoContent());
+        }
     }
 }
