@@ -73,7 +73,7 @@ onMounted(async () => {
       },
     }
   );
-  beotList.value = response.data;
+  beotList.value = response.data.filter((d: Beot) => d.toMember !== null);
 });
 </script>
 

@@ -28,4 +28,10 @@ public class AuthController {
     public MemberDto signUp(@RequestBody @Valid MemberDto member) {
         return memberService.signUp(member);
     }
+
+    @DeleteMapping("/resign")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void resign(@RequestBody @Valid MemberDto member) {
+        memberService.resign(member);
+    }
 }

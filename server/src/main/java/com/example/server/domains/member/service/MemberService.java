@@ -8,6 +8,7 @@ import com.example.server.domains.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -33,5 +34,9 @@ public class MemberService {
         }
         Member member = new Member(UUID.randomUUID().toString(), memberDto.name(), memberDto.nickname(), memberDto.birthday());
         return MemberDto.toDto(memberRepository.save(member));
+    }
+
+    public void resign(MemberDto memberDto) {
+        memberRepository.delete(new Member(memberDto.id()));
     }
 }

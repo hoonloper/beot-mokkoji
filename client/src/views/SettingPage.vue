@@ -3,8 +3,10 @@
     <LayoutHeader id="header" />
     <div class="contents-wrap">
       <ItemDivider prefix="설정" />
-      <div>내 프로필 보기</div>
-      <BeotButton @click="logout">로그아웃</BeotButton>
+      <div class="button-wrap">
+        <BeotButton @click="logout">로그아웃</BeotButton>
+        <BeotButton @click="resign">회원탈퇴</BeotButton>
+      </div>
     </div>
     <LayoutFooter id="footer" />
   </div>
@@ -18,6 +20,8 @@ import LayoutHeader from '@/layouts/LayoutHeader.vue';
 import router from '@/router';
 import { useStore } from 'vuex';
 import { useMemberStorage } from '@/composables/useMemberStorage';
+import axios from 'axios';
+import { HttpStatus } from '@/common/constant';
 
 const memberStorage = useMemberStorage();
 memberStorage.setItem('end-point', '/settings');
@@ -33,10 +37,26 @@ const logout = () => {
   store.commit('clear');
   router.push('sign-in');
 };
+
+const resign = async () => {
+  const { isLoggedIn, ...member } = store.state;
+  const response = await axios.delete(
+    'http://localhost:8080/api/v1/auth/resign',
+    {
+      data: member,
+    }
+  );
+  if (response.status === HttpStatus.NO_CONTENT) {
+    logout();
+  }
+};
 </script>
 
 <style lang="scss" scoped>
 .contents-wrap {
   min-height: calc(100% - 100px);
+}
+.button-wrap {
+  margin: 8px;
 }
 </style>
