@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -47,6 +46,7 @@ public class AuthControllerTest {
         MemberDto memberDto;
         String json;
         MemberDto returnValue;
+
         @BeforeEach
         void init() throws JsonProcessingException {
             String EXPECTED_NAME = "이름";
@@ -55,8 +55,8 @@ public class AuthControllerTest {
             memberDto = new MemberDto(null, EXPECTED_NAME, EXPECTED_NICKNAME, EXPECTED_BIRTHDAY);
             uuid = UUID.randomUUID().toString();
             mapper = new ObjectMapper()
-                .registerModule(new JavaTimeModule())
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+                    .registerModule(new JavaTimeModule())
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             json = mapper.writeValueAsString(memberDto);
             returnValue = new MemberDto(uuid, EXPECTED_NAME, EXPECTED_NICKNAME, EXPECTED_BIRTHDAY);
         }
@@ -67,31 +67,33 @@ public class AuthControllerTest {
             given(memberService.signUp(any())).willReturn(returnValue);
 
             mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-up")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(json)
-                    .accept(MediaType.APPLICATION_JSON)
-            ).andDo(print())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
                     .andExpect(MockMvcResultMatchers.status().isCreated())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(uuid))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("이름"))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.nickname").value("닉네임"))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.birthday").value("2022-06-30"));
         }
+
         @Test
         @DisplayName("로그인 API")
         void signIn() throws Exception {
             given(memberService.signIn(any())).willReturn(returnValue);
 
             mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(json)
-                    .accept(MediaType.APPLICATION_JSON)
-            ).andDo(print())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(uuid))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("이름"))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.nickname").value("닉네임"))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.birthday").value("2022-06-30"));;
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.birthday").value("2022-06-30"));
+            ;
         }
 
         @Test
@@ -103,5 +105,26 @@ public class AuthControllerTest {
                     .accept(MediaType.APPLICATION_JSON)
             ).andDo(print()).andExpect(MockMvcResultMatchers.status().isNoContent());
         }
+    }
+
+
+    @Nested
+    @DisplayName("실패 케이스")
+    class Fail {
+        @Test
+        @DisplayName("로그인 API")
+        void failSignIn() throws Exception {
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+            ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(500))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value("Internal Server Error"));
+        }
+        /*
+        * {"message":"Required request body is missing: public com.example.server.domains.member.dto.MemberDto com.example.server.application.controllers.AuthController.signIn(com.example.server.domains.member.dto.MemberDto)",
+        * "statusMessage":"Internal Server Error",
+        * "statusCode":500}*/
     }
 }
