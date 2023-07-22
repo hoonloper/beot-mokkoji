@@ -132,7 +132,7 @@ public class AuthControllerTest {
         }
 
         @Test
-        @DisplayName("로그인 API - 잘못된 이름 형식")
+        @DisplayName("로그인 API(Name) - 잘못된 이름 형식")
         void failSignInWithInvalidName() throws Exception {
             String json = mapper.writeValueAsString(new MemberDto(null, "@!@$$^#&^$#@", "닉네임", LocalDate.now()));
             mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
@@ -145,7 +145,7 @@ public class AuthControllerTest {
                     .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
         }
         @Test
-        @DisplayName("로그인 API - 이름 1글자")
+        @DisplayName("로그인 API(Name) - 이름 1글자")
         void failSignInWithShortName() throws Exception {
             String json = mapper.writeValueAsString(new MemberDto(null, "1", "닉네임", LocalDate.now()));
             mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
@@ -158,9 +158,49 @@ public class AuthControllerTest {
                     .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
         }
         @Test
-        @DisplayName("로그인 API - 이름 16글자")
+        @DisplayName("로그인 API(Name) - 이름 16글자")
         void failSignInWithLongName() throws Exception {
             String json = mapper.writeValueAsString(new MemberDto(null, "1111111111111111", "닉네임", LocalDate.now()));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
+
+        @Test
+        @DisplayName("로그인 API(Nickname) - 잘못된 닉네임 형식")
+        void failSignInWithInvalidNickname() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "이름", "@!@$$^#&^$#@", LocalDate.now()));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
+        @Test
+        @DisplayName("로그인 API(Nickname) - 닉네임 2글자")
+        void failSignInWithShortNickname() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "이름", "11", LocalDate.now()));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
+        @Test
+        @DisplayName("로그인 API(Nickname) - 닉네임 21글자")
+        void failSignInWithLongNickname() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "이름", "111111111111111111111", LocalDate.now()));
             mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(json)
