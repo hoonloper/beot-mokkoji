@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -111,9 +112,16 @@ public class AuthControllerTest {
     @Nested
     @DisplayName("실패 케이스")
     class Fail {
+        ObjectMapper mapper;
+        @BeforeEach
+        void init() {
+            mapper = new ObjectMapper()
+                    .registerModule(new JavaTimeModule())
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        }
         @Test
-        @DisplayName("로그인 API")
-        void failSignIn() throws Exception {
+        @DisplayName("로그인 API - body 없음")
+        void failSignInWithNoBody() throws Exception {
             mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
@@ -122,9 +130,45 @@ public class AuthControllerTest {
                     .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(500))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value("Internal Server Error"));
         }
-        /*
-        * {"message":"Required request body is missing: public com.example.server.domains.member.dto.MemberDto com.example.server.application.controllers.AuthController.signIn(com.example.server.domains.member.dto.MemberDto)",
-        * "statusMessage":"Internal Server Error",
-        * "statusCode":500}*/
+
+        @Test
+        @DisplayName("로그인 API - 잘못된 이름 형식")
+        void failSignInWithInvalidName() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "@!@$$^#&^$#@", "닉네임", LocalDate.now()));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
+        @Test
+        @DisplayName("로그인 API - 이름 1글자")
+        void failSignInWithShortName() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "1", "닉네임", LocalDate.now()));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
+        @Test
+        @DisplayName("로그인 API - 이름 16글자")
+        void failSignInWithLongName() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "1111111111111111", "닉네임", LocalDate.now()));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
     }
 }
