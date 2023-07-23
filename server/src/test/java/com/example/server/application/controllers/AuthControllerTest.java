@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.Period;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -295,6 +296,20 @@ public class AuthControllerTest {
         void failSignUpWithLongNickname() throws Exception {
             String json = mapper.writeValueAsString(new MemberDto(null, "이름", "111111111111111111111", LocalDate.now()));
             mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
+
+        @Test
+        @DisplayName("회원가입 API(Birthday) - 미래 생년월일")
+        void failSignUpWithFutureBirthday() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "이름", "닉네임", LocalDate.now().plus(Period.ofDays(1))));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-up")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(json)
                             .accept(MediaType.APPLICATION_JSON)
