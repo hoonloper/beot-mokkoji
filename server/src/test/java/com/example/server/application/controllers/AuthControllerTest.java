@@ -223,5 +223,85 @@ public class AuthControllerTest {
                     .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(500))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value("Internal Server Error"));
         }
+
+        @Test
+        @DisplayName("회원가입 API(Name) - 잘못된 이름 형식")
+        void failSignUpWithInvalidName() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "@!@$$^#&^$#@", "닉네임", LocalDate.now()));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
+        @Test
+        @DisplayName("회원가입 API(Name) - 이름 1글자")
+        void failSignUpWithShortName() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "1", "닉네임", LocalDate.now()));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
+        @Test
+        @DisplayName("회원가입 API(Name) - 이름 16글자")
+        void failSignUpWithLongName() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "1111111111111111", "닉네임", LocalDate.now()));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
+
+        @Test
+        @DisplayName("회원가입 API(Nickname) - 잘못된 닉네임 형식")
+        void failSignUpWithInvalidNickname() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "이름", "@!@$$^#&^$#@", LocalDate.now()));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
+        @Test
+        @DisplayName("회원가입 API(Nickname) - 닉네임 2글자")
+        void failSignUpWithShortNickname() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "이름", "11", LocalDate.now()));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
+        @Test
+        @DisplayName("회원가입 API(Nickname) - 닉네임 21글자")
+        void failSignUpWithLongNickname() throws Exception {
+            String json = mapper.writeValueAsString(new MemberDto(null, "이름", "111111111111111111111", LocalDate.now()));
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-in")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
+        }
     }
 }
