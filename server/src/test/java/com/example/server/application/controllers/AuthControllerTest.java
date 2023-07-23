@@ -210,5 +210,18 @@ public class AuthControllerTest {
                     .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(HttpStatus.BAD_REQUEST.value()))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value(HttpStatus.BAD_REQUEST.getReasonPhrase()));
         }
+
+
+        @Test
+        @DisplayName("회원가입 API - body 없음")
+        void failSignUpWithNoBody() throws Exception {
+            mvc.perform(MockMvcRequestBuilders.post(END_POINT + "/sign-up")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value(500))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.statusMessage").value("Internal Server Error"));
+        }
     }
 }
