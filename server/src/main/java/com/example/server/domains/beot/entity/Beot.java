@@ -37,4 +37,10 @@ public class Beot {
         this.toMemberId = toMemberId;
         this.createdAt = createdAt;
     }
+
+    public Beot(Long id, String fromMemberId, String toMemberId) {
+        this.id = id;
+        this.fromMemberId = fromMemberId;
+        this.toMemberId = toMemberId;
+    }
 }

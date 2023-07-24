@@ -23,7 +23,13 @@ public class BeotController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void follow(@RequestBody @Valid BeotDto beot) {
-        beotService.follow(beot);
+    public void follow(@RequestBody @Valid BeotDto beotDto) {
+        beotService.follow(beotDto);
+    }
+
+    @DeleteMapping("/following")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void unfollow(@RequestBody @Valid BeotDto beotDto) {
+        beotService.unfollow(beotDto);
     }
 }

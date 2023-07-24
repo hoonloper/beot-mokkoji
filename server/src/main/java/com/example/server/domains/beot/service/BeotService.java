@@ -7,7 +7,6 @@ import com.example.server.domains.beot.vo.BeotFollowingsVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -29,6 +28,10 @@ public class BeotService {
     }
 
     public void follow(BeotDto beotDto) {
-        beotRepository.save(new Beot(beotDto.toMemberId(), beotDto.fromMemberId(), beotDto.createdAt()));
+        beotRepository.save(new Beot(beotDto.fromMemberId(), beotDto.toMemberId(), beotDto.createdAt()));
+    }
+
+    public void unfollow(BeotDto beotDto) {
+        beotRepository.delete(new Beot(beotDto.id(), beotDto.fromMemberId(), beotDto.toMemberId()));
     }
 }

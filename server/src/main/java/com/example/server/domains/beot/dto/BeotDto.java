@@ -12,15 +12,14 @@ import java.time.LocalDateTime;
 @Builder
 public record BeotDto(
         @Nullable
-        @Pattern(regexp = "[^0-9]", message = "잘못된 고유 번호입니다.")
         @Min(value = 1L, message = "잘못된 고유 번호입니다.")
         Long id,
 
-        // @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", message = "잘못된 회원 고유 번호")
+        @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", message = "잘못된 회원 고유 번호")
         @NotNull
         String fromMemberId,
 
-        // @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", message = "잘못된 회원 고유 번호")
+        @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", message = "잘못된 회원 고유 번호")
         @NotNull
         String toMemberId,
 

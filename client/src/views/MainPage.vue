@@ -23,7 +23,7 @@
           :nickname="beot.toMember.nickname"
         />
         <div class="buttons">
-          <BeotButton>팔로우 끊기</BeotButton>
+          <BeotButton @click="unfollow(beot)">팔로우 끊기</BeotButton>
           <BeotButton>채팅하기</BeotButton>
         </div>
       </div>
@@ -43,6 +43,7 @@ import LayoutFooter from '@/layouts/LayoutFooter.vue';
 import ItemDivider from '@/components/ItemDivider.vue';
 import router from '@/router';
 import { useMemberStorage } from '@/composables/useMemberStorage';
+import { HttpStatus } from '@/common/constant';
 
 useMemberStorage().setItem('end-point', '/');
 const store = useStore();
@@ -64,10 +65,9 @@ type Beot = {
 const beotList = ref<Beot[]>([]);
 
 onMounted(async () => {
-  const response = await axios(
+  const response = await axios.get(
     'http://localhost:8080/api/v1/beots/following/:id',
     {
-      method: 'GET',
       params: {
         id: store.state.id,
       },
@@ -75,6 +75,22 @@ onMounted(async () => {
   );
   beotList.value = response.data.filter((d: Beot) => d.toMember !== null);
 });
+
+const unfollow = async (beot: Beot) => {
+  const response = await axios.delete<{ fromMember: string; toMember: string }>(
+    'http://localhost:8080/api/v1/beots/following',
+    {
+      data: {
+        id: beot.id,
+        fromMemberId: store.state.id,
+        toMemberId: beot.toMember.id,
+      },
+    }
+  );
+  if (response.status === HttpStatus.NO_CONTENT) {
+    beotList.value = beotList.value.filter((b) => b.id !== beot.id);
+  }
+};
 </script>
 
 <style lang="scss" scoped>
