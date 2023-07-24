@@ -1,5 +1,7 @@
 package com.example.server.application.configs;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -13,14 +15,14 @@ import java.sql.SQLException;
 public class DatabaseConfig implements ApplicationRunner {
     @Autowired
     DataSource dataSource;
-
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Override
     public void run(ApplicationArguments args) throws SQLException {
         try(Connection connection = dataSource.getConnection()){
-            System.out.println(connection.getMetaData().getURL());
-            System.out.println(connection.getMetaData().getUserName());
+            logger.info(connection.getMetaData().getURL());
+            logger.info(connection.getMetaData().getUserName());
         } catch (Exception e){
-            System.out.println(e);
+            logger.warn(e.toString());
         }
     }
 }
