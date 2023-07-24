@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @Component
-public class H2DatabaseConfig implements ApplicationRunner {
+public class DatabaseConfig implements ApplicationRunner {
     @Autowired
     DataSource dataSource;
 
