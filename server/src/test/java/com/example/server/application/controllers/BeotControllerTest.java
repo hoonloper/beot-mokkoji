@@ -16,13 +16,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -60,12 +61,12 @@ public class BeotControllerTest {
             beotDto = new BeotDto(null, EXPECTED_FROM_MEMBER_ID, EXPECTED_TO_MEMBER_ID, EXPECTED_CREATED_AT);
             json = mapper.writeValueAsString(beotDto);
 
-            mvc.perform(MockMvcRequestBuilders.post(END_POINT)
+            mvc.perform(post(END_POINT)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(json)
                             .accept(MediaType.APPLICATION_JSON)
                     ).andDo(print())
-                    .andExpect(MockMvcResultMatchers.status().isCreated());
+                    .andExpect(status().isCreated());
         }
 
         @Test
@@ -74,12 +75,12 @@ public class BeotControllerTest {
             beotDto = new BeotDto(12L, EXPECTED_FROM_MEMBER_ID, EXPECTED_TO_MEMBER_ID, EXPECTED_CREATED_AT);
             json = mapper.writeValueAsString(beotDto);
 
-            mvc.perform(MockMvcRequestBuilders.delete(END_POINT + "/following")
+            mvc.perform(delete(END_POINT + "/following")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(json)
                             .accept(MediaType.APPLICATION_JSON)
                     ).andDo(print())
-                    .andExpect(MockMvcResultMatchers.status().isNoContent());
+                    .andExpect(status().isNoContent());
         }
     }
 }

@@ -15,9 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +22,11 @@ import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -57,15 +59,15 @@ public class RoomControllerTest {
             RoomDto roomDto = new RoomDto(name, memberId);
             String json = new ObjectMapper().writeValueAsString(roomDto);
 
-            mvc.perform(MockMvcRequestBuilders.post(END_POINT)
+            mvc.perform(post(END_POINT)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(json)
                             .accept(MediaType.APPLICATION_JSON)
-            ).andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.status().isCreated())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.memberId").value(memberId))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(name))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.roomId").value(roomId));
+            ).andDo(print())
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.memberId").value(memberId))
+            .andExpect(jsonPath("$.name").value(name))
+            .andExpect(jsonPath("$.roomId").value(roomId));
         }
 
         @Test
@@ -110,26 +112,26 @@ public class RoomControllerTest {
             String expectedRoomMemberNickname = "$..roomMembers[?(@.memberNickname == '%s')]";
             String expectedRoomMemberMemberId = "$..roomMembers[?(@.memberId == '%s')]";
 
-            mvc.perform(MockMvcRequestBuilders.get(END_POINT + "/" + name)
+            mvc.perform(get(END_POINT + "/" + name)
                             .contentType(MediaType.APPLICATION_JSON)
-            ).andDo(MockMvcResultHandlers.print())
-                    .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.jsonPath(expectedRoomId, roomId).exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath(expectedRoomId, roomId2).exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath(expectedMemberId, name).exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath(expectedMemberId, name2).exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath(expectedRoomMemberId, id).exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath(expectedRoomMemberName, memberName).exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath(expectedRoomMemberNickname, memberNickname).exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath(expectedRoomMemberMemberId, memberId).exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath(expectedRoomMemberId, id2).exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath(expectedRoomMemberName, memberName2).exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath(expectedRoomMemberNickname, memberNickname2).exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath(expectedRoomMemberMemberId, memberId2).exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$..['roomId']").exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$..['name']").exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$[0]").exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$[1]").exists());
+            ).andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath(expectedRoomId, roomId).exists())
+                    .andExpect(jsonPath(expectedRoomId, roomId2).exists())
+                    .andExpect(jsonPath(expectedMemberId, name).exists())
+                    .andExpect(jsonPath(expectedMemberId, name2).exists())
+                    .andExpect(jsonPath(expectedRoomMemberId, id).exists())
+                    .andExpect(jsonPath(expectedRoomMemberName, memberName).exists())
+                    .andExpect(jsonPath(expectedRoomMemberNickname, memberNickname).exists())
+                    .andExpect(jsonPath(expectedRoomMemberMemberId, memberId).exists())
+                    .andExpect(jsonPath(expectedRoomMemberId, id2).exists())
+                    .andExpect(jsonPath(expectedRoomMemberName, memberName2).exists())
+                    .andExpect(jsonPath(expectedRoomMemberNickname, memberNickname2).exists())
+                    .andExpect(jsonPath(expectedRoomMemberMemberId, memberId2).exists())
+                    .andExpect(jsonPath("$..['roomId']").exists())
+                    .andExpect(jsonPath("$..['name']").exists())
+                    .andExpect(jsonPath("$[0]").exists())
+                    .andExpect(jsonPath("$[1]").exists());
 
         }
     }
