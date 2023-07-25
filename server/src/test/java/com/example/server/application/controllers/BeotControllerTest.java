@@ -2,9 +2,11 @@ package com.example.server.application.controllers;
 
 import com.example.server.domains.beot.dto.BeotDto;
 import com.example.server.domains.beot.service.BeotService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -39,17 +41,23 @@ public class BeotControllerTest {
         BeotDto beotDto;
         ObjectMapper mapper;
         String json;
+        String EXPECTED_FROM_MEMBER_ID;
+        String EXPECTED_TO_MEMBER_ID;
+        LocalDateTime EXPECTED_CREATED_AT;
+        @BeforeEach
+        void init() throws JsonProcessingException {
+            EXPECTED_FROM_MEMBER_ID = UUID.randomUUID().toString();
+            EXPECTED_TO_MEMBER_ID = UUID.randomUUID().toString();
+            EXPECTED_CREATED_AT = LocalDateTime.now();
+            mapper = new ObjectMapper()
+                    .registerModule(new JavaTimeModule())
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        }
 
         @Test
         @DisplayName("팔로우 API")
         void follow() throws Exception {
-            String EXPECTED_FROM_MEMBER_ID = UUID.randomUUID().toString();
-            String EXPECTED_TO_MEMBER_ID = UUID.randomUUID().toString();
-            LocalDateTime EXPECTED_CREATED_AT = LocalDateTime.now();
             beotDto = new BeotDto(null, EXPECTED_FROM_MEMBER_ID, EXPECTED_TO_MEMBER_ID, EXPECTED_CREATED_AT);
-            mapper = new ObjectMapper()
-                    .registerModule(new JavaTimeModule())
-                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             json = mapper.writeValueAsString(beotDto);
 
             mvc.perform(MockMvcRequestBuilders.post(END_POINT)
@@ -58,6 +66,20 @@ public class BeotControllerTest {
                             .accept(MediaType.APPLICATION_JSON)
                     ).andDo(print())
                     .andExpect(MockMvcResultMatchers.status().isCreated());
+        }
+
+        @Test
+        @DisplayName("언팔로우 API")
+        void unfollow() throws Exception {
+            beotDto = new BeotDto(12L, EXPECTED_FROM_MEMBER_ID, EXPECTED_TO_MEMBER_ID, EXPECTED_CREATED_AT);
+            json = mapper.writeValueAsString(beotDto);
+
+            mvc.perform(MockMvcRequestBuilders.delete(END_POINT + "/following")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(json)
+                            .accept(MediaType.APPLICATION_JSON)
+                    ).andDo(print())
+                    .andExpect(MockMvcResultMatchers.status().isNoContent());
         }
     }
 }
