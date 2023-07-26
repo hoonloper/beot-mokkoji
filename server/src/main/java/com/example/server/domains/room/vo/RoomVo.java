@@ -1,10 +1,10 @@
 package com.example.server.domains.room.vo;
 
-import com.example.server.domains.chat.service.ChatService;
+//import com.example.server.domains.chat.service.ChatService;
 import com.example.server.domains.room.entity.Room;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.web.socket.WebSocketSession;
+//import org.springframework.web.socket.WebSocketSession;
 
 import java.util.*;
 
@@ -13,11 +13,11 @@ public class RoomVo {
     private String roomId; // 채팅방 아이디
     private String memberId; // 채팅방 멤버 아이디
     private String name; // 채팅방 이름
-    private Set<WebSocketSession> sessions = new HashSet<>();
+//    private Set<WebSocketSession> sessions = new HashSet<>();
 
-    public <T> void sendMessage(T message, ChatService service) {
-        sessions.parallelStream().forEach(session -> service.sendMessage(session, message));
-    }
+//    public <T> void sendMessage(T message, ChatService service) {
+//        sessions.parallelStream().forEach(session -> service.sendMessage(session, message));
+//    }
     @Builder
     public RoomVo(String roomId, String memberId, String name) {
         this.roomId = roomId;
@@ -25,16 +25,16 @@ public class RoomVo {
         this.name = name;
     }
 
-    public void addSession(WebSocketSession session) {
-        sessions.add(session);
-    }
-    public void removeSession(WebSocketSession session) {
-        sessions.remove(session);
-    }
-
-    public boolean containsSession(WebSocketSession session) {
-        return sessions.contains(session);
-    }
+//    public void addSession(WebSocketSession session) {
+//        sessions.add(session);
+//    }
+//    public void removeSession(WebSocketSession session) {
+//        sessions.remove(session);
+//    }
+//
+//    public boolean containsSession(WebSocketSession session) {
+//        return sessions.contains(session);
+//    }
 
     public static RoomVo toRoomVo(Room room) {
         return RoomVo.builder()
