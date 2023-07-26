@@ -1,6 +1,5 @@
 package com.example.server.application.controllers;
 
-import com.example.server.domains.chat.interfaces.ChatsInterface;
 import com.example.server.domains.chat.service.ChatService;
 import com.example.server.domains.chat.vo.ChatEventType;
 import org.junit.jupiter.api.DisplayName;
