@@ -3,7 +3,7 @@
     <div class="chatroom-header">
       <BeotButton @click="back()">뒤로</BeotButton>
       <div class="chatroom-header-name">
-        <div class="status">{{ isConnected ? '🟢' : '🔴' }}</div>
+        <!-- <div class="status">{{ isConnected ? '🟢' : '🔴' }}</div> -->
         <div class="name">{{ room.name }}</div>
       </div>
     </div>
@@ -71,6 +71,22 @@ const chats = ref<
   }[]
 >([]);
 
+const sendChat = async () => {
+  console.log(store.state);
+  const response = await axios('http://localhost:8080/api/v1/chats', {
+    method: 'POST',
+    data: {
+      msg: text.value,
+      senderIdx: store.state.id,
+      senderName: store.state.name,
+      receiver: props.room.members[0].memberId,
+      roomNum: 1,
+    },
+  });
+
+  console.log(response.data);
+};
+
 const chatWrap = ref();
 // TODO: 스크롤 바텀 이슈 해결해야 함
 const scrollToBottom = () => {
@@ -79,13 +95,15 @@ const scrollToBottom = () => {
   }
 };
 onMounted(async () => {
+  console.log('test');
   const { data } = await axios(
-    'http://localhost:8080/api/v1/chats/' + props.room.roomId,
+    `http://localhost:8080/api/v1/chats/sender/${store.state.id}/receiver/${props.room.members[0].memberId}`,
     {
       method: 'GET',
     }
   );
-  chats.value = data;
+  console.log(data);
+  chats.value = [];
   scrollToBottom();
 });
 
@@ -100,88 +118,88 @@ const formatSendAt = (time: string) => {
 };
 const back = () => {
   router.push('/rooms');
-  disconnect();
+  // disconnect();
 };
 
-const chat = ref<{
-  type: EventType;
-  senderId: string;
-  roomId: string;
-  message: string;
-  sendAt: string;
-}>({
-  type: 'CONNECT',
-  senderId: store.state.id,
-  roomId: props.room.roomId,
-  message: '',
-  sendAt: new Date().toISOString(),
-});
+// const chat = ref<{
+//   type: EventType;
+//   senderId: string;
+//   roomId: string;
+//   message: string;
+//   sendAt: string;
+// }>({
+//   type: 'CONNECT',
+//   senderId: store.state.id,
+//   roomId: props.room.roomId,
+//   message: '',
+//   sendAt: new Date().toISOString(),
+// });
 
 const text = ref('');
 const inputText = (e: any) => {
   text.value = e.target.value;
 };
-const sendChat = () => {
-  if (text.value.length !== 0) {
-    chat.value.type = 'MESSAGE';
-    chat.value.message = text.value;
-    chat.value.sendAt = new Date().toISOString();
-    ws.value.send(JSON.stringify(chat.value));
-  }
-  text.value = '';
-};
+// const sendChat = () => {
+//   if (text.value.length !== 0) {
+//     chat.value.type = 'MESSAGE';
+//     chat.value.message = text.value;
+//     chat.value.sendAt = new Date().toISOString();
+//     ws.value.send(JSON.stringify(chat.value));
+//   }
+//   text.value = '';
+// };
 
-const connectionMessage = ref('connectionMessage');
-const isConnected = ref(false);
+// const connectionMessage = ref('connectionMessage');
+// const isConnected = ref(false);
 
-const disconnect = () => {
-  if (isConnected.value) {
-    chat.value.type = 'DISCONNECT';
-    chat.value.message = '';
-    ws.value.send(JSON.stringify(chat.value));
-    ws.value.close(1000);
-    connectionMessage.value = '연결이 끊어졌습니다.';
-  } else {
-    connectionMessage.value = '이미 연결이 끊겼습니다.';
-  }
-  isConnected.value = false;
-};
+// const disconnect = () => {
+//   if (isConnected.value) {
+//     chat.value.type = 'DISCONNECT';
+//     chat.value.message = '';
+//     ws.value.send(JSON.stringify(chat.value));
+//     ws.value.close(1000);
+//     connectionMessage.value = '연결이 끊어졌습니다.';
+//   } else {
+//     connectionMessage.value = '이미 연결이 끊겼습니다.';
+//   }
+//   isConnected.value = false;
+// };
 
 // 소켓 연결
-const ws = ref<WebSocket>(new WebSocket('ws://localhost:8080/ws/chat'));
+// const ws = ref<WebSocket>(new WebSocket('ws://localhost:8080/ws/chat'));
 
-// 연결되었을 때
-ws.value.onopen = (e) => {
-  console.log('[open] Web Socket connected!');
-  isConnected.value = e.isTrusted;
-  connectionMessage.value = '연결되었습니다.';
-  chat.value.type = 'CONNECT';
-  chat.value.message = '';
-  ws.value.send(JSON.stringify(chat.value));
-};
+// // 연결되었을 때
+// ws.value.onopen = (e) => {
+//   console.log('[open] Web Socket connected!');
+//   isConnected.value = e.isTrusted;
+//   connectionMessage.value = '연결되었습니다.';
+//   chat.value.type = 'CONNECT';
+//   chat.value.message = '';
+//   ws.value.send(JSON.stringify(chat.value));
+// };
 
-// 응답 받은 메시지
-ws.value.onmessage = (e) => {
-  if (e.isTrusted) {
-    chats.value.push(JSON.parse(e.data));
-  }
-};
+// // 응답 받은 메시지
+// ws.value.onmessage = (e) => {
+//   if (e.isTrusted) {
+//     chats.value.push(JSON.parse(e.data));
+//   }
+// };
 
-// 소켓이 끊어졌을 때
-ws.value.onclose = (e) => {
-  // code가 1000이면 정상 종료
-  if (e.code === 1000) {
-    console.log('[close] Web Socket closed!');
-  } else {
-    console.log(`[close] Web Socket Dead code: ${e.code}, reason: ${e.reason}`);
-  }
-};
+// // 소켓이 끊어졌을 때
+// ws.value.onclose = (e) => {
+//   // code가 1000이면 정상 종료
+//   if (e.code === 1000) {
+//     console.log('[close] Web Socket closed!');
+//   } else {
+//     console.log(`[close] Web Socket Dead code: ${e.code}, reason: ${e.reason}`);
+//   }
+// };
 
-// 소켓 통신중 에러가 발생했을 때
-ws.value.onerror = (e) => {
-  console.log('[Error] Web Socket Error');
-  console.log(e);
-};
+// // 소켓 통신중 에러가 발생했을 때
+// ws.value.onerror = (e) => {
+//   console.log('[Error] Web Socket Error');
+//   console.log(e);
+// };
 </script>
 
 <style lang="scss" scoped>
