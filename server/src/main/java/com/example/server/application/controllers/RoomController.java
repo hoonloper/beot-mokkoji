@@ -19,12 +19,12 @@ public class RoomController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Room> createRoom(@RequestBody @Valid Room room){
+    public Mono<Room> createRoom(@RequestBody Room room){
         return roomService.createRoom(room);
     }
 
     @GetMapping("/{roomId}")
-    public Mono<Room> findRoomByRoomId(@PathVariable("roomId") @Valid @NotNull Long roomId) {
+    public Mono<Room> findRoomByRoomId(@PathVariable("roomId") @Valid @NotNull String roomId) {
         return roomService.findRoomByRoomId(roomId);
     }
 }

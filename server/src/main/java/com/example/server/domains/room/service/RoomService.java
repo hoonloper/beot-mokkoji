@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 public class RoomService {
     private final RoomRepository roomRepository;
 
-    public Mono<Room> findRoomByRoomId(Long roomId) {
+    public Mono<Room> findRoomByRoomId(String roomId) {
         return roomRepository.findById(roomId);
     }
 

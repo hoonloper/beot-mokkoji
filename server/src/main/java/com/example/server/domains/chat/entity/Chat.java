@@ -23,8 +23,8 @@ public class Chat {
     @Field(name = "receiver_idx")
     private String receiverIdx;
 
-    @Field(name = "room_num")
-    private Long roomNum;
+    @Field(name = "room_id")
+    private String roomId;
 
     @Field(name = "created_at")
     private String createdAt;

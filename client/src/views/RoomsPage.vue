@@ -3,11 +3,8 @@
     <LayoutHeader id="header" />
     <div class="contents-wrap">
       <ItemDivider prefix="채팅방 목록" :suffix="`총 ${rooms.length}개`" />
-      <div v-for="(room, i) of rooms" :key="i">
-        <RouterLink
-          class="room-cantainer"
-          :to="{ path: '/rooms/room/' + room.roomId }"
-        >
+      <div v-for="room of rooms" :key="room.id">
+        <RouterLink class="room-cantainer" :to="{ path: '/rooms/' + room.id }">
           <img
             class="image-circle-l"
             src="../assets/logo.png"
@@ -15,7 +12,7 @@
           />
           <div class="room-info">
             <div id="name">{{ room.name }}</div>
-            <div id="members">{{ room.roomMembers.length }}명 참여중</div>
+            <div id="members">{{ room.name }}명 참여중</div>
           </div>
         </RouterLink>
       </div>
@@ -44,28 +41,21 @@ if (router.currentRoute.value.name !== 'NOT_FOUND' && !store.state.isLoggedIn) {
 
 const rooms = ref<
   {
-    roomId: string;
+    id: string;
+    memberId: string;
     name: string;
-    roomMembers: [
-      {
-        id: number;
-        memberName: string;
-        memberNickname: string;
-        memberId: string;
-      }
-    ];
   }[]
 >([]);
 
 onMounted(async () => {
   if (store.state.isLoggedIn) {
     const response = await axios(
-      'http://localhost:8080/api/v1/rooms/' + store.state.id,
+      'http://localhost:8080/api/v1/rooms/64c251c795522d393d57050e',
       {
         method: 'GET',
       }
     );
-    rooms.value = response.data;
+    rooms.value = [response.data];
   }
 });
 </script>

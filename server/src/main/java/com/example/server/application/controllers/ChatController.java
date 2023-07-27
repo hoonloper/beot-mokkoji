@@ -29,9 +29,9 @@ public class ChatController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/chatrooms/{roomNum}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<Chat> findByRoomNum(@PathVariable Integer roomNum){
-        return chatRepository.mFindByRoomNum(roomNum).subscribeOn(Schedulers.boundedElastic());
+    @GetMapping(value = "/chatrooms/{roomId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Chat> findByRoomNum(@PathVariable String roomId){
+        return chatRepository.mFindByRoomNum(roomId).subscribeOn(Schedulers.boundedElastic());
     }
 
 
@@ -39,8 +39,14 @@ public class ChatController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Chat> setMsg(@RequestBody Chat chat){
-        System.out.println(chat.toString());
         chat.setCreatedAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")).toString());
-        return chatRepository.save(chat);
+        Chat savingChat = new Chat();
+        savingChat.setCreatedAt(chat.getCreatedAt());
+        savingChat.setMsg(chat.getMsg());
+        savingChat.setRoomId(chat.getRoomId());
+        savingChat.setReceiverIdx(chat.getReceiverIdx());
+        savingChat.setSenderIdx(chat.getSenderIdx());
+        savingChat.setSenderName(chat.getSenderName());
+        return chatRepository.save(savingChat);
     }
 }

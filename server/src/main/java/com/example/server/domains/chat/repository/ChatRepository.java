@@ -13,6 +13,6 @@ public interface ChatRepository extends ReactiveMongoRepository<Chat,String> {
     //Flux- 데이터의 흐름,끊기지 않고 데이터를 지속적으로 받겠다는 의미
 
     @Tailable
-    @Query("{ 'room_num': ?0 }")
-    Flux<Chat> mFindByRoomNum(Integer roomNum);
+    @Query("{ 'room_id': ?0 }")
+    Flux<Chat> mFindByRoomNum(String roomId);
 }

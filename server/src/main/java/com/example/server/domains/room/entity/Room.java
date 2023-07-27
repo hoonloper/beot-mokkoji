@@ -10,16 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection="rooms")
 public class Room {
     @Id
-    private Long id;
+    private String id;
 
     @Field(name = "member_id")
     private String memberId;
 
     @Field
     private String name;
-
-    public Room(String memberId, String name) {
-        this.memberId = memberId;
-        this.name = name;
-    }
 }
