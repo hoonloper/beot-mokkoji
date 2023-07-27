@@ -6,6 +6,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.*;
 
@@ -52,12 +53,8 @@ public class RoomService {
 //        return roomGroups;
         return new ArrayList<>();
     }
-    public Object createRoom(Object roomDto) {
-        String roomId = UUID.randomUUID().toString(); // 랜덤한 방 아이디 생성
-//        RoomVo room = RoomVo.toRoomVo(roomRepository.save(new Room(roomDto.memberId(), roomId, roomDto.name())));
-//        registerRoom(room); // 랜덤 아이디와 room 정보를 Map 에 저장
-//        return room;
-        return new Object();
+    public Mono<Room> createRoom(Room room) {
+         return roomRepository.save(room);
     }
 
 }

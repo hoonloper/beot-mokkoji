@@ -1,6 +1,5 @@
 package com.example.server.domains.room.entity;
 
-import com.example.server.domains.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
