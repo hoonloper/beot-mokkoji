@@ -20,10 +20,3 @@ INSERT INTO BEOTS (id, from_member_id, to_member_id, created_at) VALUES (8, '97f
 INSERT INTO BEOTS (id, from_member_id, to_member_id, created_at) VALUES (9, '78344b72-20f6-48a4-923c-3e0eda961067', 'b0f8df7b-837c-4b69-bd25-99e60ad60c26', '2022-01-01');
 INSERT INTO BEOTS (id, from_member_id, to_member_id, created_at) VALUES (10, '8ee64970-36e3-4e18-a6fc-262e8956bfcf', 'b0f8df7b-837c-4b69-bd25-99e60ad60c26', '2022-01-01');
 INSERT INTO BEOTS (id, from_member_id, to_member_id, created_at) VALUES (11, '874d9086-c91d-404f-be74-3108e157ad7e', '78344b72-20f6-48a4-923c-3e0eda961067', '2022-01-01');
-
-INSERT INTO ROOMS (member_id, room_id, name) VALUES ('b0f8df7b-837c-4b69-bd25-99e60ad60c26', '09f10a65-b2ff-4390-b491-06c0436b0918', '모자');
-INSERT INTO ROOMS (member_id, room_id, name) VALUES ('78344b72-20f6-48a4-923c-3e0eda961067', '09f10a65-b2ff-4390-b491-06c0436b0918', '모자');
-INSERT INTO ROOMS (member_id, room_id, name) VALUES ('b0f8df7b-837c-4b69-bd25-99e60ad60c26', 'd2d9d376-a2cc-4805-9956-ad0b64f89c10', '부자');
-INSERT INTO ROOMS (member_id, room_id, name) VALUES ('8ee64970-36e3-4e18-a6fc-262e8956bfcf', 'd2d9d376-a2cc-4805-9956-ad0b64f89c10', '부자');
-INSERT INTO ROOMS (member_id, room_id, name) VALUES ('b0f8df7b-837c-4b69-bd25-99e60ad60c26', '0e353a9b-0e1b-4857-99f2-2939c5d9d55d', '연인');
-INSERT INTO ROOMS (member_id, room_id, name) VALUES ('0ca75e74-c967-45e9-afd3-dd820ed30b02', '0e353a9b-0e1b-4857-99f2-2939c5d9d55d', '연인');
