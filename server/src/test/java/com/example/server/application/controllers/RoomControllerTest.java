@@ -1,8 +1,6 @@
 package com.example.server.application.controllers;
 
 import com.example.server.domains.room.dto.RoomDto;
-import com.example.server.domains.room.services.RoomGroup;
-import com.example.server.domains.room.services.RoomMember;
 import com.example.server.domains.room.services.RoomService;
 import com.example.server.domains.room.vo.RoomVo;
 import com.fasterxml.jackson.databind.ObjectMapper;

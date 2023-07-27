@@ -2,37 +2,25 @@ package com.example.server.domains.room.entity;
 
 import com.example.server.domains.member.entity.Member;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 
-@Entity(name = "rooms")
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
+@Data
+@Document(collection="rooms")
 public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = Member.class)
-    @JoinColumn(name = "member_id", insertable = false, updatable = false)
-    private Member member;
-
-    @Column(name = "member_id", nullable = false)
+    @Field(name = "member_id")
     private String memberId;
 
-    @Column
-    private String roomId;
-
-    @Column
+    @Field
     private String name;
 
-    public Room(String memberId, String roomId, String name) {
+    public Room(String memberId, String name) {
         this.memberId = memberId;
-        this.roomId = roomId;
         this.name = name;
     }
 }
