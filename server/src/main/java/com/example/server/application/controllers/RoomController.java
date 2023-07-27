@@ -1,7 +1,7 @@
 package com.example.server.application.controllers;
 
 import com.example.server.domains.room.entity.Room;
-import com.example.server.domains.room.services.RoomService;
+import com.example.server.domains.room.service.RoomService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -26,8 +23,8 @@ public class RoomController {
         return roomService.createRoom(room);
     }
 
-    @GetMapping("/room/{roomId}")
-    public List<Object> findRoomByRoomId(@PathVariable("roomId") @Valid @NotNull String roomId) {
+    @GetMapping("/{roomId}")
+    public Mono<Room> findRoomByRoomId(@PathVariable("roomId") @Valid @NotNull Long roomId) {
         return roomService.findRoomByRoomId(roomId);
     }
 }

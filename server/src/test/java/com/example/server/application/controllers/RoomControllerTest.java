@@ -1,7 +1,7 @@
 package com.example.server.application.controllers;
 
 import com.example.server.domains.room.dto.RoomDto;
-import com.example.server.domains.room.services.RoomService;
+import com.example.server.domains.room.service.RoomService;
 import com.example.server.domains.room.vo.RoomVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
