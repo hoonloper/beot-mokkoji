@@ -33,26 +33,6 @@ public class RoomService {
         roomRepository.save(room);
     }
 
-    public List<Object> getAllRoomsByMemberId(String memberId) {
-//        List<FindAllByMemberIdInterface> rooms = roomRepository.findAllByMemberId(memberId);
-
-//        List<RoomGroup> roomGroups = new ArrayList<>();
-//        for (FindAllByMemberIdInterface room : rooms) {
-//            RoomMember roomMember = new RoomMember(room.getId(), room.getMemberId(), room.getMemberName(), room.getMemberNickname());
-//            RoomGroup roomGroup = roomGroups.stream()
-//                    .filter(group -> group.getRoomId().equals(room.getRoomId()))
-//                    .findFirst()
-//                    .orElseGet(() -> {
-//                        RoomGroup newGroup = new RoomGroup(room.getRoomId(), room.getName());
-//                        roomGroups.add(newGroup);
-//                        return newGroup;
-//                    });
-//            roomGroup.getRoomMembers().add(roomMember);
-//        }
-
-//        return roomGroups;
-        return new ArrayList<>();
-    }
     public Mono<Room> createRoom(Room room) {
          return roomRepository.save(room);
     }

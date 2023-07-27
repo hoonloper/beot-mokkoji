@@ -26,12 +26,6 @@ public class RoomController {
         return roomService.createRoom(room);
     }
 
-
-    @GetMapping("/{memberId}")
-    public List<Object> getAllRoomsByMemberId(@PathVariable("memberId") @Valid @NotNull String memberId) {
-        return roomService.getAllRoomsByMemberId(memberId);
-    }
-
     @GetMapping("/room/{roomId}")
     public List<Object> findRoomByRoomId(@PathVariable("roomId") @Valid @NotNull String roomId) {
         return roomService.findRoomByRoomId(roomId);
