@@ -15,16 +15,16 @@ public class Chat {
     private String msg;
 
     @Field(name = "sender_idx")
-    private Integer senderIdx;
+    private String senderIdx;
 
     @Field(name = "sender_name")
     private String senderName;
 
     @Field(name = "receiver_idx")
-    private Integer receiverIdx;
+    private String receiverIdx;
 
     @Field(name = "room_num")
-    private Integer roomNum;
+    private Long roomNum;
 
     @Field(name = "created_at")
     private String createdAt;

@@ -27,13 +27,3 @@ INSERT INTO ROOMS (member_id, room_id, name) VALUES ('b0f8df7b-837c-4b69-bd25-99
 INSERT INTO ROOMS (member_id, room_id, name) VALUES ('8ee64970-36e3-4e18-a6fc-262e8956bfcf', 'd2d9d376-a2cc-4805-9956-ad0b64f89c10', '부자');
 INSERT INTO ROOMS (member_id, room_id, name) VALUES ('b0f8df7b-837c-4b69-bd25-99e60ad60c26', '0e353a9b-0e1b-4857-99f2-2939c5d9d55d', '연인');
 INSERT INTO ROOMS (member_id, room_id, name) VALUES ('0ca75e74-c967-45e9-afd3-dd820ed30b02', '0e353a9b-0e1b-4857-99f2-2939c5d9d55d', '연인');
-
-INSERT INTO CHATS (room_id, sender_id, message, send_at, type) VALUES ('0e353a9b-0e1b-4857-99f2-2939c5d9d55d', 'b0f8df7b-837c-4b69-bd25-99e60ad60c26', '개구쟁이님이 채팅방에 접속했습니다.', '2023-07-07 20:54:00.883', 0);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, type) VALUES ('0e353a9b-0e1b-4857-99f2-2939c5d9d55d', '0ca75e74-c967-45e9-afd3-dd820ed30b02', '부잣집딸님이 채팅방에 접속했습니다.', '2023-07-07 20:55:00.883', 0);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, type) VALUES ('0e353a9b-0e1b-4857-99f2-2939c5d9d55d', 'b0f8df7b-837c-4b69-bd25-99e60ad60c26', '호이호이', '2023-07-07 20:55:00.883', 1);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, type) VALUES ('0e353a9b-0e1b-4857-99f2-2939c5d9d55d', '0ca75e74-c967-45e9-afd3-dd820ed30b02', '짱구 뭐해', '2023-07-07 20:56:00.883', 1);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, type) VALUES ('0e353a9b-0e1b-4857-99f2-2939c5d9d55d', 'b0f8df7b-837c-4b69-bd25-99e60ad60c26', '나 부리부리 댄스~', '2023-07-07 20:58:00.883', 1);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, type) VALUES ('0e353a9b-0e1b-4857-99f2-2939c5d9d55d', 'b0f8df7b-837c-4b69-bd25-99e60ad60c26', '춤추고 있어!', '2023-07-07 20:59:00.883', 1);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, type) VALUES ('0e353a9b-0e1b-4857-99f2-2939c5d9d55d', '0ca75e74-c967-45e9-afd3-dd820ed30b02', '재미있겠다! 같이 추자', '2023-07-07 21:00:00.883', 1);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, type) VALUES ('0e353a9b-0e1b-4857-99f2-2939c5d9d55d', '0ca75e74-c967-45e9-afd3-dd820ed30b02', '부리부리~~', '2023-07-07 21:01:00.883', 1);
-INSERT INTO CHATS (room_id, sender_id, message, send_at, type) VALUES ('0e353a9b-0e1b-4857-99f2-2939c5d9d55d', 'b0f8df7b-837c-4b69-bd25-99e60ad60c26', '그건좀..', '2023-07-07 22:36:00.883', 1);

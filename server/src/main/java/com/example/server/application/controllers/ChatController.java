@@ -3,6 +3,7 @@ package com.example.server.application.controllers;
 import com.example.server.domains.chat.entity.Chat;
 import com.example.server.domains.chat.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -21,8 +22,8 @@ public class ChatController {
     //귓속말 할때 사용
     @CrossOrigin
     @GetMapping(value = "/sender/{sender}/receiver/{receiver}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<Chat> getMsg(@PathVariable Integer sender,
-                             @PathVariable Integer receiver){
+    public Flux<Chat> getMsg(@PathVariable String sender,
+                             @PathVariable String receiver){
         return chatRepository.mFindBySender(sender,receiver)
                 .subscribeOn(Schedulers.boundedElastic());
     }
@@ -36,7 +37,9 @@ public class ChatController {
 
     @CrossOrigin
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Mono<Chat> setMsg(@RequestBody Chat chat){
+        System.out.println(chat.toString());
         chat.setCreatedAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")).toString());
         return chatRepository.save(chat);
     }
