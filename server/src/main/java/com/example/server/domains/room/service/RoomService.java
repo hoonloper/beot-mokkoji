@@ -2,23 +2,29 @@ package com.example.server.domains.room.service;
 
 import com.example.server.domains.room.entity.Room;
 import com.example.server.domains.room.repository.RoomRepository;
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Slf4j
-@Data
+@RequiredArgsConstructor
 @Service
 public class RoomService {
+    @Autowired
     private final RoomRepository roomRepository;
 
-    public Mono<Room> findRoomByRoomId(String roomId) {
-        return roomRepository.findById(roomId);
+    public Room findRoomByRoomId(String roomId) {
+        return roomRepository.findById(roomId).orElse(null);
     }
 
-    public Mono<Room> createRoom(Room room) {
+    public Room createRoom(Room room) {
          return roomRepository.save(room);
     }
 
+    public List<Room> findAllByMemberId(String memberId) {
+        return roomRepository.findAllByMemberId(memberId);
+    }
 }

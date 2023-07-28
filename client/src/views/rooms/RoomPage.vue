@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
 import BeotButton from '@/components/BeotButton.vue';
@@ -58,15 +58,35 @@ const chats = ref<
   }[]
 >([]);
 
+const room = ref<{ id: string; name: string; members: string[] } | null>(null);
+onMounted(async () => {
+  const response = await axios(
+    'http://localhost:8080/api/v1/rooms/' + props.roomId,
+    {
+      method: 'GET',
+    }
+  );
+  room.value = response.data;
+});
+
 const sendChat = async () => {
+  if (!room.value) {
+    throw new Error();
+  }
+  const receiverIdx = room.value.members.find(
+    (member) => store.state.id !== member
+  );
+  if (!receiverIdx) {
+    return;
+  }
   const response = await axios('http://localhost:8080/api/v1/chats', {
     method: 'POST',
     data: {
       msg: text.value,
       senderIdx: store.state.id,
       senderName: store.state.name,
-      receiverIdx: 'b0f8df7b-837c-4b69-bd25-99e60ad60c26',
-      roomId: props.roomId,
+      receiverIdx,
+      roomId: room.value.id,
     },
   });
   chats.value.push(response.data);

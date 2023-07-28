@@ -22,10 +22,8 @@ public class ChatController {
     //귓속말 할때 사용
     @CrossOrigin
     @GetMapping(value = "/sender/{sender}/receiver/{receiver}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<Chat> getMsg(@PathVariable String sender,
-                             @PathVariable String receiver){
-        return chatRepository.mFindBySender(sender,receiver)
-                .subscribeOn(Schedulers.boundedElastic());
+    public Flux<Chat> getMsg(@PathVariable String sender, @PathVariable String receiver){
+        return chatRepository.mFindBySender(sender,receiver).subscribeOn(Schedulers.boundedElastic());
     }
 
     @CrossOrigin

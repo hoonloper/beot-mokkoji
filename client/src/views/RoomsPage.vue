@@ -12,7 +12,7 @@
           />
           <div class="room-info">
             <div id="name">{{ room.name }}</div>
-            <div id="members">{{ room.name }}명 참여중</div>
+            <div id="members">{{ room.members.length }}명 참여중</div>
           </div>
         </RouterLink>
       </div>
@@ -42,7 +42,7 @@ if (router.currentRoute.value.name !== 'NOT_FOUND' && !store.state.isLoggedIn) {
 const rooms = ref<
   {
     id: string;
-    memberId: string;
+    members: string[];
     name: string;
   }[]
 >([]);
@@ -50,12 +50,12 @@ const rooms = ref<
 onMounted(async () => {
   if (store.state.isLoggedIn) {
     const response = await axios(
-      'http://localhost:8080/api/v1/rooms/64c251c795522d393d57050e',
+      'http://localhost:8080/api/v1/rooms/beot/' + store.state.id,
       {
         method: 'GET',
       }
     );
-    rooms.value = [response.data];
+    rooms.value = response.data;
   }
 });
 </script>
