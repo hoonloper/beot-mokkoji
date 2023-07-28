@@ -79,16 +79,17 @@ const sendChat = async () => {
   if (!receiverIdx) {
     return;
   }
-  const response = await axios('http://localhost:8080/api/v1/chats', {
-    method: 'POST',
-    data: {
+  const response = await axios.post(
+    'http://localhost:8080/api/v1/chats',
+    {
       msg: text.value,
       senderIdx: store.state.id,
       senderName: store.state.name,
       receiverIdx,
       roomId: room.value.id,
     },
-  });
+    { withCredentials: true }
+  );
   chats.value.push(response.data);
 };
 
