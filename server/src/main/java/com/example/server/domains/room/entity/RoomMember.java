@@ -1,23 +1,22 @@
 package com.example.server.domains.room.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-import java.util.List;
-
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection="rooms")
-public class Room {
+@Document("room_members")
+public class RoomMember {
     @Id
     private String id;
-
-    private List<RoomMember> members;
-
-    @Field
     private String name;
+    private String nickname;
+
+    @Field("member_id")
+    private String memberId;
 }

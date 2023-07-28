@@ -25,6 +25,6 @@ public class RoomService {
     }
 
     public List<Room> findAllByMemberId(String memberId) {
-        return roomRepository.findAllByMemberId(memberId);
+        return roomRepository.findAllByMemberIdInMembers(memberId);
     }
 }

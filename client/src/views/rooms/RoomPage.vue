@@ -66,6 +66,7 @@ onMounted(async () => {
       method: 'GET',
     }
   );
+  console.log(response.data);
   room.value = response.data;
 });
 

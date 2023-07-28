@@ -42,18 +42,15 @@ if (router.currentRoute.value.name !== 'NOT_FOUND' && !store.state.isLoggedIn) {
 const rooms = ref<
   {
     id: string;
-    members: string[];
+    members: { id: string; name: string; nickname: string; memberId: string }[];
     name: string;
   }[]
 >([]);
 
 onMounted(async () => {
   if (store.state.isLoggedIn) {
-    const response = await axios(
-      'http://localhost:8080/api/v1/rooms/beot/' + store.state.id,
-      {
-        method: 'GET',
-      }
+    const response = await axios.get(
+      'http://localhost:8080/api/v1/rooms/beot/' + store.state.id
     );
     rooms.value = response.data;
   }
