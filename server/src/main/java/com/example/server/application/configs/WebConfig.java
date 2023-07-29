@@ -1,4 +1,4 @@
-package com.example.server.application.filters;
+package com.example.server.application.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
