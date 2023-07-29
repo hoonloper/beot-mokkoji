@@ -29,7 +29,7 @@ public class ChatController {
     @CrossOrigin
     @GetMapping(value = "/chatrooms/{roomId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Chat> findByRoomNum(@PathVariable String roomId){
-        return chatRepository.mFindByRoomNum(roomId).subscribeOn(Schedulers.boundedElastic());
+        return chatRepository.mFindByRoomNum(roomId);
     }
 
 
@@ -45,7 +45,6 @@ public class ChatController {
         savingChat.setReceiverId(chat.getReceiverId());
         savingChat.setSenderId(chat.getSenderId());
         savingChat.setSenderName(chat.getSenderName());
-        System.out.println(savingChat.toString());
         return chatRepository.save(savingChat);
     }
 }

@@ -9,7 +9,7 @@
     <div ref="chatWrap" class="chat-wrap">
       <div
         v-for="chat of chats"
-        :class="[chat.senderIdx === store.state.id ? 'me' : 'you']"
+        :class="[chat.senderId === store.state.id ? 'me' : 'you']"
         :key="chat.id"
       >
         <div class="message">{{ chat.msg }}</div>
@@ -47,9 +47,9 @@ const chats = ref<
     createdAt: string;
     id: string;
     msg: string;
-    receiverIdx: string;
+    receiverId: string;
     roomId: string;
-    senderIdx: string;
+    senderId: string;
     senderName: string;
   }[]
 >([]);
