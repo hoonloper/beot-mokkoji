@@ -42,9 +42,10 @@ public class ChatController {
         savingChat.setCreatedAt(chat.getCreatedAt());
         savingChat.setMsg(chat.getMsg());
         savingChat.setRoomId(chat.getRoomId());
-        savingChat.setReceiverIdx(chat.getReceiverIdx());
-        savingChat.setSenderIdx(chat.getSenderIdx());
+        savingChat.setReceiverId(chat.getReceiverId());
+        savingChat.setSenderId(chat.getSenderId());
         savingChat.setSenderName(chat.getSenderName());
+        System.out.println(savingChat.toString());
         return chatRepository.save(savingChat);
     }
 }

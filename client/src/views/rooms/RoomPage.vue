@@ -3,8 +3,7 @@
     <div class="chatroom-header">
       <BeotButton @click="back()">뒤로</BeotButton>
       <div class="chatroom-header-name">
-        <!-- <div class="status">{{ isConnected ? '🟢' : '🔴' }}</div> -->
-        <!-- <div class="name">{{ room.name }}</div> -->
+        <div class="name">{{ room?.name ?? '채팅방' }}</div>
       </div>
     </div>
     <div ref="chatWrap" class="chat-wrap">
@@ -13,12 +12,8 @@
         :class="[chat.senderIdx === store.state.id ? 'me' : 'you']"
         :key="chat.id"
       >
-        <div class="message">
-          {{ chat.msg }}
-        </div>
-        <div align="right" class="time">
-          {{ formatSendAt(chat.createdAt) }}
-        </div>
+        <div class="message">{{ chat.msg }}</div>
+        <div align="right" class="time">{{ formatSendAt(chat.createdAt) }}</div>
       </div>
     </div>
     <div class="chat-input-wrap">
@@ -44,6 +39,7 @@ import BeotButton from '@/components/BeotButton.vue';
 import BeotInput from '@/components/BeotInput.vue';
 import router from '@/router';
 
+const chatWrap = ref();
 const props = defineProps(['roomId']);
 const store = useStore();
 const chats = ref<
@@ -58,15 +54,33 @@ const chats = ref<
   }[]
 >([]);
 
-const room = ref<{ id: string; name: string; members: string[] } | null>(null);
+const eventSource = new EventSource(
+  `http://localhost:8080/api/v1/chats/chatrooms/${props.roomId}`
+);
+eventSource.onopen = (event) => {
+  console.log('Connect');
+};
+
+eventSource.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  if (store.state.id !== data.senderIdx) {
+    chats.value.push(data);
+  }
+};
+eventSource.onerror = (error) => {
+  console.warn(error);
+  eventSource.close();
+};
+
+const room = ref<{
+  id: string;
+  name: string;
+  members: { id: string; name: string; nickname: string; memberId: string }[];
+} | null>(null);
 onMounted(async () => {
-  const response = await axios(
-    'http://localhost:8080/api/v1/rooms/' + props.roomId,
-    {
-      method: 'GET',
-    }
+  const response = await axios.get(
+    'http://localhost:8080/api/v1/rooms/' + props.roomId
   );
-  console.log(response.data);
   room.value = response.data;
 });
 
@@ -74,36 +88,20 @@ const sendChat = async () => {
   if (!room.value) {
     throw new Error();
   }
-  const receiverIdx = room.value.members.find(
+  const receiver = room.value.members.find(
     (member) => store.state.id !== member
   );
-  if (!receiverIdx) {
+  if (!receiver) {
     return;
   }
-  const response = await axios.post(
-    'http://localhost:8080/api/v1/chats',
-    {
-      msg: text.value,
-      senderIdx: store.state.id,
-      senderName: store.state.name,
-      receiverIdx,
-      roomId: room.value.id,
-    },
-    { withCredentials: true }
-  );
+  const response = await axios.post('http://localhost:8080/api/v1/chats', {
+    msg: text.value,
+    senderId: store.state.id,
+    senderName: store.state.name,
+    receiverId: receiver.memberId,
+    roomId: room.value.id,
+  });
   chats.value.push(response.data);
-};
-
-const chatWrap = ref();
-
-const eventSource = new EventSource(
-  `http://localhost:8080/api/v1/chats/chatrooms/${props.roomId}`
-);
-eventSource.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  if (store.state.id !== data.senderIdx) {
-    chats.value.push(data);
-  }
 };
 
 const formatSendAt = (time: string) => {

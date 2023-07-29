@@ -14,18 +14,28 @@ public class Chat {
 
     private String msg;
 
-    @Field(name = "sender_idx")
-    private String senderIdx;
+    @Field(name = "sender_id")
+    private String senderId;
 
     @Field(name = "sender_name")
     private String senderName;
 
-    @Field(name = "receiver_idx")
-    private String receiverIdx;
+    @Field(name = "receiver_id")
+    private String receiverId;
 
     @Field(name = "room_id")
     private String roomId;
 
     @Field(name = "created_at")
     private String createdAt;
+
+    @Override
+    public String toString() {
+        return "id: " + id + "\n" +
+                "msg: " + msg + "\n" +
+                "sender_id: " + senderId + "\n" +
+                "receiver_id: " + receiverId + "\n" +
+                "room_id: " + roomId + "\n" +
+                "created_at: " + createdAt + "\n";
+    }
 }
