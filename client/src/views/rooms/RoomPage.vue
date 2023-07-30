@@ -24,7 +24,6 @@
         can-focus
         :value="text"
         @input="inputText"
-        @keyup.enter="sendChat()"
       />
       <BeotButton @click="sendChat()">전송</BeotButton>
     </div>
@@ -54,51 +53,52 @@ const chats = ref<
   }[]
 >([]);
 
-const eventSource = new EventSource(
-  `http://localhost:8080/api/v1/chats/chatrooms/${props.roomId}`
-);
-eventSource.onopen = (event) => {
-  console.log('Connect');
-};
-
-eventSource.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  if (store.state.id !== data.senderIdx) {
-    chats.value.push(data);
-  }
-};
-eventSource.onerror = (error) => {
-  console.warn(error);
-  eventSource.close();
-};
-
 const room = ref<{
   id: string;
   name: string;
   members: { id: string; name: string; nickname: string; memberId: string }[];
 } | null>(null);
+
+const receiver = ref();
+
 onMounted(async () => {
   const response = await axios.get(
     'http://localhost:8080/api/v1/rooms/' + props.roomId
   );
   room.value = response.data;
+  receiver.value = response.data.members.find(
+    (member) => store.state.id !== member.memberId
+  );
+
+  const eventSource = new EventSource(
+    `http://localhost:8080/api/v1/chats/chatrooms/${props.roomId}`
+  );
+  eventSource.onopen = (event) => {
+    console.log('Connect');
+  };
+
+  eventSource.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    console.log(data);
+    if (store.state.id !== data.senderIdx) {
+      chats.value.push(data);
+    }
+  };
+  eventSource.onerror = (error) => {
+    console.warn(error);
+    // eventSource.close();
+  };
 });
 
 const sendChat = async () => {
   if (!room.value) {
     throw new Error();
   }
-  const receiver = room.value.members.find(
-    (member) => store.state.id !== member
-  );
-  if (!receiver) {
-    return;
-  }
   const response = await axios.post('http://localhost:8080/api/v1/chats', {
     msg: text.value,
     senderId: store.state.id,
     senderName: store.state.name,
-    receiverId: receiver.memberId,
+    receiverId: receiver.value.memberId,
     roomId: room.value.id,
   });
   chats.value.push(response.data);

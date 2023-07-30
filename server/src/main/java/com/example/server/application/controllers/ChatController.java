@@ -10,6 +10,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -23,28 +24,38 @@ public class ChatController {
     @CrossOrigin
     @GetMapping(value = "/sender/{sender}/receiver/{receiver}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Chat> getMsg(@PathVariable String sender, @PathVariable String receiver){
-        return chatRepository.mFindBySender(sender,receiver).subscribeOn(Schedulers.boundedElastic());
+        return chatRepository
+                .mFindBySender(sender, receiver)
+                .subscribeOn(Schedulers.boundedElastic())
+                .onErrorResume(throwable -> Mono.just(new Chat()));
     }
 
     @CrossOrigin
     @GetMapping(value = "/chatrooms/{roomId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Chat> findByRoomNum(@PathVariable String roomId){
-        return chatRepository.mFindByRoomNum(roomId);
+        System.out.println(roomId + "컨트롤러");
+        Flux<Chat> chatFlux = chatRepository.mFindByRoomNum(roomId)
+                .subscribeOn(Schedulers.boundedElastic())
+                .onErrorResume(throwable -> Mono.just(new Chat()));
+
+        System.out.println(chatFlux);
+        return chatFlux;
     }
 
 
     @CrossOrigin
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Chat> setMsg(@RequestBody Chat chat){
-        chat.setCreatedAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")).toString());
-        Chat savingChat = new Chat();
-        savingChat.setCreatedAt(chat.getCreatedAt());
-        savingChat.setMsg(chat.getMsg());
-        savingChat.setRoomId(chat.getRoomId());
-        savingChat.setReceiverId(chat.getReceiverId());
-        savingChat.setSenderId(chat.getSenderId());
-        savingChat.setSenderName(chat.getSenderName());
-        return chatRepository.save(savingChat);
+    public Chat setMsg(@RequestBody Chat chat){
+        Chat savingChat = Chat.builder()
+                .msg(chat.getMsg())
+                .senderId(chat.getSenderId())
+                .roomId(chat.getRoomId())
+                .receiverId(chat.getReceiverId())
+                .senderName(chat.getSenderName())
+                .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")).toString())
+                .build();
+        chatRepository.save(savingChat).doOnNext(System.out::println).doOnError(System.out::println).subscribe();
+        return savingChat;
     }
 }
