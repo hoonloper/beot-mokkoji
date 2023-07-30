@@ -38,12 +38,6 @@ public class Member {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    @OneToMany(mappedBy = "fromMember")
-    private List<Beot> fromBeots = new ArrayList<>();
-
-    @OneToMany(mappedBy = "toMember")
-    private List<Beot> toBeots = new ArrayList<>();
-
     public Member(String id, String name, String nickname, LocalDate birthday) {
         this.id = id;
         this.name = name;

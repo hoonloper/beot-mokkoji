@@ -16,9 +16,10 @@ public class BeotController {
     @Autowired
     private BeotService beotService;
 
-    @GetMapping("/following/:id")
-    public List<BeotFollowingsVo> getFollowingBeots(@RequestParam("id") String id) {
-        return beotService.getFollowingBeots(id);
+    @GetMapping("/following/{memberId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BeotFollowingsVo> getFollowingBeots(@PathVariable("memberId") String memberId) {
+        return beotService.getFollowingBeots(memberId);
     }
 
     @PostMapping

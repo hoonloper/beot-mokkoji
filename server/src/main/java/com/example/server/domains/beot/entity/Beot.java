@@ -15,14 +15,14 @@ public class Beot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "from_member_id", insertable = false, updatable = false)
     private Member fromMember;
 
     @Column(name = "from_member_id", nullable = false)
     private String fromMemberId;
 
-    @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "to_member_id", insertable = false, updatable = false)
     private Member toMember;
 

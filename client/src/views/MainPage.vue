@@ -47,10 +47,6 @@ import { HttpStatus } from '@/common/constant';
 
 useMemberStorage().setItem('end-point', '/');
 const store = useStore();
-// 비로그인 사용자는 로그인 페이지로 이동
-if (router.currentRoute.value.name !== 'NOT_FOUND' && !store.state.isLoggedIn) {
-  router.push('sign-in');
-}
 
 type Beot = {
   id: number;
@@ -63,17 +59,18 @@ type Beot = {
   createdAt: string;
 };
 const beotList = ref<Beot[]>([]);
-
 onMounted(async () => {
-  const response = await axios.get(
-    'http://localhost:8080/api/v1/beots/following/:id',
-    {
-      params: {
-        id: store.state.id,
-      },
-    }
-  );
-  beotList.value = response.data.filter((d: Beot) => d.toMember !== null);
+  // 비로그인 사용자는 로그인 페이지로 이동
+  if (
+    router.currentRoute.value.name !== 'NOT_FOUND' &&
+    !store.state.isLoggedIn
+  ) {
+    router.push('sign-in');
+  } else {
+    const URL = `http://localhost:8080/api/v1/beots/following/${store.state.id}`;
+    const response = await axios.get(URL);
+    beotList.value = response.data.filter((d: Beot) => d.toMember !== null);
+  }
 });
 
 const unfollow = async (beot: Beot) => {
