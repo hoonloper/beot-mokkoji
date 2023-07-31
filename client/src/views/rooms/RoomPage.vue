@@ -12,7 +12,7 @@
         :class="[chat.senderId === store.state.id ? 'me' : 'you']"
         :key="chat.id"
       >
-        <div class="message">{{ chat.msg }}</div>
+        <div class="message">{{ chat.message }}</div>
         <div align="right" class="time">{{ formatSendAt(chat.createdAt) }}</div>
       </div>
     </div>
@@ -24,8 +24,9 @@
         can-focus
         :value="text"
         @input="inputText"
+        @keyup.enter="sendChat()"
       />
-      <BeotButton @click="sendChat()">전송</BeotButton>
+      <BeotButton @click.stop="sendChat()">전송</BeotButton>
     </div>
   </div>
 </template>
@@ -45,7 +46,7 @@ const chats = ref<
   {
     createdAt: string;
     id: string;
-    msg: string;
+    message: string;
     receiverId: string;
     roomId: string;
     senderId: string;
@@ -99,7 +100,7 @@ const sendChat = async () => {
     throw new Error();
   }
   const response = await axios.post('http://localhost:8080/api/v1/chats', {
-    msg: text.value,
+    message: text.value,
     senderId: store.state.id,
     senderName: store.state.name,
     receiverId: receiver.value.memberId,

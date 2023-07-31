@@ -1,5 +1,6 @@
 package com.example.server.domains.chat.service;
 
+import com.example.server.domains.chat.dto.ChatDto;
 import com.example.server.domains.chat.entity.Chat;
 import com.example.server.domains.chat.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,30 +17,43 @@ import java.time.ZoneId;
 public class ChatService {
     private final ChatRepository chatRepository;
 
-    public Flux<Chat> subscribeMember(String senderId, String receiverId) {
+    public Flux<ChatDto> subscribeMember(String senderId, String receiverId) {
         return chatRepository
                 .subscribeMemberWithReceiver(senderId, receiverId)
                 .subscribeOn(Schedulers.boundedElastic())
-                .onErrorResume(throwable -> Mono.just(new Chat()));
+                .onErrorResume(throwable -> Mono.just(ChatDto.builder().build()));
     }
 
-    public Flux<Chat> subscribeRoom(String roomId) {
+    public Flux<ChatDto> subscribeRoom(String roomId) {
         return chatRepository
                 .subscribeRoom(roomId)
                 .subscribeOn(Schedulers.boundedElastic())
-                .onErrorResume(throwable -> Mono.just(new Chat()));
+                .onErrorResume(throwable -> Mono.just(ChatDto.builder().build()));
     }
 
-    public Chat saveChat(Chat chat) {
+    public ChatDto saveChat(ChatDto chat) {
         Chat savingChat = Chat.builder()
-                .msg(chat.getMsg())
-                .senderId(chat.getSenderId())
-                .roomId(chat.getRoomId())
-                .receiverId(chat.getReceiverId())
-                .senderName(chat.getSenderName())
+                .message(chat.message())
+                .senderId(chat.senderId())
+                .roomId(chat.roomId())
+                .receiverId(chat.receiverId())
+                .senderName(chat.senderName())
                 .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")).toString())
                 .build();
         chatRepository.insert(savingChat).doOnNext(System.out::println).doOnError(System.out::println).subscribe();
-        return savingChat;
+        return toDto(savingChat);
+    }
+
+    private ChatDto toDto(Chat chat) {
+        return ChatDto
+                .builder()
+                .id(chat.getId())
+                .message(chat.getMessage())
+                .senderId(chat.getSenderId())
+                .roomId(chat.getRoomId())
+                .senderName(chat.getSenderName())
+                .createdAt(chat.getCreatedAt())
+                .receiverId(chat.getReceiverId())
+                .build();
     }
 }

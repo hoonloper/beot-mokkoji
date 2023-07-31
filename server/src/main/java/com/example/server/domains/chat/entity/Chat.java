@@ -15,7 +15,7 @@ public class Chat {
     @Id
     private String id;
 
-    private String msg;
+    private String message;
 
     @Field(name = "sender_id")
     private String senderId;
@@ -35,7 +35,7 @@ public class Chat {
     @Override
     public String toString() {
         return "id: " + id + "\n" +
-                "msg: " + msg + "\n" +
+                "message: " + message + "\n" +
                 "sender_id: " + senderId + "\n" +
                 "receiver_id: " + receiverId + "\n" +
                 "room_id: " + roomId + "\n" +
@@ -43,9 +43,9 @@ public class Chat {
     }
 
     @Builder
-    public Chat(String id, String msg, String senderId, String senderName, String receiverId, String roomId, String createdAt) {
+    public Chat(String id, String message, String senderId, String senderName, String receiverId, String roomId, String createdAt) {
         this.id = id;
-        this.msg = msg;
+        this.message = message;
         this.senderId = senderId;
         this.senderName = senderName;
         this.receiverId = receiverId;
