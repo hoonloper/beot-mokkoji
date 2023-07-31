@@ -67,7 +67,12 @@ onMounted(async () => {
   );
   room.value = response.data;
   receiver.value = response.data.members.find(
-    (member) => store.state.id !== member.memberId
+    (member: {
+      id: string;
+      name: string;
+      nickname: string;
+      memberId: string;
+    }) => store.state.id !== member.memberId
   );
 
   const eventSource = new EventSource(
@@ -79,14 +84,13 @@ onMounted(async () => {
 
   eventSource.onmessage = (event) => {
     const data = JSON.parse(event.data);
-    console.log(data);
-    if (store.state.id !== data.senderIdx) {
+    if (store.state.id !== data.senderId) {
       chats.value.push(data);
     }
   };
   eventSource.onerror = (error) => {
     console.warn(error);
-    // eventSource.close();
+    eventSource.close();
   };
 });
 
@@ -102,6 +106,7 @@ const sendChat = async () => {
     roomId: room.value.id,
   });
   chats.value.push(response.data);
+  text.value = '';
 };
 
 const formatSendAt = (time: string) => {
