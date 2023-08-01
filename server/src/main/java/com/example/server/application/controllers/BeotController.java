@@ -3,6 +3,7 @@ package com.example.server.application.controllers;
 import com.example.server.domains.beot.dto.BeotDto;
 import com.example.server.domains.beot.vo.BeotFollowingsVo;
 import com.example.server.domains.beot.service.BeotService;
+import com.example.server.domains.member.dto.MemberDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,12 @@ import java.util.List;
 public class BeotController {
     @Autowired
     private BeotService beotService;
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<MemberDto> getRandomBeots() {
+        return beotService.getRandomBeots();
+    }
 
     @GetMapping("/following/{memberId}")
     @ResponseStatus(HttpStatus.OK)

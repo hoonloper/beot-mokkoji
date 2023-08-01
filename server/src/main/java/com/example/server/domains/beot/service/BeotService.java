@@ -4,6 +4,8 @@ import com.example.server.domains.beot.dto.BeotDto;
 import com.example.server.domains.beot.entity.Beot;
 import com.example.server.domains.beot.repository.BeotRepository;
 import com.example.server.domains.beot.vo.BeotFollowingsVo;
+import com.example.server.domains.member.dto.MemberDto;
+import com.example.server.domains.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,15 @@ import java.util.List;
 @Service
 public class BeotService {
     private final BeotRepository beotRepository;
+    private final MemberRepository memberRepository;
+
+    public List<MemberDto> getRandomBeots() {
+        return memberRepository
+                .findAllByRandomOrderBy()
+                .stream()
+                .map(MemberDto::toDto)
+                .toList();
+    }
 
     public List<BeotFollowingsVo> getFollowingBeots(String id) {
         return toVoList(beotRepository.findByFromMemberId(id));
