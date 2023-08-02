@@ -99,6 +99,9 @@ const sendChat = async () => {
   if (!room.value) {
     throw new Error();
   }
+  if (text.value.length === 0) {
+    return;
+  }
   const response = await axios.post('http://localhost:8080/api/v1/chats', {
     message: text.value,
     senderId: store.state.id,
