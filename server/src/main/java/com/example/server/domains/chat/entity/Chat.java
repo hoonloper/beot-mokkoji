@@ -1,11 +1,12 @@
 package com.example.server.domains.chat.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Data
@@ -30,7 +31,7 @@ public class Chat {
     private String roomId;
 
     @Field(name = "created_at")
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @Override
     public String toString() {
@@ -42,8 +43,7 @@ public class Chat {
                 "created_at: " + createdAt + "\n";
     }
 
-    @Builder
-    public Chat(String id, String message, String senderId, String senderName, String receiverId, String roomId, String createdAt) {
+    public Chat(String id, String message, String senderId, String senderName, String receiverId, String roomId, LocalDateTime createdAt) {
         this.id = id;
         this.message = message;
         this.senderId = senderId;

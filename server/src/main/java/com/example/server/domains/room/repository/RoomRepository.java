@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.repository.Query;
 import java.util.List;
 
 public interface RoomRepository extends MongoRepository<Room, String> {
-    @Query("{ 'members': { '$elemMatch': { 'member_id': '0ca75e74-c967-45e9-afd3-dd820ed30b02' } } }")
+    @Query("{ 'members': { '$elemMatch': { 'member_id': ?0 } } }")
     List<Room> findAllByMemberIdInMembers(String memberId);
 }

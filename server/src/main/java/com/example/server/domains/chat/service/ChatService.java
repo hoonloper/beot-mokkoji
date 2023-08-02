@@ -32,15 +32,8 @@ public class ChatService {
     }
 
     public ChatDto saveChat(ChatDto chat) {
-        Chat savingChat = Chat.builder()
-                .message(chat.message())
-                .senderId(chat.senderId())
-                .roomId(chat.roomId())
-                .receiverId(chat.receiverId())
-                .senderName(chat.senderName())
-                .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")).toString())
-                .build();
-        chatRepository.insert(savingChat).doOnNext(System.out::println).doOnError(System.out::println).subscribe();
+        Chat savingChat = new Chat(null, chat.message(), chat.senderId(), chat.senderName(), chat.receiverId(), chat.roomId(), LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        chatRepository.insert(savingChat).doOnNext(System.out::println).subscribe();
         return toDto(savingChat);
     }
 
@@ -52,7 +45,7 @@ public class ChatService {
                 .senderId(chat.getSenderId())
                 .roomId(chat.getRoomId())
                 .senderName(chat.getSenderName())
-                .createdAt(chat.getCreatedAt())
+                .createdAt(chat.getCreatedAt().toString())
                 .receiverId(chat.getReceiverId())
                 .build();
     }
