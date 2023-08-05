@@ -5,15 +5,17 @@ import com.example.server.application.exceptions.UnauthorizedException;
 import com.example.server.domains.member.dto.MemberDto;
 import com.example.server.domains.member.entity.Member;
 import com.example.server.domains.member.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-@RequiredArgsConstructor
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     /* READ */
     public MemberDto signIn(MemberDto memberDto) {

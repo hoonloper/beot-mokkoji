@@ -6,16 +6,21 @@ import com.example.server.domains.beot.repository.BeotRepository;
 import com.example.server.domains.beot.vo.BeotFollowingsVo;
 import com.example.server.domains.member.dto.MemberDto;
 import com.example.server.domains.member.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Service
 public class BeotService {
     private final BeotRepository beotRepository;
     private final MemberRepository memberRepository;
+
+    @Autowired
+    public BeotService(BeotRepository beotRepository, MemberRepository memberRepository) {
+        this.beotRepository = beotRepository;
+        this.memberRepository = memberRepository;
+    }
 
     public List<MemberDto> getRandomBeots() {
         return memberRepository
