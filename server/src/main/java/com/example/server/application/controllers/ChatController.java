@@ -2,17 +2,19 @@ package com.example.server.application.controllers;
 
 import com.example.server.domains.chat.dto.ChatDto;
 import com.example.server.domains.chat.service.ChatService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
-@RequiredArgsConstructor
 @RequestMapping("/api/v1/chats")
 @RestController
 public class ChatController {
     private final ChatService chatService;
+
+    public ChatController(ChatService chatService) {
+        this.chatService = chatService;
+    }
 
     //귓속말 할때 사용
     @CrossOrigin

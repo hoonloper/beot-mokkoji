@@ -5,7 +5,6 @@ import com.example.server.domains.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
-    @Autowired
     private MemberService memberService;
+
+    public AuthController(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     @PostMapping("/sign-in")
     @ResponseStatus(HttpStatus.OK)
