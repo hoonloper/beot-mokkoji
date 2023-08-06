@@ -1,5 +1,6 @@
 package com.example.server.domains.beot.service;
 
+import com.example.server.application.exceptions.BadRequestException;
 import com.example.server.domains.beot.dto.BeotDto;
 import com.example.server.domains.beot.entity.Beot;
 import com.example.server.domains.beot.repository.BeotRepository;
@@ -48,6 +49,9 @@ public class BeotService {
     }
 
     public void unfollow(BeotDto beotDto) {
+        if(beotRepository.findById(beotDto.id()).isEmpty()) {
+            throw new BadRequestException("존재하지 않는 아이디입니다.");
+        };
         beotRepository.delete(new Beot(beotDto.id(), beotDto.fromMemberId(), beotDto.toMemberId()));
     }
 }
