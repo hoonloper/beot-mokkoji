@@ -29,7 +29,7 @@ public class Beot {
     @Column(name = "to_member_id", nullable = false)
     private String toMemberId;
 
-    @Column(name = "created_at", nullable = false)
+    @Temporal(value = TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
     public Beot(String fromMemberId, String toMemberId, LocalDateTime createdAt) {

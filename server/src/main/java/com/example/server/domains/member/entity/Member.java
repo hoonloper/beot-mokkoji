@@ -1,10 +1,6 @@
 package com.example.server.domains.member.entity;
 
-import com.example.server.domains.beot.entity.Beot;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +9,6 @@ import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(name = "members")
 @AllArgsConstructor
@@ -32,10 +26,10 @@ public class Member {
     @Column(nullable = false)
     private String nickname;
 
-    @Column
+    @Temporal(value = TemporalType.DATE)
     private LocalDate birthday;
 
-    @Column(name = "deleted_at")
+    @Temporal(value = TemporalType.TIMESTAMP)
     private LocalDateTime deletedAt;
 
     public Member(String id, String name, String nickname, LocalDate birthday) {
