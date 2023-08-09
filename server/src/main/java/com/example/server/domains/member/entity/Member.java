@@ -10,7 +10,8 @@ import org.hibernate.annotations.Where;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity(name = "members")
+@Entity
+@Table(name = "members")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
