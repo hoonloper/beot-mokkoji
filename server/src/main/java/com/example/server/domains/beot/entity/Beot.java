@@ -16,32 +16,18 @@ public class Beot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = Member.class)
+    @ManyToOne
     @JoinColumn(name = "from_member_id", insertable = false, updatable = false)
     private Member fromMember;
 
-    @Column(name = "from_member_id", nullable = false)
-    private String fromMemberId;
-
-    @ManyToOne(targetEntity = Member.class)
+    @ManyToOne
     @JoinColumn(name = "to_member_id", insertable = false, updatable = false)
     private Member toMember;
-
-    @Column(name = "to_member_id", nullable = false)
-    private String toMemberId;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
-    public Beot(String fromMemberId, String toMemberId, LocalDateTime createdAt) {
-        this.fromMemberId = fromMemberId;
-        this.toMemberId = toMemberId;
-        this.createdAt = createdAt;
-    }
-
-    public Beot(Long id, String fromMemberId, String toMemberId) {
+    public Beot(Long id) {
         this.id = id;
-        this.fromMemberId = fromMemberId;
-        this.toMemberId = toMemberId;
     }
 }

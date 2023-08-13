@@ -6,10 +6,12 @@ import com.example.server.domains.beot.entity.Beot;
 import com.example.server.domains.beot.repository.BeotRepository;
 import com.example.server.domains.beot.vo.BeotFollowingsVo;
 import com.example.server.domains.member.dto.MemberDto;
+import com.example.server.domains.member.entity.Member;
 import com.example.server.domains.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -45,13 +47,15 @@ public class BeotService {
     }
 
     public void follow(BeotDto beotDto) {
-        beotRepository.save(new Beot(beotDto.fromMemberId(), beotDto.toMemberId(), beotDto.createdAt()));
+        Member toMember = new Member(beotDto.toMemberId());
+        Member fromMember = new Member(beotDto.fromMemberId());
+        beotRepository.save(new Beot(null, toMember, fromMember, LocalDateTime.now()));
     }
 
     public void unfollow(BeotDto beotDto) {
         if(beotRepository.findById(beotDto.id()).isEmpty()) {
             throw new BadRequestException("존재하지 않는 아이디입니다.");
         };
-        beotRepository.delete(new Beot(beotDto.id(), beotDto.fromMemberId(), beotDto.toMemberId()));
+        beotRepository.delete(new Beot(beotDto.id()));
     }
 }
